@@ -60,5 +60,13 @@ BEGIN
 END tbi_pessoa;
 /
 
+CREATE OR REPLACE TRIGGER tbud_relatorio BEFORE
+    UPDATE OR DELETE ON relatorio
+    FOR EACH ROW
+BEGIN
+    
+END tbud_relatorio;
+/
+
 COMMIT;
       
