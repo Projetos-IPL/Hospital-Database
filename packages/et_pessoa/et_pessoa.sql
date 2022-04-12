@@ -16,6 +16,7 @@ CREATE OR REPLACE PACKAGE et_pessoa AS
         p_ult_nome       IN pessoa.ult_nome%TYPE,
         p_morada         IN pessoa.morada%TYPE,
         p_telefone       IN pessoa.telefone%TYPE,
+        p_dta_nasc       IN pessoa.dta_nasc%TYPE,
         p_n_utente_saude IN paciente.n_utente_saude%TYPE
     );
 
