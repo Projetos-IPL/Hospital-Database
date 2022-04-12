@@ -49,14 +49,4 @@ DROP TABLE tipo_cirurgia;
 DROP TABLE area_atuacao;
 /
 
-
-
-
-
-
-
-
-
-
-
-
+COMMIT;
