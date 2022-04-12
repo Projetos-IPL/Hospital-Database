@@ -1,4 +1,4 @@
-CREATE OR REPLACE TRIGGER tbi_seq_area_atuacao BEFORE
+CREATE OR REPLACE TRIGGER tbi_area_atuacao BEFORE
     INSERT ON area_atuacao
     FOR EACH ROW
 BEGIN
@@ -6,7 +6,7 @@ BEGIN
 END;
 /
 
-CREATE OR REPLACE TRIGGER tbi_seq_cirurgia BEFORE
+CREATE OR REPLACE TRIGGER tbi_cirurgia BEFORE
     INSERT ON cirurgia
     FOR EACH ROW
 BEGIN
@@ -14,7 +14,7 @@ BEGIN
 END;
 /
 
-CREATE OR REPLACE TRIGGER tbi_seq_consulta BEFORE
+CREATE OR REPLACE TRIGGER tbi_consulta BEFORE
     INSERT ON consulta
     FOR EACH ROW
 BEGIN
@@ -22,7 +22,7 @@ BEGIN
 END;
 /
 
-CREATE OR REPLACE TRIGGER tbi_seq_relatorio BEFORE
+CREATE OR REPLACE TRIGGER tbi_relatorio BEFORE
     INSERT ON relatorio
     FOR EACH ROW
 BEGIN
@@ -30,7 +30,7 @@ BEGIN
 END;
 /
 
-CREATE OR REPLACE TRIGGER tbi_seq_tipo_cirurgia BEFORE
+CREATE OR REPLACE TRIGGER tbi_tipo_cirurgia BEFORE
     INSERT ON tipo_cirurgia
     FOR EACH ROW
 BEGIN
@@ -38,7 +38,7 @@ BEGIN
 END;
 /
 
-CREATE OR REPLACE TRIGGER tbi_seq_tratamento BEFORE
+CREATE OR REPLACE TRIGGER tbi_tratamento BEFORE
     INSERT ON tratamento
     FOR EACH ROW
 BEGIN
