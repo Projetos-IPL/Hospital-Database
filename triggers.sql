@@ -6,6 +6,7 @@ BEGIN
 END;
 /
 
+
 CREATE OR REPLACE TRIGGER tbi_cirurgia BEFORE
     INSERT ON cirurgia
     FOR EACH ROW
@@ -13,6 +14,7 @@ BEGIN
     :NEW.id_cirurgia := pk_cirurgia_seq.NEXTVAL;
 END;
 /
+
 
 CREATE OR REPLACE TRIGGER tbi_consulta BEFORE
     INSERT ON consulta
@@ -22,6 +24,7 @@ BEGIN
 END;
 /
 
+
 CREATE OR REPLACE TRIGGER tbi_relatorio BEFORE
     INSERT ON relatorio
     FOR EACH ROW
@@ -30,6 +33,7 @@ BEGIN
 END;
 /
 
+
 CREATE OR REPLACE TRIGGER tbi_tipo_cirurgia BEFORE
     INSERT ON tipo_cirurgia
     FOR EACH ROW
@@ -37,6 +41,7 @@ BEGIN
     :NEW.id_tipo_cirurgia := pk_tipo_cirurgia_seq.NEXTVAL;
 END;
 /
+
 
 CREATE OR REPLACE TRIGGER tbi_tratamento BEFORE
     INSERT ON tratamento
@@ -76,6 +81,7 @@ BEGIN
 END tbi_tratamento;
 /
 
+
 CREATE OR REPLACE TRIGGER tbi_pessoa BEFORE
     INSERT ON pessoa
     FOR EACH ROW
@@ -90,6 +96,7 @@ BEGIN
 END tbi_pessoa;
 /
 
+
 CREATE OR REPLACE TRIGGER tbud_relatorio BEFORE
     UPDATE OR DELETE ON relatorio
     FOR EACH ROW
@@ -97,6 +104,7 @@ BEGIN
     
 END tbud_relatorio;
 /
+
 
 COMMIT;
       
