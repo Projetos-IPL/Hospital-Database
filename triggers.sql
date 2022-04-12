@@ -46,5 +46,19 @@ BEGIN
 END;
 /
 
+CREATE OR REPLACE TRIGGER tbi_pessoa BEFORE
+    INSERT ON pessoa
+    FOR EACH ROW
+DECLARE
+    n_idade NUMBER;
+BEGIN
+    n_idade := MONTHS_BETWEEN(SYSDATE, :NEW.dta_nasc) / 12;
+    
+    IF n_idade < 18 THEN
+        RAISE et_pessoa.menor_de_idade;
+    END IF;
+END tbi_pessoa;
+/
+
 COMMIT;
       
