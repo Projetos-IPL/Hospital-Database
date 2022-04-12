@@ -7,6 +7,8 @@ CREATE OR REPLACE PACKAGE BODY et_pessoa AS
         COMMIT;
 
         EXCEPTION
+            WHEN menor_de_idade THEN
+                dbms_output.PUT_LINE('Não é permitido o registo de pessoas com menos de 18 anos.');
             WHEN OTHERS THEN
                 dbms_output.PUT_LINE('Error code: '|| SQLCODE);
                 dbms_output.PUT_LINE(SQLERRM);
@@ -45,7 +47,7 @@ CREATE OR REPLACE PACKAGE BODY et_pessoa AS
             WHEN OTHERS THEN
                 dbms_output.PUT_LINE('Error code: '|| SQLCODE);
                 dbms_output.PUT_LINE(SQLERRM);
-            ROLLBACK;
+                ROLLBACK;
 
     END adicionar_paciente;
 

@@ -43,6 +43,7 @@ CREATE OR REPLACE TRIGGER tbi_tratamento BEFORE
     FOR EACH ROW
 BEGIN
     :NEW.id_tratamento := pk_tratamento_seq.NEXTVAL;
+    :NEW.dta_inicio := SYSDATE;
 END;
 /
 

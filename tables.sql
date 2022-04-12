@@ -1,7 +1,7 @@
 CREATE TABLE area_atuacao
 (
     id_area_atuacao INTEGER,
-    descricao       VARCHAR2(50) NOT NULL,
+    descricao       VARCHAR2(100) NOT NULL,
     CONSTRAINT pk_area_atuacao PRIMARY KEY (id_area_atuacao),
     CONSTRAINT uq_area_atuacao_descricao UNIQUE (descricao)
 );
@@ -36,10 +36,10 @@ CREATE TABLE pessoa
     ult_nome  VARCHAR2(30)  NOT NULL,
     morada    VARCHAR2(200) NOT NULL,
     telefone  VARCHAR2(9)   NOT NULL,
+    dta_nasc  DATE          NOT NULL,
     CONSTRAINT pk_pessoa PRIMARY KEY (nif)
 );
 /
-
 
 CREATE TABLE funcionario
 (

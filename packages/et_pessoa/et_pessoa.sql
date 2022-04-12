@@ -1,5 +1,7 @@
 CREATE OR REPLACE PACKAGE et_pessoa AS
 
+    menor_de_idade EXCEPTION;
+
     /**
       Procedimento para adicionar uma pessoa
      */
