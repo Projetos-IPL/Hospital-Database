@@ -56,10 +56,6 @@ CREATE SEQUENCE pk_consulta_seq
     MINVALUE 1
     MAXVALUE 999999999
     NOCACHE;
-    
-    
-    
-    
-    
-    
-    
+
+
+COMMIT;
