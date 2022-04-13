@@ -39,6 +39,11 @@ CREATE OR REPLACE PACKAGE et_tratamento AS
         p_rec_antigo_trat   IN tratamento%rowtype)
     RETURN BOOLEAN;
 
+    -- Procedimento para atualizar o estado de um paciente
+    PROCEDURE atualizar_estado_tratamento(
+        p_id_tratamento tratamento.id_tratamento%TYPE,
+        p_id_estado_paciente tratamento.id_estado_paciente%TYPE);
+
     -- Procedimento para imprimir o registo de erros
     PROCEDURE print_error_log;
 

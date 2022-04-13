@@ -174,4 +174,13 @@ CREATE TABLE medico_cirurgia
 /
 
 
+CREATE TABLE user_exception (
+    code INT,
+    name VARCHAR2(60),
+    errm VARCHAR2(200),
+    CONSTRAINT pk_user_exception PRIMARY KEY (code),
+    CONSTRAINT uq_user_exception_name UNIQUE (name)
+);
+/
+
 COMMIT;

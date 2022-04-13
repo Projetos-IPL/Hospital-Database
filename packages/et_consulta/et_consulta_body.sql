@@ -44,21 +44,33 @@ CREATE OR REPLACE PACKAGE BODY et_consulta AS
         
         EXCEPTION
             WHEN ex_consulta_em_tratamento_finalizado THEN
-                RAISE_APPLICATION_ERROR(
-                    ex_consulta_em_tratamento_finalizado_error_code,
-                    ex_consulta_em_tratamento_finalizado_errm
-                );
-                ROLLBACK;
+                exception_handler.handle_user_exception('consulta_em_tratamento_finalizado');
             WHEN et_tratamento.ex_tratamento_nao_encontrado THEN
-                RAISE_APPLICATION_ERROR(
-                    et_tratamento.ex_tratamento_nao_encontrado_error_code,
-                    et_tratamento.ex_tratamento_nao_encontrado_errm
-                );
-                ROLLBACK;
+                exception_handler.handle_user_exception('tratamento_nao_encontrado');
             WHEN OTHERS THEN
-                dbms_output.PUT_LINE(utl_call_stack.concatenate_subprogram(utl_call_stack.subprogram(1)));
-                dbms_output.PUT_LINE(SQLERRM);
-                ROLLBACK;
+                exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
     END registar_consulta;
+
+    -- Procedimento para validar se é permitido registar uma nova consulta a um tratamento
+    FUNCTION validar_nova_consulta(
+        p_id_tratamento IN consulta.id_tratamento%TYPE)
+    RETURN BOOLEAN IS
+        d_dta_alta DATE;
+    BEGIN
+        -- Verifica se tratamento ainda está ativo
+        SELECT dta_alta INTO d_dta_alta
+            FROM tratamento
+            WHERE id_tratamento = p_id_tratamento;
+
+        IF d_dta_alta IS NOT NULL THEN
+            RETURN FALSE;
+        END IF;
+
+        RETURN TRUE;
+
+        EXCEPTION
+            WHEN NO_DATA_FOUND THEN
+                RETURN FALSE;
+    END validar_nova_consulta;
 
 END et_consulta;

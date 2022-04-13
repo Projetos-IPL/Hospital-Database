@@ -58,4 +58,16 @@ DROP SEQUENCE pk_consulta_seq;
 DROP VIEW tratamento_dados_view;
 /
 
+DROP PACKAGE et_consulta;
+/
+
+DROP PACKAGE et_relatorio;
+/
+
+DROP PACKAGE et_pessoa;
+/
+
+DROP PACKAGE et_tratamento;
+/
+
 COMMIT;
