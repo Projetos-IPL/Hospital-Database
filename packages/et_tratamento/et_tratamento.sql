@@ -3,7 +3,7 @@ CREATE OR REPLACE PACKAGE et_tratamento AS
     -- Exceções
     ex_tratamento_repetido EXCEPTION;
     ex_tratamento_nao_encontrado EXCEPTION;
-    ex_finalizacao_repetida EXCEPTION;
+    ex_tratamento_ja_finalizado EXCEPTION;
     ex_alteracao_invalida EXCEPTION;
 		
     -- Procedimento para registar tratamentos

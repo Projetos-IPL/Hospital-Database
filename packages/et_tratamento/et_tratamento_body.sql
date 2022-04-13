@@ -54,9 +54,7 @@ CREATE OR REPLACE PACKAGE BODY et_tratamento AS
 
         EXCEPTION
             WHEN OTHERS THEN
-                dbms_output.PUT_LINE(utl_call_stack.concatenate_subprogram(utl_call_stack.subprogram(1)));
-                dbms_output.PUT_LINE(SQLERRM);
-                ROLLBACK;
+                exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
     END registar_tratamento;
 
 
@@ -89,11 +87,9 @@ CREATE OR REPLACE PACKAGE BODY et_tratamento AS
             WHEN ex_paciente_ja_tem_tratamento THEN
                 print_error_log;
                 limpar_error_log;
-                ROLLBACK;
+                exception_handler.handle_user_exception('paciente_ja_tem_tratamento');
             WHEN OTHERS THEN
-                dbms_output.PUT_LINE(utl_call_stack.concatenate_subprogram(utl_call_stack.subprogram(1)));
-                dbms_output.PUT_LINE(SQLERRM);
-                ROLLBACK;
+                exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
     END registar_primeiro_tratamento;
 
 
@@ -109,7 +105,7 @@ CREATE OR REPLACE PACKAGE BODY et_tratamento AS
             WHERE id_tratamento = p_id_tratamento;
 
         IF dt_dta_alta IS NOT NULL THEN
-            RAISE ex_finalizacao_repetida;
+            RAISE ex_tratamento_ja_finalizado;
         END IF;
 
         SET TRANSACTION READ WRITE NAME 'Finalizar registo';
@@ -120,19 +116,11 @@ CREATE OR REPLACE PACKAGE BODY et_tratamento AS
 
         EXCEPTION
             WHEN NO_DATA_FOUND THEN
-                RAISE_APPLICATION_ERROR(
-                    ex_tratamento_repetido_error_code,
-                    ex_tratamento_repetido_errm
-                );
-            WHEN ex_finalizacao_repetida THEN
-                RAISE_APPLICATION_ERROR(
-                    ex_finalizacao_repetida_error_code,
-                    ex_finalizacao_repetida_errm
-                );
+                exception_handler.handle_user_exception('tratamento_repetido');
+            WHEN ex_tratamento_ja_finalizado THEN
+                exception_handler.handle_user_exception('tratamento_ja_finalizado');
             WHEN OTHERS THEN
-                dbms_output.PUT_LINE(utl_call_stack.concatenate_subprogram(utl_call_stack.subprogram(1)));
-                dbms_output.PUT_LINE(SQLERRM);
-                ROLLBACK;
+                exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
     END finalizar_tratamento;
 
 
@@ -193,9 +181,7 @@ CREATE OR REPLACE PACKAGE BODY et_tratamento AS
 
         EXCEPTION
             WHEN OTHERS THEN
-                dbms_output.PUT_LINE(utl_call_stack.concatenate_subprogram(utl_call_stack.subprogram(1)));
-                dbms_output.PUT_LINE(SQLERRM);
-                ROLLBACK;
+                exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
     END atualizar_estado_tratamento;
 
 END et_tratamento;

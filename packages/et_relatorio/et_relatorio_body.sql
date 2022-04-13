@@ -15,8 +15,7 @@ CREATE OR REPLACE PACKAGE BODY et_relatorio AS
 
         EXCEPTION
             WHEN OTHERS THEN
-                dbms_output.PUT_LINE(utl_call_stack.concatenate_subprogram(utl_call_stack.subprogram(1)));
-                dbms_output.PUT_LINE(SQLERRM);
+                exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
     END adicionar_relatorio;
 END et_relatorio;
 /

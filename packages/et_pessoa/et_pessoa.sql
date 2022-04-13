@@ -1,5 +1,8 @@
 CREATE OR REPLACE PACKAGE et_pessoa AS
 
+    ex_menor_de_idade EXCEPTION;
+    ex_paciente_sem_tratamento EXCEPTION;
+
     /**
       Procedimento para adicionar um paciente
      */

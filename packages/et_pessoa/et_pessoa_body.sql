@@ -8,10 +8,7 @@ CREATE OR REPLACE PACKAGE BODY et_pessoa AS
         INSERT INTO pessoa VALUES p_rec_pessoa;
         EXCEPTION
             WHEN OTHERS THEN
-                dbms_output.PUT_LINE(utl_call_stack.concatenate_subprogram(utl_call_stack.subprogram(1)));
-                dbms_output.PUT_LINE(SQLERRM);
-                ROLLBACK;
-
+                exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
     END adicionar_pessoa;
 
 
@@ -38,17 +35,16 @@ CREATE OR REPLACE PACKAGE BODY et_pessoa AS
         SET TRANSACTION READ WRITE NAME 'Adicionar paciente';
 
         adicionar_pessoa(rec_pessoa);
+
         et_tratamento.registar_primeiro_tratamento(p_nif, p_id_area_atuacao);
+
         INSERT INTO paciente
             VALUES (p_nif, p_n_utente_saude);
         COMMIT;
 
         EXCEPTION
             WHEN OTHERS THEN
-                dbms_output.PUT_LINE(utl_call_stack.concatenate_subprogram(utl_call_stack.subprogram(1)));
-                dbms_output.PUT_LINE(SQLERRM);
-                ROLLBACK;
-
+                exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
     END adicionar_paciente;
 
 
@@ -62,10 +58,7 @@ CREATE OR REPLACE PACKAGE BODY et_pessoa AS
 
         EXCEPTION
             WHEN OTHERS THEN
-                dbms_output.PUT_LINE(utl_call_stack.concatenate_subprogram(utl_call_stack.subprogram(1)));
-                dbms_output.PUT_LINE(SQLERRM);
-                ROLLBACK;
-
+                exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
     END adicionar_funcionario;
     
     
@@ -99,9 +92,7 @@ CREATE OR REPLACE PACKAGE BODY et_pessoa AS
 
         EXCEPTION
             WHEN OTHERS THEN
-                dbms_output.PUT_LINE(SQLERRM);
-                ROLLBACK;
-
+                exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
     END adicionar_enfermeiro;
     
     
@@ -136,10 +127,7 @@ CREATE OR REPLACE PACKAGE BODY et_pessoa AS
 
         EXCEPTION
             WHEN OTHERS THEN
-                dbms_output.PUT_LINE(utl_call_stack.concatenate_subprogram(utl_call_stack.subprogram(1)));
-                dbms_output.PUT_LINE(SQLERRM);
-                ROLLBACK;
-
+                exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
     END adicionar_medico;
 
 END et_pessoa;
