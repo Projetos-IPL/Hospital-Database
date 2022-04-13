@@ -107,31 +107,41 @@ CREATE TABLE tratamento
     dta_inicio         DATE,
     dta_alta           DATE,
     CONSTRAINT pk_tratamento PRIMARY KEY (id_tratamento),
+    /*
+    Esta constraint é deferida para permitir a inserção do tratamento antes do paciente
+    para validar no trigger after insert do paciente se existe um tratamento associado a ele.
+     */
     CONSTRAINT fk_tratamento_paciente FOREIGN KEY (nif)
-        REFERENCES paciente (nif),
+        REFERENCES paciente (nif) DEFERRABLE INITIALLY DEFERRED ,
     CONSTRAINT fk_tratamento_area_atuacao FOREIGN KEY (id_area_atuacao)
         REFERENCES area_atuacao (id_area_atuacao)
 );
 /
+
+ALTER TABLE tratamento DROP CONSTRAINT fk_tratamento_paciente;
+ALTER TABLE tratamento ADD CONSTRAINT fk_tratamento_paciente FOREIGN KEY (nif)
+        REFERENCES paciente (nif) DEFERRABLE INITIALLY DEFERRED;
 
 
 CREATE TABLE consulta
 (
     id_consulta        INTEGER,
     id_tratamento      INTEGER,
+    nif_funcionario    NUMBER(9),
     id_relatorio       INTEGER,
     id_estado_paciente INTEGER,
     dta_realizacao     DATE,
     CONSTRAINT pk_consulta PRIMARY KEY (id_consulta),
     CONSTRAINT fk_consulta_tratamento FOREIGN KEY (id_tratamento)
         REFERENCES tratamento (id_tratamento),
+    CONSTRAINT fk_consulta_funcionario FOREIGN KEY (nif_funcionario)
+        REFERENCES funcionario (nif),
     CONSTRAINT fk_consulta_relatorio FOREIGN KEY (id_relatorio)
         REFERENCES relatorio (id_relatorio),
     CONSTRAINT fk_consulta_estado_paciente FOREIGN KEY (id_estado_paciente)
         REFERENCES estado_paciente (id_estado_paciente)
 );
 /
-
 
 CREATE TABLE cirurgia
 (
