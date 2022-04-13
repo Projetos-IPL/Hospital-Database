@@ -20,4 +20,5 @@ CREATE OR REPLACE PACKAGE et_consulta AS
         p_id_tratamento      IN consulta.id_tratamento%TYPE)
     RETURN BOOLEAN;
 
+
 END et_consulta;

@@ -5,10 +5,11 @@ CREATE OR REPLACE PACKAGE et_relatorio AS
     ex_alteracao_relatorio_errm VARCHAR2(100) := 'Tentativa de alteração de um relatório';
 
     -- Procedimento para adicionar um relatório
-    PROCEDURE adicionar_relatorio(
+    FUNCTION adicionar_relatorio(
         p_nif       IN relatorio.nif%TYPE,
         p_texto     IN relatorio.texto%TYPE,
-        p_categoria IN relatorio.categoria%TYPE);
+        p_categoria IN relatorio.categoria%TYPE)
+    RETURN INT;
 
 END et_relatorio;
 /

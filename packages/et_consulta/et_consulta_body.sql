@@ -46,15 +46,11 @@ CREATE OR REPLACE PACKAGE BODY et_consulta AS
         
         EXCEPTION
             WHEN ex_consulta_em_tratamento_finalizado THEN
-                RAISE_APPLICATION_ERROR(
-                    ex_consulta_em_tratamento_finalizado_error_code,
-                    ex_consulta_em_tratamento_finalizado_errm
-                );
+                exception_handler.handle_user_exception('consulta_em_tratamento_finalizado');
             WHEN et_tratamento.ex_tratamento_nao_encontrado THEN
-                RAISE_APPLICATION_ERROR(
-                    et_tratamento.ex_tratamento_nao_encontrado_error_code,
-                    et_tratamento.ex_tratamento_nao_encontrado_errm
-                );
+                exception_handler.handle_user_exception('tratamento_nao_encontrado');
+            WHEN OTHERS THEN
+                exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
     END registar_consulta;
 
     -- Procedimento para validar se é permitido registar uma nova consulta a um tratamento
