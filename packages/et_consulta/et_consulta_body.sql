@@ -57,4 +57,26 @@ CREATE OR REPLACE PACKAGE BODY et_consulta AS
                 );
     END registar_consulta;
 
+    -- Procedimento para validar se é permitido registar uma nova consulta a um tratamento
+    FUNCTION validar_nova_consulta(
+        p_id_tratamento IN consulta.id_tratamento%TYPE)
+    RETURN BOOLEAN IS
+        d_dta_alta DATE;
+    BEGIN
+        -- Verifica se tratamento ainda está ativo
+        SELECT dta_alta INTO d_dta_alta
+            FROM tratamento
+            WHERE id_tratamento = p_id_tratamento;
+
+        IF d_dta_alta IS NOT NULL THEN
+            RETURN FALSE;
+        END IF;
+
+        RETURN TRUE;
+
+        EXCEPTION
+            WHEN NO_DATA_FOUND THEN
+                RETURN FALSE;
+    END validar_nova_consulta;
+
 END et_consulta;

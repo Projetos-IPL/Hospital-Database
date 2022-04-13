@@ -23,6 +23,7 @@ CREATE OR REPLACE PACKAGE BODY et_tratamento AS
                         p_erro;
     END adicionar_error_log;
 
+
     FUNCTION obter_error_log
     RETURN VARCHAR2 IS
     BEGIN
@@ -57,6 +58,7 @@ CREATE OR REPLACE PACKAGE BODY et_tratamento AS
                 dbms_output.PUT_LINE(SQLERRM);
                 ROLLBACK;
     END registar_tratamento;
+
 
     PROCEDURE registar_primeiro_tratamento(
             p_nif                IN tratamento.nif%TYPE,
@@ -93,6 +95,7 @@ CREATE OR REPLACE PACKAGE BODY et_tratamento AS
                 dbms_output.PUT_LINE(SQLERRM);
                 ROLLBACK;
     END registar_primeiro_tratamento;
+
 
     PROCEDURE finalizar_tratamento(
         p_id_tratamento IN tratamento.id_tratamento%TYPE
@@ -178,6 +181,22 @@ CREATE OR REPLACE PACKAGE BODY et_tratamento AS
 
         RETURN b_valid;
     END validar_alteracao;
+
+    -- Procedimento para atualizar o estado de um paciente
+    PROCEDURE atualizar_estado_tratamento(
+        p_id_tratamento tratamento.id_tratamento%TYPE,
+        p_id_estado_paciente tratamento.id_estado_paciente%TYPE
+    ) IS
+    BEGIN
+        UPDATE tratamento SET id_estado_paciente = p_id_estado_paciente
+            WHERE id_tratamento = p_id_tratamento;
+
+        EXCEPTION
+            WHEN OTHERS THEN
+                dbms_output.PUT_LINE(utl_call_stack.concatenate_subprogram(utl_call_stack.subprogram(1)));
+                dbms_output.PUT_LINE(SQLERRM);
+                ROLLBACK;
+    END atualizar_estado_tratamento;
 
 END et_tratamento;
 /

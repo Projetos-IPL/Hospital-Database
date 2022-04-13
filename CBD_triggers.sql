@@ -26,8 +26,19 @@ CREATE OR REPLACE TRIGGER tbi_consulta
     ON consulta
     FOR EACH ROW
 BEGIN
-    :new.id_consulta := pk_consulta_seq.nextval;
-    :new.dta_realizacao := SYSDATE;
+    :NEW.id_consulta := pk_consulta_seq.nextval;
+    :NEW.dta_realizacao := SYSDATE;
+
+    IF et_consulta.validar_nova_consulta(:NEW.id_tratamento) = FALSE THEN
+        RAISE et_consulta.ex_consulta_em_tratamento_finalizado;
+    END IF;
+
+    EXCEPTION
+        WHEN et_consulta.ex_consulta_em_tratamento_finalizado THEN
+            RAISE_APPLICATION_ERROR(
+                et_consulta.ex_consulta_em_tratamento_finalizado_error_code,
+                et_consulta.ex_consulta_em_tratamento_finalizado_errm
+                );
 END;
 /
 
@@ -222,5 +233,13 @@ BEGIN
 END tbud_consulta;
 /
 
+
+CREATE OR REPLACE TRIGGER tai_consulta
+    AFTER INSERT ON consulta
+    FOR EACH ROW
+BEGIN
+    -- O estado do tratamento é atualizado quando uma consulta é adicionada
+    et_tratamento.atualizar_estado_tratamento(:NEW.id_tratamento, :NEW.id_estado_paciente);
+END;
 
 COMMIT;
