@@ -1,15 +1,3 @@
-/*
-********************************************************
-
-    DEFINIÇÃO DE SEQUENCES
-
-    Afonso Santos, Iúri Raimundo
-    Deloitte Delivery Center S.A - Brightstart
-
-*********************************************************
-*/
-
-
 -- Área de atuação
 CREATE SEQUENCE pk_area_atuacao_seq
     INCREMENT BY 1
@@ -56,6 +44,5 @@ CREATE SEQUENCE pk_consulta_seq
     MINVALUE 1
     MAXVALUE 999999999
     NOCACHE;
-
 
 COMMIT;

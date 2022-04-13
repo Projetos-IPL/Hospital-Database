@@ -161,5 +161,7 @@ CREATE TABLE medico_cirurgia
     CONSTRAINT fk_medico_cirurgia_cirurgia FOREIGN KEY (id_cirurgia)
         REFERENCES cirurgia (id_cirurgia)
 );
+/
+
 
 COMMIT;

@@ -64,9 +64,8 @@ CREATE OR REPLACE TRIGGER tbud_relatorio BEFORE
     UPDATE OR DELETE ON relatorio
     FOR EACH ROW
 BEGIN
-    
+    RAISE et_relatorio.alteracao_relatorio;
 END tbud_relatorio;
 /
 
 COMMIT;
-      

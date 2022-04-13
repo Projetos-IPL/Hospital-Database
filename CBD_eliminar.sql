@@ -1,15 +1,3 @@
-/*
-********************************************************
-
-    Eliminação dos objetos da base de dados
-
-    Afonso Santos, Iúri Raimundo
-    Deloitte Delivery Center S.A - Brightstart
-
-*********************************************************
-*/
-
-
 DROP TABLE medico_cirurgia;
 /
 
@@ -47,6 +35,24 @@ DROP TABLE tipo_cirurgia;
 /
 
 DROP TABLE area_atuacao;
+/
+
+DROP SEQUENCE pk_area_atuacao_seq;
+/
+
+DROP SEQUENCE pk_relatorio_seq;
+/
+
+DROP SEQUENCE pk_tratamento_seq;
+/
+
+DROP SEQUENCE pk_tipo_cirurgia_seq;
+/
+
+DROP SEQUENCE pk_cirurgia_seq;
+/
+
+DROP SEQUENCE pk_consulta_seq;
 /
 
 COMMIT;
