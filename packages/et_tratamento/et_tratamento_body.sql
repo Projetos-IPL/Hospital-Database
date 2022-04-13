@@ -11,7 +11,7 @@ CREATE OR REPLACE PACKAGE BODY et_tratamento AS
     END limpar_error_log;
 
 
-    -- Procediento para adicionar uma linha ao registo de erros
+    -- Procedimento para adicionar uma linha ao registo de erros
     PROCEDURE adicionar_error_log(
         p_erro IN VARCHAR2
     ) IS
@@ -21,6 +21,18 @@ CREATE OR REPLACE PACKAGE BODY et_tratamento AS
                         '['||TO_CHAR(SYSDATE, 'DD-MM-YYYY HH24:MI:SS')||'] '||
                         p_erro;
     END adicionar_error_log;
+
+    FUNCTION obter_error_log
+    RETURN VARCHAR2 IS
+    BEGIN
+        RETURN v_error_logs;
+    END;
+
+    -- Procedimento para imprimir o registo de erro
+    PROCEDURE print_error_log IS
+    BEGIN
+        dbms_output.put_line(v_error_logs);
+    END;
 
 
     PROCEDURE registar_tratamento(
@@ -40,18 +52,45 @@ CREATE OR REPLACE PACKAGE BODY et_tratamento AS
 
         EXCEPTION
             WHEN OTHERS THEN
-                dbms_output.PUT_LINE('Error code: '|| SQLCODE);
                 dbms_output.PUT_LINE(SQLERRM);
                 ROLLBACK;
     END registar_tratamento;
 
-
-    -- Procedimento para imprimir o registo de erro
-    PROCEDURE print_error_log IS
+    PROCEDURE registar_primeiro_tratamento(
+            p_nif                IN tratamento.nif%TYPE,
+            p_id_area_atuacao    IN tratamento.id_area_atuacao%TYPE
+        )
+    IS
+        ex_paciente_ja_tem_tratamento EXCEPTION;
+        n_count_trat INT;
     BEGIN
-        dbms_output.put_line(v_error_logs);
-    END;
+        -- Verificar se o paciente já tem algum tratamento associado
+        SELECT COUNT(1) INTO n_count_trat
+            FROM tratamento
+            WHERE nif = p_nif;
 
+        IF n_count_trat <> 0 THEN
+            adicionar_error_log('Paciente com nif:' || p_nif || ' tem pelo menos um tratamento associado.');
+            RAISE ex_paciente_ja_tem_tratamento;
+        END IF;
+
+        INSERT INTO tratamento
+            (nif, id_area_atuacao)
+            VALUES (
+                    p_nif,
+                    p_id_area_atuacao
+                   );
+
+        EXCEPTION
+            WHEN ex_paciente_ja_tem_tratamento THEN
+                print_error_log;
+                limpar_error_log;
+                ROLLBACK;
+            WHEN OTHERS THEN
+                dbms_output.PUT_LINE(utl_call_stack.concatenate_subprogram(utl_call_stack.subprogram(1)));
+                dbms_output.PUT_LINE(SQLERRM);
+                ROLLBACK;
+    END registar_primeiro_tratamento;
 
     PROCEDURE finalizar_tratamento(
         p_id_tratamento IN tratamento.id_tratamento%TYPE

@@ -1,6 +1,12 @@
 CREATE OR REPLACE PACKAGE et_pessoa AS
 
-    menor_de_idade EXCEPTION;
+    ex_menor_de_idade EXCEPTION;
+    ex_menor_de_idade_error_code INT := -20899;
+    ex_menor_de_idade_errm VARCHAR2(100) := 'Não é permitido o registo de pessoas com menos de 18 anos.';
+
+    ex_paciente_sem_tratamento EXCEPTION;
+    ex_paciente_sem_tratamento_error_code INT := -20888;
+    ex_paciente_sem_tratamento_errm VARCHAR2(100) := 'Paciente sem tratamento';
 
     /**
       Procedimento para adicionar um paciente
@@ -12,7 +18,8 @@ CREATE OR REPLACE PACKAGE et_pessoa AS
         p_morada         IN pessoa.morada%TYPE,
         p_telefone       IN pessoa.telefone%TYPE,
         p_dta_nasc       IN pessoa.dta_nasc%TYPE,
-        p_n_utente_saude IN paciente.n_utente_saude%TYPE
+        p_n_utente_saude IN paciente.n_utente_saude%TYPE,
+        p_id_area_atuacao IN tratamento.id_area_atuacao%TYPE
     );
     
     PROCEDURE adicionar_enfermeiro(
