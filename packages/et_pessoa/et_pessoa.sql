@@ -1,13 +1,5 @@
 CREATE OR REPLACE PACKAGE et_pessoa AS
 
-    ex_menor_de_idade EXCEPTION;
-    ex_menor_de_idade_error_code INT := -20899;
-    ex_menor_de_idade_errm VARCHAR2(100) := 'Não é permitido o registo de pessoas com menos de 18 anos.';
-
-    ex_paciente_sem_tratamento EXCEPTION;
-    ex_paciente_sem_tratamento_error_code INT := -20888;
-    ex_paciente_sem_tratamento_errm VARCHAR2(100) := 'Paciente sem tratamento';
-
     /**
       Procedimento para adicionar um paciente
      */

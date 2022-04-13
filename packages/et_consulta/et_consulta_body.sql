@@ -31,9 +31,7 @@ CREATE OR REPLACE PACKAGE BODY et_consulta AS
         END IF;
         
         -- criar registo na tabela Relatório
-        INSERT INTO relatorio (nif, texto, categoria)
-            VALUES (p_nif_funcionario, p_relatorio, 'CON')
-            RETURNING id_relatorio INTO n_id_relatorio;
+        n_id_relatorio := et_relatorio.adicionar_relatorio(p_nif_funcionario, p_relatorio, 'CON');
         
         /**
             Criar o registo na tabela Consulta, utilizando o ID do relatório
@@ -56,6 +54,10 @@ CREATE OR REPLACE PACKAGE BODY et_consulta AS
                     et_tratamento.ex_tratamento_nao_encontrado_error_code,
                     et_tratamento.ex_tratamento_nao_encontrado_errm
                 );
+                ROLLBACK;
+            WHEN OTHERS THEN
+                dbms_output.PUT_LINE(utl_call_stack.concatenate_subprogram(utl_call_stack.subprogram(1)));
+                dbms_output.PUT_LINE(SQLERRM);
                 ROLLBACK;
     END registar_consulta;
 
