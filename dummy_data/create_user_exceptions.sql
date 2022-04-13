@@ -30,4 +30,28 @@ BEGIN
         'Tentativa de alteração de um relatório.'
     );
 
+    exception_handler.add_user_exception(
+        -20998,
+        'tratamento_repetido',
+        'Tentativa de abertura de tratamento repetido para paciente com nif: '
+    );
+
+    exception_handler.add_user_exception(
+        -20997,
+        'tratamento_nao_encontrado',
+        'Tratamento não encontrado.'
+    );
+
+		exception_handler.add_user_exception(
+        -20996,
+        'finalizacao_repetida',
+        'Tentativa de finalizar tratamento já finalizado. Tratamento: '
+    );
+
+		exception_handler.add_user_exception(
+        -20995,
+        'alteracao_invalida',
+        'Tentativa de alteração do tratamento não permitida.'
+    );
+
 END;
