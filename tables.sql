@@ -12,7 +12,7 @@ CREATE TABLE tipo_cirurgia
 (
     id_tipo_cirurgia INTEGER,
     id_area_atuacao  INTEGER,
-    nome             VARCHAR2(50) NOT NULL,
+    nome             VARCHAR2(150) NOT NULL,
     CONSTRAINT pk_tipo_cirurgia PRIMARY KEY (id_tipo_cirurgia),
     CONSTRAINT fk_tipo_cirurgia_area_atuacao FOREIGN KEY (id_area_atuacao) REFERENCES area_atuacao (id_area_atuacao),
     CONSTRAINT uq_tipo_cirurgia_nome UNIQUE (nome)
