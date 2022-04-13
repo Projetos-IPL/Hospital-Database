@@ -207,8 +207,15 @@ CREATE OR REPLACE TRIGGER tbud_consulta
     ON consulta
     FOR EACH ROW
 BEGIN
-    RAISE et_consulta.alteracao_consulta;
-END tbud_relatorio;
+    RAISE et_consulta.ex_alteracao_consulta;
+
+    EXCEPTION
+        WHEN et_consulta.ex_alteracao_consulta THEN
+            RAISE_APPLICATION_ERROR(
+                et_consulta.ex_alteracao_consulta_error_code,
+                et_consulta.ex_alteracao_consulta_errm
+                );
+END tbud_consulta;
 /
 
 

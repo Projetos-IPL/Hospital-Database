@@ -27,7 +27,7 @@ CREATE OR REPLACE PACKAGE BODY et_consulta AS
             WHERE id_tratamento = p_id_tratamento;
             
         IF d_dta_alta IS NOT NULL THEN
-            RAISE et_tratamento.ex_tratamento_finalizado;
+            RAISE ex_consulta_em_tratamento_finalizado;
         END IF;
         
         -- criar registo na tabela Relatório
@@ -45,16 +45,18 @@ CREATE OR REPLACE PACKAGE BODY et_consulta AS
         COMMIT;
         
         EXCEPTION
-            WHEN et_tratamento.ex_tratamento_finalizado THEN
+            WHEN ex_consulta_em_tratamento_finalizado THEN
                 RAISE_APPLICATION_ERROR(
-                    et_tratamento.ex_tratamento_finalizado_error_code,
-                    et_tratamento.ex_tratamento_finalizado_errm
+                    ex_consulta_em_tratamento_finalizado_error_code,
+                    ex_consulta_em_tratamento_finalizado_errm
                 );
+                ROLLBACK;
             WHEN et_tratamento.ex_tratamento_nao_encontrado THEN
                 RAISE_APPLICATION_ERROR(
                     et_tratamento.ex_tratamento_nao_encontrado_error_code,
                     et_tratamento.ex_tratamento_nao_encontrado_errm
                 );
+                ROLLBACK;
     END registar_consulta;
 
 END et_consulta;
