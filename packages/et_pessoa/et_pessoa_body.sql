@@ -1,5 +1,9 @@
 CREATE OR REPLACE PACKAGE BODY et_pessoa AS
 
+    /**
+      Procedimento para adicionar uma pessoa
+    */
+
     PROCEDURE adicionar_pessoa(p_rec_pessoa IN pessoa%ROWTYPE) IS
     BEGIN
         SET TRANSACTION READ WRITE NAME 'Adicionar';
@@ -7,6 +11,8 @@ CREATE OR REPLACE PACKAGE BODY et_pessoa AS
         COMMIT;
 
         EXCEPTION
+            WHEN menor_de_idade THEN
+                dbms_output.PUT_LINE('Não é permitido o registo de pessoas com menos de 18 anos.');
             WHEN OTHERS THEN
                 dbms_output.PUT_LINE('Error code: '|| SQLCODE);
                 dbms_output.PUT_LINE(SQLERRM);
@@ -21,6 +27,7 @@ CREATE OR REPLACE PACKAGE BODY et_pessoa AS
         p_ult_nome       IN pessoa.ult_nome%TYPE,
         p_morada         IN pessoa.morada%TYPE,
         p_telefone       IN pessoa.telefone%TYPE,
+        p_dta_nasc       IN pessoa.dta_nasc%TYPE,
         p_n_utente_saude IN paciente.n_utente_saude%TYPE
     )
     IS
@@ -31,6 +38,7 @@ CREATE OR REPLACE PACKAGE BODY et_pessoa AS
         rec_pessoa.ult_nome := p_ult_nome;
         rec_pessoa.morada := p_morada;
         rec_pessoa.telefone := p_telefone;
+        rec_pessoa.dta_nasc := p_dta_nasc;
 
         adicionar_pessoa(rec_pessoa);
 
@@ -45,7 +53,7 @@ CREATE OR REPLACE PACKAGE BODY et_pessoa AS
             WHEN OTHERS THEN
                 dbms_output.PUT_LINE('Error code: '|| SQLCODE);
                 dbms_output.PUT_LINE(SQLERRM);
-            ROLLBACK;
+                ROLLBACK;
 
     END adicionar_paciente;
 
@@ -72,7 +80,8 @@ CREATE OR REPLACE PACKAGE BODY et_pessoa AS
         p_prim_nome      IN pessoa.prim_nome%TYPE,
         p_ult_nome       IN pessoa.ult_nome%TYPE,
         p_morada         IN pessoa.morada%TYPE,
-        p_telefone       IN pessoa.telefone%TYPE
+        p_telefone       IN pessoa.telefone%TYPE,
+        p_dta_nasc       IN pessoa.dta_nasc%TYPE
     )
     IS
         rec_pessoa pessoa%ROWTYPE;
@@ -82,6 +91,7 @@ CREATE OR REPLACE PACKAGE BODY et_pessoa AS
         rec_pessoa.ult_nome := p_ult_nome;
         rec_pessoa.morada := p_morada;
         rec_pessoa.telefone := p_telefone;
+        rec_pessoa.dta_nasc := p_dta_nasc;
 
         adicionar_funcionario(rec_pessoa);
 
@@ -107,6 +117,7 @@ CREATE OR REPLACE PACKAGE BODY et_pessoa AS
         p_ult_nome          IN pessoa.ult_nome%TYPE,
         p_morada            IN pessoa.morada%TYPE,
         p_telefone          IN pessoa.telefone%TYPE,
+        p_dta_nasc       IN pessoa.dta_nasc%TYPE,
         p_id_area_atuacao   IN medico.id_area_atuacao%TYPE
     )
     IS
@@ -117,6 +128,7 @@ CREATE OR REPLACE PACKAGE BODY et_pessoa AS
         rec_pessoa.ult_nome := p_ult_nome;
         rec_pessoa.morada := p_morada;
         rec_pessoa.telefone := p_telefone;
+        rec_pessoa.dta_nasc := p_dta_nasc;
 
         adicionar_funcionario(rec_pessoa);
 

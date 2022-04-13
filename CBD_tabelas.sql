@@ -1,7 +1,7 @@
 CREATE TABLE area_atuacao
 (
     id_area_atuacao INTEGER,
-    descricao       VARCHAR2(50) NOT NULL,
+    descricao       VARCHAR2(100) NOT NULL,
     CONSTRAINT pk_area_atuacao PRIMARY KEY (id_area_atuacao),
     CONSTRAINT uq_area_atuacao_descricao UNIQUE (descricao)
 );
@@ -12,7 +12,7 @@ CREATE TABLE tipo_cirurgia
 (
     id_tipo_cirurgia INTEGER,
     id_area_atuacao  INTEGER,
-    nome             VARCHAR2(50) NOT NULL,
+    nome             VARCHAR2(150) NOT NULL,
     CONSTRAINT pk_tipo_cirurgia PRIMARY KEY (id_tipo_cirurgia),
     CONSTRAINT fk_tipo_cirurgia_area_atuacao FOREIGN KEY (id_area_atuacao) REFERENCES area_atuacao (id_area_atuacao),
     CONSTRAINT uq_tipo_cirurgia_nome UNIQUE (nome)
@@ -36,10 +36,10 @@ CREATE TABLE pessoa
     ult_nome  VARCHAR2(30)  NOT NULL,
     morada    VARCHAR2(200) NOT NULL,
     telefone  VARCHAR2(9)   NOT NULL,
+    dta_nasc  DATE          NOT NULL,
     CONSTRAINT pk_pessoa PRIMARY KEY (nif)
 );
 /
-
 
 CREATE TABLE funcionario
 (
