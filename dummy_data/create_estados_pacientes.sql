@@ -1,4 +1,13 @@
-INSERT INTO tipo_cirurgia (id_area_atuacao, nome)
-    VALUES (1, 'Tratamento não cirúrgico de lesões traumáticas ou degenerativas');
+INSERT INTO estado_paciente (descricao)
+    VALUES ('Cuidados Mínimos');
+
+INSERT INTO estado_paciente (descricao)
+    VALUES ('Cuidados Intermediários');
+
+INSERT INTO estado_paciente (descricao)
+    VALUES ('Cuidados Semi-Intensivos');
+
+INSERT INTO estado_paciente (descricao)
+    VALUES ('Cuidados Intensivos');
 
 COMMIT;

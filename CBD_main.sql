@@ -4,3 +4,4 @@
 @@ CBD_tabelas.sql
 @@ CBD_triggers.sql
 @@ CBD_views.sql
+@@ views/index.sql
