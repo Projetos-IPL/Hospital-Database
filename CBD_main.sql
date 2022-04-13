@@ -3,3 +3,4 @@
 @@ CBD_eliminar.sql
 @@ CBD_tabelas.sql
 @@ CBD_triggers.sql
+@@ CBD_views.sql

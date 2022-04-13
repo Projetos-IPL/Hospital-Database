@@ -45,4 +45,12 @@ CREATE SEQUENCE pk_consulta_seq
     MAXVALUE 999999999
     NOCACHE;
 
+
+-- Estado do Paciente
+CREATE SEQUENCE pk_estado_paciente_seq
+    INCREMENT BY 1
+    MINVALUE 1
+    MAXVALUE 9999
+    NOCACHE;
+
 COMMIT;

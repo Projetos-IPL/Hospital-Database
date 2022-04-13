@@ -149,4 +149,13 @@ END tbud_relatorio;
 /
 
 
+CREATE OR REPLACE TRIGGER tbi_estado_paciente BEFORE
+    INSERT ON estado_paciente
+    FOR EACH ROW
+BEGIN
+    :NEW.id_estado_paciente := pk_estado_paciente_seq.NEXTVAL;
+END;
+/
+
+
 COMMIT;

@@ -55,4 +55,7 @@ DROP SEQUENCE pk_cirurgia_seq;
 DROP SEQUENCE pk_consulta_seq;
 /
 
+DROP VIEW tratamento_dados_view;
+/
+
 COMMIT;
