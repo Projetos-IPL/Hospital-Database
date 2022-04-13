@@ -4,6 +4,7 @@ CREATE OR REPLACE PACKAGE BODY et_tratamento AS
      são detetadas durante o procedimento de validação de alterações. */
     v_error_logs VARCHAR2(3000);
 
+
     -- Procedimento para limpar a variável de registo de erros
     PROCEDURE limpar_error_log IS
     BEGIN
@@ -52,6 +53,7 @@ CREATE OR REPLACE PACKAGE BODY et_tratamento AS
 
         EXCEPTION
             WHEN OTHERS THEN
+                dbms_output.PUT_LINE(utl_call_stack.concatenate_subprogram(utl_call_stack.subprogram(1)));
                 dbms_output.PUT_LINE(SQLERRM);
                 ROLLBACK;
     END registar_tratamento;
@@ -124,6 +126,10 @@ CREATE OR REPLACE PACKAGE BODY et_tratamento AS
                     ex_finalizacao_repetida_error_code,
                     ex_finalizacao_repetida_errm
                 );
+            WHEN OTHERS THEN
+                dbms_output.PUT_LINE(utl_call_stack.concatenate_subprogram(utl_call_stack.subprogram(1)));
+                dbms_output.PUT_LINE(SQLERRM);
+                ROLLBACK;
     END finalizar_tratamento;
 
 

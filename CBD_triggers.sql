@@ -38,7 +38,7 @@ CREATE OR REPLACE TRIGGER tbi_relatorio
     ON relatorio
     FOR EACH ROW
 BEGIN
-    :new.id_relatorio := pk_relatorio_seq.nextval;
+    :NEW.id_relatorio := pk_relatorio_seq.nextval;
 END;
 /
 
@@ -148,6 +148,7 @@ CREATE OR REPLACE TRIGGER tbi_pessoa
 DECLARE
     n_idade NUMBER;
 BEGIN
+    -- Validar idade
     n_idade := MONTHS_BETWEEN(SYSDATE, :new.dta_nasc) / 12;
 
     IF n_idade < 18 THEN
@@ -161,10 +162,6 @@ EXCEPTION
                 et_pessoa.ex_menor_de_idade_errm
             );
     WHEN OTHERS THEN
-        RAISE_APPLICATION_ERROR(
-                        SQLCODE,
-                        SQLERRM
-            );
 END tbi_pessoa;
 /
 
@@ -191,22 +188,29 @@ END tai_paciente;
 
 
 CREATE OR REPLACE TRIGGER tbud_relatorio
-    BEFORE
-        UPDATE OR DELETE
+    BEFORE UPDATE OR DELETE
     ON relatorio
     FOR EACH ROW
 BEGIN
-    RAISE et_relatorio.alteracao_relatorio;
+    -- Como não é permitido atualizar ou apagar relatório, lançar exceção
+    RAISE et_relatorio.ex_alteracao_relatorio;
+
+    EXCEPTION
+        WHEN et_relatorio.ex_alteracao_relatorio THEN
+            RAISE_APPLICATION_ERROR(
+                et_relatorio.ex_alteracao_relatorio_error_code,
+                et_relatorio.ex_alteracao_relatorio_errm
+                );
 END tbud_relatorio;
 /
 
 
 CREATE OR REPLACE TRIGGER tbud_consulta
-    BEFORE
-        UPDATE OR DELETE
+    BEFORE UPDATE OR DELETE
     ON consulta
     FOR EACH ROW
 BEGIN
+    -- Como não é permitido atualizar ou apagar consultas, lançar exceção
     RAISE et_consulta.ex_alteracao_consulta;
 
     EXCEPTION

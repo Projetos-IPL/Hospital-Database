@@ -50,13 +50,11 @@ CREATE OR REPLACE PACKAGE BODY et_consulta AS
                     ex_consulta_em_tratamento_finalizado_error_code,
                     ex_consulta_em_tratamento_finalizado_errm
                 );
-                ROLLBACK;
             WHEN et_tratamento.ex_tratamento_nao_encontrado THEN
                 RAISE_APPLICATION_ERROR(
                     et_tratamento.ex_tratamento_nao_encontrado_error_code,
                     et_tratamento.ex_tratamento_nao_encontrado_errm
                 );
-                ROLLBACK;
     END registar_consulta;
 
 END et_consulta;
