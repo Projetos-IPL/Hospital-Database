@@ -17,6 +17,10 @@ CREATE OR REPLACE PACKAGE et_tratamento AS
     ex_alteracao_invalida_error_code INT := -20995;
     ex_alteracao_invalida_errm VARCHAR2(100) := 'Tentativa de alteração do tratamento não permitida';
 
+		ex_tratamento_finalizado EXCEPTION;
+    ex_tratamento_finalizado_error_code INT := -20799;
+    ex_tratamento_finalizado_errm VARCHAR2(100) := 'O tratamento especificado já está terminado.';
+
     -- Procedimento para registar tratamentos
     PROCEDURE registar_tratamento(
         p_nif                IN tratamento.nif%TYPE,

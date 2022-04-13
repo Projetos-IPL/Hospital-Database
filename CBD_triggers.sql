@@ -27,6 +27,7 @@ CREATE OR REPLACE TRIGGER tbi_consulta
     FOR EACH ROW
 BEGIN
     :new.id_consulta := pk_consulta_seq.nextval;
+    :new.dta_realizacao := SYSDATE;
 END;
 /
 
@@ -186,6 +187,7 @@ BEGIN
                 et_pessoa.ex_paciente_sem_tratamento_errm
                 );
 END tai_paciente;
+/
 
 
 CREATE OR REPLACE TRIGGER tbud_relatorio
@@ -194,11 +196,20 @@ CREATE OR REPLACE TRIGGER tbud_relatorio
     ON relatorio
     FOR EACH ROW
 BEGIN
+    RAISE et_relatorio.alteracao_relatorio;
+END tbud_relatorio;
+/
 
 
+CREATE OR REPLACE TRIGGER tbud_consulta
+    BEFORE
+        UPDATE OR DELETE
+    ON consulta
+    FOR EACH ROW
+BEGIN
+    RAISE et_consulta.alteracao_consulta;
 END tbud_relatorio;
 /
 
 
 COMMIT;
-      
