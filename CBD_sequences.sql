@@ -53,4 +53,13 @@ CREATE SEQUENCE pk_estado_paciente_seq
     MAXVALUE 9999
     NOCACHE;
 
+
+-- Histórico de Exceções
+CREATE SEQUENCE pk_exception_log_seq
+    INCREMENT BY 1
+    MINVALUE 1
+    MAXVALUE 999999999
+    NOCACHE;
+
+
 COMMIT;

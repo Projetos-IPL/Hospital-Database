@@ -16,6 +16,18 @@ CREATE OR REPLACE TRIGGER tbi_cirurgia
     FOR EACH ROW
 BEGIN
     :new.id_cirurgia := pk_cirurgia_seq.nextval;
+    :new.dta_realizacao := SYSDATE;
+END;
+/
+
+
+CREATE OR REPLACE TRIGGER tbi_exception_log
+    BEFORE
+        INSERT
+    ON exception_log
+    FOR EACH ROW
+BEGIN
+    :new.id_exception_log := pk_exception_log_seq.nextval;
 END;
 /
 
@@ -39,6 +51,8 @@ BEGIN
                 et_consulta.ex_consulta_em_tratamento_finalizado_error_code,
                 et_consulta.ex_consulta_em_tratamento_finalizado_errm
                 );
+        WHEN OTHERS THEN
+            exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
 END;
 /
 
@@ -100,8 +114,7 @@ EXCEPTION
                 et_tratamento.ex_tratamento_repetido_errm || :new.nif
             );
     WHEN OTHERS THEN
-        dbms_output.PUT_LINE(sqlerrm);
-
+        exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
 END tbi_tratamento;
 /
 
@@ -147,6 +160,8 @@ EXCEPTION
                 et_tratamento.obter_error_log
             );
         et_tratamento.limpar_error_log;
+    WHEN OTHERS THEN
+        exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
 END tbu_tratamento;
 /
 
@@ -173,6 +188,7 @@ EXCEPTION
                 et_pessoa.ex_menor_de_idade_errm
             );
     WHEN OTHERS THEN
+        exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
 END tbi_pessoa;
 /
 
@@ -194,6 +210,8 @@ BEGIN
                 et_pessoa.ex_paciente_sem_tratamento_error_code,
                 et_pessoa.ex_paciente_sem_tratamento_errm
                 );
+        WHEN OTHERS THEN
+            exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
 END tai_paciente;
 /
 
@@ -212,6 +230,8 @@ BEGIN
                 et_relatorio.ex_alteracao_relatorio_error_code,
                 et_relatorio.ex_alteracao_relatorio_errm
                 );
+        WHEN OTHERS THEN
+            exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
 END tbud_relatorio;
 /
 
@@ -230,6 +250,8 @@ BEGIN
                 et_consulta.ex_alteracao_consulta_error_code,
                 et_consulta.ex_alteracao_consulta_errm
                 );
+        WHEN OTHERS THEN
+            exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
 END tbud_consulta;
 /
 
@@ -241,5 +263,33 @@ BEGIN
     -- O estado do tratamento é atualizado quando uma consulta é adicionada
     et_tratamento.atualizar_estado_tratamento(:NEW.id_tratamento, :NEW.id_estado_paciente);
 END;
+/
+
+
+CREATE OR REPLACE TRIGGER tbi_user_exception
+    BEFORE INSERT ON user_exception
+    FOR EACH ROW
+BEGIN
+    -- verifica se o código da exceção não contém espaços
+    IF INSTR(:NEW.code, ' ') <> 0 THEN
+        RAISE exception_handler.ex_mal_formatada;
+    END IF;
+    
+    -- verifica se o nome da exceção não contém espaços
+    IF INSTR(:NEW.name, ' ') <> 0 THEN
+        RAISE exception_handler.ex_mal_formatada;
+    END IF;
+    
+    -- converter para upper case
+    :NEW.name := UPPER(:NEW.name);
+    
+    EXCEPTION
+        WHEN exception_handler.ex_mal_formatada THEN
+            -- handle error
+        WHEN OTHERS THEN
+            exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
+END;
+/
+
 
 COMMIT;

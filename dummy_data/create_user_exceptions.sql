@@ -42,15 +42,21 @@ BEGIN
         'Tratamento não encontrado.'
     );
 
-		exception_handler.add_user_exception(
+    exception_handler.add_user_exception(
         -20996,
         'finalizacao_repetida',
         'Tentativa de finalizar tratamento já finalizado. Tratamento: '
     );
-
-		exception_handler.add_user_exception(
+    
+    exception_handler.add_user_exception(
         -20995,
         'alteracao_invalida',
+        'Tentativa de alteração do tratamento não permitida.'
+    );
+    
+    exception_handler.add_user_exception(
+        -20995,
+        'exception_malformatted',
         'Tentativa de alteração do tratamento não permitida.'
     );
 

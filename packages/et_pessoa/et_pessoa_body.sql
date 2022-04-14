@@ -6,6 +6,7 @@ CREATE OR REPLACE PACKAGE BODY et_pessoa AS
     PROCEDURE adicionar_pessoa(p_rec_pessoa IN pessoa%ROWTYPE) IS
     BEGIN
         INSERT INTO pessoa VALUES p_rec_pessoa;
+				
         EXCEPTION
             WHEN OTHERS THEN
                 exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
