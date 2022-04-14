@@ -55,9 +55,9 @@ BEGIN
     );
     
     exception_handler.add_user_exception(
-        -20995,
-        'exception_malformatted',
-        'Tentativa de alteração do tratamento não permitida.'
+        -20101,
+        'excecao_mal_formatada',
+        'Nome/código de exceção mal formatada.'
     );
 
 END;

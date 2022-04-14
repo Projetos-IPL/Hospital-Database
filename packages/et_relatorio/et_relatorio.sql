@@ -1,5 +1,7 @@
 CREATE OR REPLACE PACKAGE et_relatorio AS
 
+    ex_alteracao_relatorio EXCEPTION;
+
     -- Função para adicionar um relatório, devolvendo o ID criado
     FUNCTION adicionar_relatorio(
         p_nif       IN relatorio.nif%TYPE,

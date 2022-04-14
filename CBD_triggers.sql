@@ -183,10 +183,7 @@ BEGIN
 
 EXCEPTION
     WHEN et_pessoa.ex_menor_de_idade THEN
-        RAISE_APPLICATION_ERROR(
-                et_pessoa.ex_menor_de_idade_error_code,
-                et_pessoa.ex_menor_de_idade_errm
-            );
+        exception_handler.handle_user_exception('menor_de_idade');
     WHEN OTHERS THEN
         exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
 END tbi_pessoa;
@@ -197,19 +194,20 @@ CREATE OR REPLACE TRIGGER tai_paciente
     AFTER INSERT ON paciente
     FOR EACH ROW
 DECLARE
-    n_nif_paciente paciente.nif%TYPE;
+    n_count_paciente INTEGER;
 BEGIN
     -- Verificar se paciente tem tratamento associado
-    SELECT nif INTO n_nif_paciente
+    SELECT COUNT(nif) INTO n_count_paciente
         FROM tratamento
         WHERE nif = :NEW.nif;
+        
+    IF n_count_paciente = 0 THEN
+        RAISE et_pessoa.ex_paciente_sem_tratamento;
+    END IF;
 
     EXCEPTION
-        WHEN NO_DATA_FOUND THEN
-            RAISE_APPLICATION_ERROR(
-                et_pessoa.ex_paciente_sem_tratamento_error_code,
-                et_pessoa.ex_paciente_sem_tratamento_errm
-                );
+        WHEN et_pessoa.ex_paciente_sem_tratamento THEN
+            exception_handler.handle_user_exception('paciente_sem_tratamento');
         WHEN OTHERS THEN
             exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
 END tai_paciente;
@@ -226,10 +224,7 @@ BEGIN
 
     EXCEPTION
         WHEN et_relatorio.ex_alteracao_relatorio THEN
-            RAISE_APPLICATION_ERROR(
-                et_relatorio.ex_alteracao_relatorio_error_code,
-                et_relatorio.ex_alteracao_relatorio_errm
-                );
+            exception_handler.handle_user_exception('alteracao_relatorio');
         WHEN OTHERS THEN
             exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
 END tbud_relatorio;
@@ -246,10 +241,7 @@ BEGIN
 
     EXCEPTION
         WHEN et_consulta.ex_alteracao_consulta THEN
-            RAISE_APPLICATION_ERROR(
-                et_consulta.ex_alteracao_consulta_error_code,
-                et_consulta.ex_alteracao_consulta_errm
-                );
+            exception_handler.handle_user_exception('alteracao_consulta');
         WHEN OTHERS THEN
             exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
 END tbud_consulta;
@@ -285,7 +277,7 @@ BEGIN
     
     EXCEPTION
         WHEN exception_handler.ex_mal_formatada THEN
-            -- handle error
+            exception_handler.handle_user_exception('excecao_mal_formatada');
         WHEN OTHERS THEN
             exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
 END;
