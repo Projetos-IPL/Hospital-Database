@@ -31,6 +31,7 @@ CREATE OR REPLACE PACKAGE BODY exception_handler AS
 
         EXCEPTION
             WHEN OTHERS THEN
+                dbms_output.PUT_LINE(sqlerrm);
                 ROLLBACK;
     END log_exception;
     
