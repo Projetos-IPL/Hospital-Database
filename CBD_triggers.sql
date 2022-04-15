@@ -150,7 +150,6 @@ END tbu_tratamento;
 
 -- Tabela consulta
 
-
 CREATE OR REPLACE TRIGGER tbi_consulta
     BEFORE INSERT ON consulta
     FOR EACH ROW
@@ -195,6 +194,7 @@ BEGIN
 END;
 /
 
+-- Tabela consulta
 
 CREATE OR REPLACE TRIGGER tbi_cirurgia
     BEFORE INSERT ON cirurgia
@@ -224,6 +224,21 @@ BEGIN
         WHEN OTHERS THEN
             exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
 END;
+/
+
+CREATE OR REPLACE TRIGGER tbud_cirurgia
+    BEFORE UPDATE OR DELETE ON cirurgia
+    FOR EACH ROW
+BEGIN
+    -- Como não é permitido atualizar ou apagar uma cirurgia, lançar exceção
+    RAISE et_cirurgia.ex_alteracao_cirurgia;
+
+    EXCEPTION
+        WHEN et_cirurgia.ex_alteracao_cirurgia THEN
+            exception_handler.handle_user_exception('alteracao_cirurgia');
+        WHEN OTHERS THEN
+            exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
+END tbud_cirurgia;
 /
 
 
@@ -265,21 +280,6 @@ BEGIN
 END tbud_relatorio;
 /
 
-
-CREATE OR REPLACE TRIGGER tbud_cirurgia
-    BEFORE UPDATE OR DELETE ON cirurgia
-    FOR EACH ROW
-BEGIN
-    -- Como não é permitido atualizar ou apagar uma cirurgia, lançar exceção
-    RAISE et_cirurgia.ex_alteracao_cirurgia;
-
-    EXCEPTION
-        WHEN et_cirurgia.ex_alteracao_cirurgia THEN
-            exception_handler.handle_user_exception('alteracao_cirurgia');
-        WHEN OTHERS THEN
-            exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
-END tbud_cirurgia;
-/
 
 
 CREATE OR REPLACE TRIGGER tbi_user_exception
