@@ -5,6 +5,7 @@ SET SERVEROUTPUT ON;
 @@ CBD_eliminar.sql
 
 @@ CBD_tabelas.sql
+@@ CBD_sequences.sql
 
 @@ exception_handler.sql
 @@ exception_handler_body.sql
