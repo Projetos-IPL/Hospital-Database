@@ -175,12 +175,11 @@ BEGIN
             exception_handler.handle_user_exception('consulta_em_tratamento_finalizado');
         WHEN OTHERS THEN
             exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
-END;
+END tbi_consulta;
 /
 
 CREATE OR REPLACE TRIGGER tbud_consulta
-    BEFORE UPDATE OR DELETE
-    ON consulta
+    BEFORE UPDATE OR DELETE ON consulta
     FOR EACH ROW
 BEGIN
     -- Como não é permitido atualizar ou apagar consultas, lançar exceção
