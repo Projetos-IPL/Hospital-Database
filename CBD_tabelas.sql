@@ -5,7 +5,7 @@ CREATE TABLE area_atuacao
     CONSTRAINT pk_area_atuacao PRIMARY KEY (id_area_atuacao),
     CONSTRAINT uq_area_atuacao_descricao UNIQUE (descricao)
 );
-/
+
 
 
 CREATE TABLE tipo_cirurgia
@@ -17,7 +17,7 @@ CREATE TABLE tipo_cirurgia
     CONSTRAINT fk_tipo_cirurgia_area_atuacao FOREIGN KEY (id_area_atuacao) REFERENCES area_atuacao (id_area_atuacao),
     CONSTRAINT uq_tipo_cirurgia_nome UNIQUE (nome)
 );
-/
+
 
 
 CREATE TABLE estado_paciente
@@ -26,7 +26,7 @@ CREATE TABLE estado_paciente
     descricao          VARCHAR2(50) NOT NULL,
     CONSTRAINT pk_estado_paciente PRIMARY KEY (id_estado_paciente)
 );
-/
+
 
 
 CREATE TABLE pessoa
@@ -39,7 +39,7 @@ CREATE TABLE pessoa
     dta_nasc  DATE          NOT NULL,
     CONSTRAINT pk_pessoa PRIMARY KEY (nif)
 );
-/
+
 
 CREATE TABLE funcionario
 (
@@ -47,7 +47,7 @@ CREATE TABLE funcionario
     CONSTRAINT pk_funcionario PRIMARY KEY (nif),
     CONSTRAINT fk_funcionario_pessoa FOREIGN KEY (nif) REFERENCES pessoa (nif)
 );
-/
+
 
 
 CREATE TABLE enfermeiro
@@ -56,7 +56,7 @@ CREATE TABLE enfermeiro
     CONSTRAINT pk_enfermeiro PRIMARY KEY (nif),
     CONSTRAINT fk_enfermeiro_funcionario FOREIGN KEY (nif) REFERENCES funcionario (nif)
 );
-/
+
 
 
 CREATE TABLE medico
@@ -69,7 +69,7 @@ CREATE TABLE medico
     CONSTRAINT fk_medico_area_atuacao FOREIGN KEY (id_area_atuacao)
         REFERENCES area_atuacao (id_area_atuacao)
 );
-/
+
 
 
 CREATE TABLE paciente
@@ -81,7 +81,7 @@ CREATE TABLE paciente
         REFERENCES pessoa (nif),
     CONSTRAINT uq_paciente_n_utente_saude UNIQUE (n_utente_saude)
 );
-/
+
 
 
 CREATE TABLE relatorio
@@ -95,7 +95,7 @@ CREATE TABLE relatorio
         REFERENCES funcionario (nif),
     CONSTRAINT ck_relatorio_categoria CHECK (categoria IN ('CON', 'CIR'))
 );
-/
+
 
 
 CREATE TABLE tratamento
@@ -116,7 +116,7 @@ CREATE TABLE tratamento
     CONSTRAINT fk_tratamento_area_atuacao FOREIGN KEY (id_area_atuacao)
         REFERENCES area_atuacao (id_area_atuacao)
 );
-/
+
 
 
 CREATE TABLE consulta
@@ -137,7 +137,7 @@ CREATE TABLE consulta
     CONSTRAINT fk_consulta_estado_paciente FOREIGN KEY (id_estado_paciente)
         REFERENCES estado_paciente (id_estado_paciente)
 );
-/
+
 
 
 CREATE TABLE cirurgia
@@ -155,7 +155,7 @@ CREATE TABLE cirurgia
     CONSTRAINT fk_cirurgia_tipo_cirurgia FOREIGN KEY (id_tipo_cirurgia)
         REFERENCES tipo_cirurgia (id_tipo_cirurgia)
 );
-/
+
 
 
 CREATE TABLE medico_cirurgia
@@ -168,7 +168,7 @@ CREATE TABLE medico_cirurgia
     CONSTRAINT fk_medico_cirurgia_cirurgia FOREIGN KEY (id_cirurgia)
         REFERENCES cirurgia (id_cirurgia)
 );
-/
+
 
 
 CREATE TABLE user_exception (
@@ -178,7 +178,7 @@ CREATE TABLE user_exception (
     CONSTRAINT pk_user_exception PRIMARY KEY (code),
     CONSTRAINT uq_user_exception_name UNIQUE (name)
 );
-/
+
 
 
 CREATE TABLE exception_log (
@@ -188,7 +188,4 @@ CREATE TABLE exception_log (
     stacktrace VARCHAR2(500),
     CONSTRAINT pk_exception_log PRIMARY KEY (id_exception_log)
 );
-/
 
-
-COMMIT;
