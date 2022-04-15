@@ -3,6 +3,8 @@ CREATE OR REPLACE PACKAGE et_pessoa AS
     ex_menor_de_idade EXCEPTION;
     ex_paciente_sem_tratamento EXCEPTION;
 
+    TYPE t_nif IS TABLE OF pessoa.nif%TYPE;
+
     /**
       Procedimento para adicionar um paciente
      */

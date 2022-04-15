@@ -1,5 +1,21 @@
 CREATE OR REPLACE PACKAGE BODY exception_handler AS
 
+    -- Função para obter stacktrace
+    FUNCTION get_stack_trace
+    RETURN VARCHAR2 IS
+        v_stacktrace VARCHAR2(500);
+    BEGIN
+        -- Começa no 2 para não colocar o get_stack_trace
+        FOR j IN REVERSE 2..UTL_Call_Stack.Dynamic_Depth() LOOP
+          v_stacktrace := v_stacktrace || UTL_Call_Stack.Concatenate_Subprogram(UTL_Call_Stack.Subprogram(j)) || ', ';
+        END LOOP;
+
+		-- Remover os dois últimos caracteres da string
+        v_stacktrace := SUBSTR(v_stacktrace, 0, LENGTH(v_stacktrace) - 2);
+
+        RETURN v_stacktrace;
+    END;
+
     -- Procedimento para adicionar uma exceção ao histórico
     PROCEDURE log_exception(
         p_code IN INT,
@@ -45,20 +61,14 @@ CREATE OR REPLACE PACKAGE BODY exception_handler AS
     IS
         n_code user_exception.code%TYPE;
         v_errm user_exception.errm%TYPE;
-        v_stacktrace VARCHAR2(500);
     BEGIN
         SELECT code, errm
             INTO n_code, v_errm
             FROM user_exception
-            WHERE name = p_name;
-        
-        FOR j IN REVERSE 1..UTL_Call_Stack.Dynamic_Depth() LOOP
-          v_stacktrace := v_stacktrace || UTL_Call_Stack.Concatenate_Subprogram(UTL_Call_Stack.Subprogram(j)) || ', ';
-        END LOOP;
-        
-				-- remove os dois últimos caracteres da string
-        v_stacktrace := SUBSTR(v_stacktrace, 0, LENGTH(v_stacktrace) - 2);
-        log_exception(n_code, v_stacktrace);
+            WHERE name = UPPER(p_name);
+
+        -- Fazer log da exceção
+        log_exception(n_code, get_stack_trace());
 
         RAISE_APPLICATION_ERROR(
             n_code,
@@ -78,22 +88,15 @@ CREATE OR REPLACE PACKAGE BODY exception_handler AS
         p_code IN INT,
         p_errm IN VARCHAR2)
     IS
-        v_stacktrace VARCHAR2(500);
+        v_stacktrace VARCHAR2(500) := get_stack_trace();
     BEGIN
-        FOR j IN REVERSE 1..UTL_Call_Stack.Dynamic_Depth() LOOP 
-          v_stacktrace := v_stacktrace || ', ' || UTL_Call_Stack.Concatenate_Subprogram(UTL_Call_Stack.Subprogram(j));
-        END LOOP;
 
-				-- remove os dois últimos caracteres da string
-				v_stacktrace := SUBSTR(v_stacktrace, 0, LENGTH(v_stacktrace) - 2);
         log_exception(p_code, v_stacktrace);
         
         -- A instrução seguinte imprime o nome do programa que chamou a função handle_sys_exception
         dbms_output.PUT_LINE(v_stacktrace);
         dbms_output.PUT_LINE(p_errm);
-        
-        log_exception(p_code, v_stacktrace);
-        
+
         ROLLBACK;
     END handle_sys_exception;
 
