@@ -61,9 +61,9 @@ BEGIN
     );
 
 		exception_handler.add_user_exception(
-				-20500,
-				'area_atuacao_nao_corresponde',
-				'Área de atuação não corresponde!'
+				-20501,
+				'alteracao_cirurgia',
+				'Alteração/remoção de uma cirurgia não permitida!'
 		);
 
 END;
