@@ -1,5 +1,7 @@
 CREATE OR REPLACE PACKAGE et_consulta AS
 
+    ex_consulta_em_tratamento_finalizado EXCEPTION;
+
     -- Procedimento para registar uma consulta
     PROCEDURE registar_consulta(
         p_id_tratamento      IN consulta.id_tratamento%TYPE,

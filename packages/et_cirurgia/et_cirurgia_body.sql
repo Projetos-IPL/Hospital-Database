@@ -19,10 +19,7 @@ CREATE OR REPLACE PACKAGE BODY et_cirurgia AS
             RAISE ex_area_atuacao_nao_corresponde;
         END IF;
 
-        -- criar relatório para a cirurgia
-
-
-
+        -- Criar relatório para a cirurgia
         n_id_relatorio := et_relatorio.adicionar_relatorio(
                 p_nif => p_t_nif(1),
                 p_texto => p_relatorio,

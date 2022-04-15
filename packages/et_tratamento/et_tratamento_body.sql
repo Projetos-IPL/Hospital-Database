@@ -1,7 +1,7 @@
 CREATE OR REPLACE PACKAGE BODY et_tratamento AS
 
-    /* Esta variável é utilizada para registar erros, por exemplo, alterações inválidas que
-     são detetadas durante o procedimento de validação de alterações. */
+    -- Esta variável é utilizada para registar erros, por exemplo, alterações inválidas que
+    -- são detetadas durante o procedimento de validação de alterações.
     v_error_logs VARCHAR2(3000);
 
 
