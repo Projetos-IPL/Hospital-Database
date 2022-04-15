@@ -61,6 +61,12 @@ DROP SEQUENCE pk_cirurgia_seq;
 DROP SEQUENCE pk_consulta_seq;
 /
 
+DROP SEQUENCE pk_estado_paciente_seq;
+/
+
+DROP SEQUENCE pk_exception_log_seq;
+/
+
 DROP VIEW tratamento_dados_view;
 /
 
