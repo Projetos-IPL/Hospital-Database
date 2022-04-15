@@ -223,8 +223,7 @@ END tai_paciente;
 
 
 CREATE OR REPLACE TRIGGER tbud_relatorio
-    BEFORE UPDATE OR DELETE
-    ON relatorio
+    BEFORE UPDATE OR DELETE ON relatorio
     FOR EACH ROW
 BEGIN
     -- Como não é permitido atualizar ou apagar relatório, lançar exceção
