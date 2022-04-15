@@ -30,13 +30,10 @@ CREATE OR REPLACE PACKAGE BODY et_consulta AS
             RAISE ex_consulta_em_tratamento_finalizado;
         END IF;
         
-        -- criar registo na tabela Relatório
+        -- Criar registo na tabela Relatório
         n_id_relatorio := et_relatorio.adicionar_relatorio(p_nif_funcionario, p_relatorio, 'CON');
-        
-        /**
-            Criar o registo na tabela Consulta, utilizando o ID do relatório
-            criado acima.
-        **/
+
+        -- Criar o registo na tabela Consulta, utilizando o ID do relatório criado acima.
         INSERT INTO consulta (id_tratamento, id_relatorio, nif_funcionario, id_estado_paciente)
             VALUES (p_id_tratamento, n_id_relatorio, p_nif_funcionario, p_id_estado_paciente);
             
