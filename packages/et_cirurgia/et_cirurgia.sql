@@ -19,3 +19,4 @@ CREATE OR REPLACE PACKAGE et_cirurgia AS
     RETURN BOOLEAN;
 
 END et_cirurgia;
+/

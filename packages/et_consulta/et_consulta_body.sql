@@ -74,3 +74,4 @@ CREATE OR REPLACE PACKAGE BODY et_consulta AS
     END validar_nova_consulta;
 
 END et_consulta;
+/

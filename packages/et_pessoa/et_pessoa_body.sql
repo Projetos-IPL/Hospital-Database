@@ -131,5 +131,21 @@ CREATE OR REPLACE PACKAGE BODY et_pessoa AS
                 exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
     END adicionar_medico;
 
+    FUNCTION validar_nome(p_nome IN VARCHAR2)
+    RETURN BOOLEAN  IS
+    BEGIN
+        IF LENGTH(TRIM(TRANSLATE(
+            p_nome, c_carateres_nome_validos, ' '
+            ))) <> 0
+        THEN
+            RETURN FALSE;
+        ELSE
+            RETURN TRUE;
+        END IF;
+
+    END;
+
+
 END et_pessoa;
+/
 

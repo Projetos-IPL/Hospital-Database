@@ -14,3 +14,4 @@ CREATE OR REPLACE PACKAGE et_consulta AS
 
 
 END et_consulta;
+/

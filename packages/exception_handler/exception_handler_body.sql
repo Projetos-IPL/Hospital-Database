@@ -14,7 +14,7 @@ CREATE OR REPLACE PACKAGE BODY exception_handler AS
         v_stacktrace := SUBSTR(v_stacktrace, 0, LENGTH(v_stacktrace) - 2);
 
         RETURN v_stacktrace;
-    END;
+    END get_stack_trace;
 
     -- Procedimento para adicionar uma exceção ao histórico
     PROCEDURE log_exception(

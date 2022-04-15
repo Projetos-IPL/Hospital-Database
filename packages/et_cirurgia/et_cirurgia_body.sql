@@ -96,6 +96,7 @@ CREATE OR REPLACE PACKAGE BODY et_cirurgia AS
             RETURN FALSE;
         WHEN ex_area_atuacao_nao_corresponde THEN
             RETURN FALSE;
-    END;
+    END validar_cirurgia;
 
 END et_cirurgia;
+    /

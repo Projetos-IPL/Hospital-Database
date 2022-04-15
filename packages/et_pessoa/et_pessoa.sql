@@ -1,8 +1,10 @@
 CREATE OR REPLACE PACKAGE et_pessoa AS
 
     ex_menor_de_idade EXCEPTION;
+    ex_nome_invalido EXCEPTION;
     ex_paciente_sem_tratamento EXCEPTION;
 
+    c_carateres_nome_validos CONSTANT VARCHAR2(100) :='aáàâãbcdeéèêfghiíìîjklmnoóòõôpqrstuúùûvwxyzç';
     TYPE t_nif IS TABLE OF pessoa.nif%TYPE;
 
     /**
@@ -37,6 +39,9 @@ CREATE OR REPLACE PACKAGE et_pessoa AS
         p_dta_nasc       IN pessoa.dta_nasc%TYPE,
         p_id_area_atuacao   IN medico.id_area_atuacao%TYPE
     );
+
+    -- Função para validar o nome, devolve verdadeiro se for válido e falso se não.
+    FUNCTION validar_nome(p_nome IN VARCHAR2) RETURN BOOLEAN;
 
 END et_pessoa;
 /

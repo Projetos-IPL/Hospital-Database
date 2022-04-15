@@ -28,19 +28,26 @@ CREATE OR REPLACE TRIGGER tbi_pessoa
     FOR EACH ROW
 DECLARE
     n_idade NUMBER;
+    v_nome_completo VARCHAR2(61);
 BEGIN
     -- Validar idade
-    n_idade := MONTHS_BETWEEN(SYSDATE, :new.dta_nasc) / 12;
+    n_idade := MONTHS_BETWEEN(SYSDATE, :NEW.dta_nasc) / 12;
 
     IF n_idade < 18 THEN
         RAISE et_pessoa.ex_menor_de_idade;
     END IF;
 
-    -- Validar nome da ideia
+    -- Validar nome da pessoa, não pode conter números ou carateres especiais.
+    IF et_pessoa.validar_nome(:NEW.prim_nome || :NEW.ult_nome) THEN
+        RAISE et_pessoa.ex_nome_invalido;
+    END IF;
+
 
 EXCEPTION
     WHEN et_pessoa.ex_menor_de_idade THEN
         exception_handler.handle_user_exception('menor_de_idade');
+    WHEN et_pessoa.ex_nome_invalido THEN
+        exception_handler.handle_user_exception('nome_invalido');
     WHEN OTHERS THEN
         exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
 END tbi_pessoa;
@@ -208,6 +215,7 @@ BEGIN
     :new.id_cirurgia := pk_cirurgia_seq.nextval;
     :new.dta_realizacao := SYSDATE;
 
+    -- Verificar se cirurgia é da área de atuação do tratamento e lançar exceção se não for.
     SELECT id_area_atuacao INTO n_id_area_atuacao_tratamento
         FROM tratamento
         WHERE id_tratamento = :NEW.id_tratamento;

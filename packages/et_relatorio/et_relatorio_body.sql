@@ -1,4 +1,5 @@
 CREATE OR REPLACE PACKAGE BODY et_relatorio AS
+
     FUNCTION adicionar_relatorio(
         p_nif       IN relatorio.nif%TYPE,
         p_texto     IN relatorio.texto%TYPE,
@@ -17,5 +18,6 @@ CREATE OR REPLACE PACKAGE BODY et_relatorio AS
             WHEN OTHERS THEN
                 exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
     END adicionar_relatorio;
+
 END et_relatorio;
 /

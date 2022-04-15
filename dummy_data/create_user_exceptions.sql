@@ -1,4 +1,6 @@
+ROLLBACK;
 BEGIN
+    SET TRANSACTION READ WRITE NAME 'create_user_exceptions';
 
 	exception_handler.add_user_exception(
         -20799,
@@ -30,7 +32,6 @@ BEGIN
             'Nome da pessoa inválido. O nome não pode conter números ou carateres especiais'
     );
 
-    
     exception_handler.add_user_exception(
         -20699,
         'alteracao_relatorio',
@@ -67,10 +68,12 @@ BEGIN
         'Nome/código de exceção mal formatada.'
     );
 
-		exception_handler.add_user_exception(
-				-20501,
-				'alteracao_cirurgia',
-				'Alteração/remoção de uma cirurgia não permitida!'
+	exception_handler.add_user_exception(
+		-20501,
+		'alteracao_cirurgia',
+		'Alteração/remoção de uma cirurgia não permitida!'
 		);
+
+    COMMIT;
 
 END;
