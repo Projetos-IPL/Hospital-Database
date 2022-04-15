@@ -36,6 +36,8 @@ BEGIN
         RAISE et_pessoa.ex_menor_de_idade;
     END IF;
 
+    -- Validar nome da ideia
+
 EXCEPTION
     WHEN et_pessoa.ex_menor_de_idade THEN
         exception_handler.handle_user_exception('menor_de_idade');
@@ -241,16 +243,7 @@ BEGIN
 END tbud_cirurgia;
 /
 
-
-CREATE OR REPLACE TRIGGER tbi_exception_log
-    BEFORE INSERT ON exception_log
-    FOR EACH ROW
-BEGIN
-    :new.id_exception_log := pk_exception_log_seq.nextval;
-END;
-/
-
-
+-- Tabela relatorio
 
 CREATE OR REPLACE TRIGGER tbi_relatorio
     BEFORE INSERT ON relatorio
@@ -259,10 +252,6 @@ BEGIN
     :NEW.id_relatorio := pk_relatorio_seq.nextval;
 END;
 /
-
-
-
-
 
 CREATE OR REPLACE TRIGGER tbud_relatorio
     BEFORE UPDATE OR DELETE ON relatorio
@@ -281,6 +270,7 @@ END tbud_relatorio;
 /
 
 
+-- Tabela user_exception
 
 CREATE OR REPLACE TRIGGER tbi_user_exception
     BEFORE INSERT ON user_exception
@@ -290,20 +280,31 @@ BEGIN
     IF INSTR(:NEW.code, ' ') <> 0 THEN
         RAISE exception_handler.ex_mal_formatada;
     END IF;
-    
+
     -- verifica se o nome da exceção não contém espaços
     IF INSTR(:NEW.name, ' ') <> 0 THEN
         RAISE exception_handler.ex_mal_formatada;
     END IF;
-    
+
     -- converter para upper case
     :NEW.name := UPPER(:NEW.name);
-    
+
     EXCEPTION
         WHEN exception_handler.ex_mal_formatada THEN
             exception_handler.handle_user_exception('excecao_mal_formatada');
         WHEN OTHERS THEN
             exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
+END;
+/
+
+
+-- Tabela exception log
+
+CREATE OR REPLACE TRIGGER tbi_exception_log
+    BEFORE INSERT ON exception_log
+    FOR EACH ROW
+BEGIN
+    :new.id_exception_log := pk_exception_log_seq.nextval;
 END;
 /
 
