@@ -1,7 +1,7 @@
 CREATE OR REPLACE PACKAGE BODY et_pessoa AS
 
-    /* Procedimento para adicionar uma pessoa, como a entidade pessoa tem
-       uma disjunção obrigatória não é efetuado o commit neste procedimento. */
+    -- Procedimento para adicionar uma pessoa, como a entidade pessoa tem
+    -- uma disjunção obrigatória não é efetuado o commit neste procedimento.
     PROCEDURE adicionar_pessoa(p_rec_pessoa IN pessoa%ROWTYPE) IS
     BEGIN
         INSERT INTO pessoa VALUES p_rec_pessoa;
