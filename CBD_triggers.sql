@@ -47,10 +47,7 @@ BEGIN
 
     EXCEPTION
         WHEN et_consulta.ex_consulta_em_tratamento_finalizado THEN
-            RAISE_APPLICATION_ERROR(
-                et_consulta.ex_consulta_em_tratamento_finalizado_error_code,
-                et_consulta.ex_consulta_em_tratamento_finalizado_errm
-                );
+            exception_handler.handle_user_exception('consulta_em_tratamento_finalizado');
         WHEN OTHERS THEN
             exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
 END;
@@ -109,10 +106,7 @@ BEGIN
 
 EXCEPTION
     WHEN et_tratamento.ex_tratamento_repetido THEN
-        RAISE_APPLICATION_ERROR(
-                et_tratamento.ex_tratamento_repetido_error_code,
-                et_tratamento.ex_tratamento_repetido_errm || :new.nif
-            );
+        exception_handler.handle_user_exception('tratamento_repetido');
     WHEN OTHERS THEN
         exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
 END tbi_tratamento;
@@ -153,13 +147,7 @@ BEGIN
 
 EXCEPTION
     WHEN et_tratamento.ex_alteracao_invalida THEN
-        RAISE_APPLICATION_ERROR(
-                et_tratamento.ex_alteracao_invalida_error_code,
-                et_tratamento.ex_alteracao_invalida_errm ||
-                CHR(10) ||
-                et_tratamento.obter_error_log
-            );
-        et_tratamento.limpar_error_log;
+        exception_handler.handle_user_exception('alteracao_invalida');
     WHEN OTHERS THEN
         exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
 END tbu_tratamento;

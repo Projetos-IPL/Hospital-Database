@@ -60,4 +60,10 @@ BEGIN
         'Nome/código de exceção mal formatada.'
     );
 
+		exception_handler.add_user_exception(
+				-20500,
+				'area_atuacao_nao_corresponde',
+				'Área de atuação não corresponde!'
+		);
+
 END;
