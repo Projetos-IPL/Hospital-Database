@@ -28,6 +28,10 @@ CREATE OR REPLACE PACKAGE BODY exception_handler AS
             VALUES (p_code, CURRENT_TIMESTAMP, p_stacktrace);
         
         COMMIT;
+
+        EXCEPTION
+            WHEN OTHERS THEN
+                ROLLBACK;
     END log_exception;
     
 
