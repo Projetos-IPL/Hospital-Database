@@ -1,7 +1,5 @@
 CREATE OR REPLACE TRIGGER tbi_area_atuacao
-    BEFORE
-        INSERT
-    ON area_atuacao
+    BEFORE INSERT ON area_atuacao
     FOR EACH ROW
 BEGIN
     :new.id_area_atuacao := pk_area_atuacao_seq.nextval;
@@ -41,9 +39,7 @@ END;
 
 
 CREATE OR REPLACE TRIGGER tbi_exception_log
-    BEFORE
-        INSERT
-    ON exception_log
+    BEFORE INSERT ON exception_log
     FOR EACH ROW
 BEGIN
     :new.id_exception_log := pk_exception_log_seq.nextval;
@@ -52,9 +48,7 @@ END;
 
 
 CREATE OR REPLACE TRIGGER tbi_consulta
-    BEFORE
-        INSERT
-    ON consulta
+    BEFORE INSERT ON consulta
     FOR EACH ROW
 BEGIN
     :NEW.id_consulta := pk_consulta_seq.nextval;
@@ -74,9 +68,7 @@ END;
 
 
 CREATE OR REPLACE TRIGGER tbi_relatorio
-    BEFORE
-        INSERT
-    ON relatorio
+    BEFORE INSERT ON relatorio
     FOR EACH ROW
 BEGIN
     :NEW.id_relatorio := pk_relatorio_seq.nextval;
@@ -85,9 +77,7 @@ END;
 
 
 CREATE OR REPLACE TRIGGER tbi_tipo_cirurgia
-    BEFORE
-        INSERT
-    ON tipo_cirurgia
+    BEFORE INSERT ON tipo_cirurgia
     FOR EACH ROW
 BEGIN
     :new.id_tipo_cirurgia := pk_tipo_cirurgia_seq.nextval;
@@ -96,9 +86,7 @@ END;
 
 
 CREATE OR REPLACE TRIGGER tbi_tratamento
-    BEFORE
-        INSERT
-    ON tratamento
+    BEFORE INSERT ON tratamento
     FOR EACH ROW
 DECLARE
     CURSOR cur_tratamentos_ativos IS
@@ -133,8 +121,7 @@ END tbi_tratamento;
 
 
 CREATE OR REPLACE TRIGGER tbu_tratamento
-    BEFORE UPDATE
-    ON tratamento
+    BEFORE UPDATE ON tratamento
     FOR EACH ROW
 DECLARE
     b_alteracao_valida BOOLEAN;
@@ -175,9 +162,7 @@ END tbu_tratamento;
 
 
 CREATE OR REPLACE TRIGGER tbi_pessoa
-    BEFORE
-        INSERT
-    ON pessoa
+    BEFORE INSERT ON pessoa
     FOR EACH ROW
 DECLARE
     n_idade NUMBER;
@@ -231,6 +216,7 @@ BEGIN
 
     EXCEPTION
         WHEN et_relatorio.ex_alteracao_relatorio THEN
+            dbms_output.put_line('3');
             exception_handler.handle_user_exception('alteracao_relatorio');
         WHEN OTHERS THEN
             exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
