@@ -37,6 +37,12 @@ DROP TABLE tipo_cirurgia;
 DROP TABLE area_atuacao;
 /
 
+DROP TABLE user_exception;
+/
+
+DROP TABLE exception_log;
+/
+
 DROP SEQUENCE pk_area_atuacao_seq;
 /
 
@@ -68,6 +74,12 @@ DROP PACKAGE et_pessoa;
 /
 
 DROP PACKAGE et_tratamento;
+/
+
+DROP PACKAGE et_cirurgia;
+/
+
+DROP PACKAGE exception_handler;
 /
 
 COMMIT;
