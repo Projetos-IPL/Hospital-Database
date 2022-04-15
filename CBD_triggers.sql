@@ -219,6 +219,22 @@ END tbud_relatorio;
 /
 
 
+CREATE OR REPLACE TRIGGER tbud_cirurgia
+    BEFORE UPDATE OR DELETE ON cirurgia
+    FOR EACH ROW
+BEGIN
+    -- Como não é permitido atualizar ou apagar uma cirurgia, lançar exceção
+    RAISE et_cirurgia.ex_alteracao_cirurgia;
+
+    EXCEPTION
+        WHEN et_cirurgia.ex_alteracao_cirurgia THEN
+            exception_handler.handle_user_exception('alteracao_cirurgia');
+        WHEN OTHERS THEN
+            exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
+END tbud_cirurgia;
+/
+
+
 CREATE OR REPLACE TRIGGER tbud_consulta
     BEFORE UPDATE OR DELETE
     ON consulta

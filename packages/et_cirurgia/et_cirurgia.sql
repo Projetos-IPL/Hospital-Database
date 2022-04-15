@@ -1,5 +1,7 @@
 CREATE OR REPLACE PACKAGE et_cirurgia AS
 
+    ex_alteracao_cirurgia EXCEPTION;
+
     -- Registar uma nova cirurgia, associando a um tratamento
     PROCEDURE registar_cirurgia(
         p_id_tratamento         IN tratamento.id_tratamento%TYPE,
