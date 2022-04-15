@@ -23,6 +23,13 @@ BEGIN
         'paciente_sem_tratamento',
         'Paciente sem tratamento registado.'
     );
+
+	exception_handler.add_user_exception(
+            -20887,
+            'nome_invalido',
+            'Nome da pessoa inválido. O nome não pode conter números ou carateres especiais'
+    );
+
     
     exception_handler.add_user_exception(
         -20699,
