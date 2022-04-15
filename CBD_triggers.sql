@@ -70,8 +70,8 @@ BEGIN
 END tai_paciente;
 /
 
--- Tabela tratamento
 
+-- Tabela tratamento
 
 CREATE OR REPLACE TRIGGER tbi_tratamento
     BEFORE INSERT ON tratamento
@@ -148,7 +148,54 @@ END tbu_tratamento;
 /
 
 
--- Tabela
+-- Tabela consulta
+
+
+CREATE OR REPLACE TRIGGER tbi_consulta
+    BEFORE INSERT ON consulta
+    FOR EACH ROW
+BEGIN
+    :NEW.id_consulta := pk_consulta_seq.nextval;
+    :NEW.dta_realizacao := SYSDATE;
+
+    IF et_consulta.validar_nova_consulta(:NEW.id_tratamento) = FALSE THEN
+        RAISE et_consulta.ex_consulta_em_tratamento_finalizado;
+    END IF;
+
+    EXCEPTION
+        WHEN et_consulta.ex_consulta_em_tratamento_finalizado THEN
+            exception_handler.handle_user_exception('consulta_em_tratamento_finalizado');
+        WHEN OTHERS THEN
+            exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
+END;
+/
+
+CREATE OR REPLACE TRIGGER tbud_consulta
+    BEFORE UPDATE OR DELETE
+    ON consulta
+    FOR EACH ROW
+BEGIN
+    -- Como não é permitido atualizar ou apagar consultas, lançar exceção
+    RAISE et_consulta.ex_alteracao_consulta;
+
+    EXCEPTION
+        WHEN et_consulta.ex_alteracao_consulta THEN
+            exception_handler.handle_user_exception('alteracao_consulta');
+        WHEN OTHERS THEN
+            exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
+END tbud_consulta;
+/
+
+CREATE OR REPLACE TRIGGER tai_consulta
+    AFTER INSERT ON consulta
+    FOR EACH ROW
+BEGIN
+    -- O estado do tratamento é atualizado quando uma consulta é adicionada
+    et_tratamento.atualizar_estado_tratamento(:NEW.id_tratamento, :NEW.id_estado_paciente);
+END;
+/
+
+
 CREATE OR REPLACE TRIGGER tbi_cirurgia
     BEFORE INSERT ON cirurgia
     FOR EACH ROW
@@ -188,25 +235,6 @@ BEGIN
 END;
 /
 
-
-CREATE OR REPLACE TRIGGER tbi_consulta
-    BEFORE INSERT ON consulta
-    FOR EACH ROW
-BEGIN
-    :NEW.id_consulta := pk_consulta_seq.nextval;
-    :NEW.dta_realizacao := SYSDATE;
-
-    IF et_consulta.validar_nova_consulta(:NEW.id_tratamento) = FALSE THEN
-        RAISE et_consulta.ex_consulta_em_tratamento_finalizado;
-    END IF;
-
-    EXCEPTION
-        WHEN et_consulta.ex_consulta_em_tratamento_finalizado THEN
-            exception_handler.handle_user_exception('consulta_em_tratamento_finalizado');
-        WHEN OTHERS THEN
-            exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
-END;
-/
 
 
 CREATE OR REPLACE TRIGGER tbi_relatorio
@@ -251,33 +279,6 @@ BEGIN
         WHEN OTHERS THEN
             exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
 END tbud_cirurgia;
-/
-
-
-CREATE OR REPLACE TRIGGER tbud_consulta
-    BEFORE UPDATE OR DELETE
-    ON consulta
-    FOR EACH ROW
-BEGIN
-    -- Como não é permitido atualizar ou apagar consultas, lançar exceção
-    RAISE et_consulta.ex_alteracao_consulta;
-
-    EXCEPTION
-        WHEN et_consulta.ex_alteracao_consulta THEN
-            exception_handler.handle_user_exception('alteracao_consulta');
-        WHEN OTHERS THEN
-            exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
-END tbud_consulta;
-/
-
-
-CREATE OR REPLACE TRIGGER tai_consulta
-    AFTER INSERT ON consulta
-    FOR EACH ROW
-BEGIN
-    -- O estado do tratamento é atualizado quando uma consulta é adicionada
-    et_tratamento.atualizar_estado_tratamento(:NEW.id_tratamento, :NEW.id_estado_paciente);
-END;
 /
 
 
