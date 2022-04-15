@@ -118,10 +118,6 @@ CREATE TABLE tratamento
 );
 /
 
-ALTER TABLE tratamento DROP CONSTRAINT fk_tratamento_paciente;
-ALTER TABLE tratamento ADD CONSTRAINT fk_tratamento_paciente FOREIGN KEY (nif)
-        REFERENCES paciente (nif) DEFERRABLE INITIALLY DEFERRED;
-
 
 CREATE TABLE consulta
 (
@@ -142,6 +138,7 @@ CREATE TABLE consulta
         REFERENCES estado_paciente (id_estado_paciente)
 );
 /
+
 
 CREATE TABLE cirurgia
 (
