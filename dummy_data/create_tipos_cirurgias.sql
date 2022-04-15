@@ -119,3 +119,4 @@ INSERT INTO tipo_cirurgia (id_area_atuacao, nome)
     VALUES (8, 'Luxação da Rótula');
 
 COMMIT;
+/
