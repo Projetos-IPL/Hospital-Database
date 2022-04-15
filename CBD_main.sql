@@ -1,26 +1,32 @@
 -- Entry point para criação dos objetos na base de dados
 
-@@ c:\users\admin\desktop\hospital-database\@@ c:\users\admin\desktop\hospital-database\ c:\users\admin\desktop\hospital-database\CBD_eliminar.sql
+SET SERVEROUTPUT ON;
 
-@@ c:\users\admin\desktop\hospital-database\CBD_tabelas.sql
+@@ CBD_eliminar.sql
 
-@@ c:\users\admin\desktop\hospital-database\packages\exception_handler\exception_handler.sql
-@@ c:\users\admin\desktop\hospital-database\packages\exception_handler\exception_handler_body.sql
+@@ CBD_tabelas.sql
 
-@@ c:\users\admin\desktop\hospital-database\packages\et_cirurgia\et_cirurgia.sql
-@@ c:\users\admin\desktop\hospital-database\packages\et_consulta\et_consulta.sql
-@@ c:\users\admin\desktop\hospital-database\packages\et_pessoa\et_pessoa.sql
-@@ c:\users\admin\desktop\hospital-database\packages\et_relatorio\et_relatorio.sql
-@@ c:\users\admin\desktop\hospital-database\packages\et_tratamento\et_tratamento.sql
+@@ exception_handler.sql
+@@ exception_handler_body.sql
 
-@@ c:\users\admin\desktop\hospital-database\CBD_views.sql
+@@ et_pessoa.sql
+@@ et_tratamento.sql
+@@ et_cirurgia.sql
+@@ et_consulta.sql
+@@ et_relatorio.sql
 
-@@ c:\users\admin\desktop\hospital-database\packages\et_cirurgia\et_cirurgia_body.sql
-@@ c:\users\admin\desktop\hospital-database\packages\et_consulta\et_consulta_body.sql
-@@ c:\users\admin\desktop\hospital-database\packages\et_pessoa\et_pessoa_body.sql
-@@ c:\users\admin\desktop\hospital-database\packages\et_relatorio\et_relatorio_body.sql
-@@ c:\users\admin\desktop\hospital-database\packages\et_tratamento\et_tratamento_body.sql
+@@ CBD_views.sql
 
-@@ c:\users\admin\desktop\hospital-database\CBD_triggers.sql
+@@ et_cirurgia_body.sql
+@@ et_consulta_body.sql
+@@ et_pessoa_body.sql
+@@ et_relatorio_body.sql
+@@ et_tratamento_body.sql
 
-@@ c:\users\admin\desktop\hospital-database\dummy_data\index.sql
+@@ CBD_triggers.sql
+
+@@ create_user_exceptions.sql
+@@ create_areas_atuacao.sql
+@@ create_tipos_cirurgias.sql
+@@ create_estados_pacientes.sql
+@@ create_pessoas.sql
