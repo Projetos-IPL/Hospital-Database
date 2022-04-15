@@ -33,7 +33,7 @@ BEGIN
     exception_handler.add_user_exception(
         -20998,
         'tratamento_repetido',
-        'Tentativa de abertura de tratamento repetido para paciente com nif: '
+        'Tentativa de abertura de tratamento repetido para o mesmo paciente.'
     );
 
     exception_handler.add_user_exception(
@@ -45,7 +45,7 @@ BEGIN
     exception_handler.add_user_exception(
         -20996,
         'finalizacao_repetida',
-        'Tentativa de finalizar tratamento já finalizado. Tratamento: '
+        'Tentativa de finalizar tratamento já finalizado.'
     );
     
     exception_handler.add_user_exception(
