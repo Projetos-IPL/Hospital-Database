@@ -1,6 +1,5 @@
 CREATE OR REPLACE PACKAGE BODY et_pessoa AS
 
-
     /* Procedimento para adicionar uma pessoa, como a entidade pessoa tem
        uma disjunção obrigatória não é efetuado o commit neste procedimento. */
     PROCEDURE adicionar_pessoa(p_rec_pessoa IN pessoa%ROWTYPE) IS
@@ -134,6 +133,11 @@ CREATE OR REPLACE PACKAGE BODY et_pessoa AS
     FUNCTION validar_nome(p_nome IN VARCHAR2)
     RETURN BOOLEAN  IS
     BEGIN
+
+        IF LENGTH(p_nome) < 3 THEN
+            RETURN FALSE;
+        END IF;
+
         IF LENGTH(TRIM(TRANSLATE(
             p_nome, c_carateres_nome_validos, ' '
             ))) <> 0
@@ -143,7 +147,7 @@ CREATE OR REPLACE PACKAGE BODY et_pessoa AS
             RETURN TRUE;
         END IF;
 
-    END;
+    END validar_nome;
 
 
 END et_pessoa;
