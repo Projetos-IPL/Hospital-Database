@@ -1,4 +1,3 @@
-ROLLBACK;
 BEGIN
     SET TRANSACTION READ WRITE NAME 'create_user_exceptions';
 
