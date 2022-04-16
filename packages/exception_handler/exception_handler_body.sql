@@ -1,5 +1,8 @@
 CREATE OR REPLACE PACKAGE BODY exception_handler AS
 
+    -- Esta variável serve para contar o número de ciclos recursivos para impedir ciclos infinitos
+    n_recursive_loop_count INTEGER := 0;
+
     -- Função para obter stacktrace
     FUNCTION get_stack_trace
     RETURN VARCHAR2 IS
@@ -68,6 +71,13 @@ CREATE OR REPLACE PACKAGE BODY exception_handler AS
         n_code user_exception.code%TYPE;
         v_errm user_exception.errm%TYPE;
     BEGIN
+
+        IF n_recursive_loop_count <> 0 THEN
+            RETURN;
+        END IF;
+
+        n_recursive_loop_count := 0;
+
         SELECT code, errm
             INTO n_code, v_errm
             FROM user_exception
@@ -86,6 +96,7 @@ CREATE OR REPLACE PACKAGE BODY exception_handler AS
         EXCEPTION
             WHEN NO_DATA_FOUND THEN
                 dbms_output.put_line('handle_user_exception');
+                n_recursive_loop_count := n_recursive_loop_count + 1;
                 handle_user_exception('exception_not_defined');
     END handle_user_exception;
 
