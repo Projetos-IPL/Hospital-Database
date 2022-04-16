@@ -11,7 +11,7 @@ BEGIN
     exception_handler.add_user_exception(
             -20002,
             'system_exception',
-            'Exceção de sistema ou genérica acionada no ''EXCEPTION WHEN OTHERS THEN ...'
+            'Exceção de sistema ou genérica acionada no "EXCEPTION WHEN OTHERS THEN ..."'
         );
 
 		exception_handler.add_user_exception(
