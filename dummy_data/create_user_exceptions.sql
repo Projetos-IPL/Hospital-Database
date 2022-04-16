@@ -1,5 +1,4 @@
 BEGIN
-    SET TRANSACTION READ WRITE NAME 'create_user_exceptions';
 
 		exception_handler.add_user_exception(
         -20001,
