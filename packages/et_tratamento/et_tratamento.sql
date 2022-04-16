@@ -5,7 +5,8 @@ CREATE OR REPLACE PACKAGE et_tratamento AS
     ex_tratamento_nao_encontrado EXCEPTION;
     ex_tratamento_ja_finalizado EXCEPTION;
     ex_alteracao_invalida EXCEPTION;
-		
+    ex_paciente_ja_tem_tratamento EXCEPTION;
+
     -- Procedimento para registar tratamentos
     PROCEDURE registar_tratamento(
         p_nif                IN tratamento.nif%TYPE,

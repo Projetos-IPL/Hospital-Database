@@ -33,6 +33,7 @@ CREATE OR REPLACE PACKAGE BODY et_tratamento AS
     -- Procedimento para imprimir o registo de erro
     PROCEDURE print_error_log IS
     BEGIN
+        dbms_output.put_line('et_tratamento error logs');
         dbms_output.put_line(v_error_logs);
     END;
 
@@ -58,12 +59,14 @@ CREATE OR REPLACE PACKAGE BODY et_tratamento AS
     END registar_tratamento;
 
 
+    -- Como este procedimento é apenas utilizado no procedimento et_pessoa.adicionar_paciente
+    -- e não é suposto ser usado individualmente as suas exceções não são tratadas aqui.
+    -- O controlo da transação também não é feito aqui pelo mesmo motivo.
     PROCEDURE registar_primeiro_tratamento(
             p_nif                IN tratamento.nif%TYPE,
             p_id_area_atuacao    IN tratamento.id_area_atuacao%TYPE
         )
     IS
-        ex_paciente_ja_tem_tratamento EXCEPTION;
         n_count_trat INT;
     BEGIN
         -- Verificar se o paciente já tem algum tratamento associado
@@ -72,7 +75,7 @@ CREATE OR REPLACE PACKAGE BODY et_tratamento AS
             WHERE nif = p_nif;
 
         IF n_count_trat <> 0 THEN
-            adicionar_error_log('Paciente com nif:' || p_nif || ' tem pelo menos um tratamento associado.');
+            adicionar_error_log('Paciente com nif:' || p_nif || ' já tem pelo menos um tratamento associado.');
             RAISE ex_paciente_ja_tem_tratamento;
         END IF;
 
@@ -82,14 +85,6 @@ CREATE OR REPLACE PACKAGE BODY et_tratamento AS
                     p_nif,
                     p_id_area_atuacao
                    );
-
-        EXCEPTION
-            WHEN ex_paciente_ja_tem_tratamento THEN
-                print_error_log;
-                limpar_error_log;
-                exception_handler.handle_user_exception('paciente_ja_tem_tratamento');
-            WHEN OTHERS THEN
-                exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
     END registar_primeiro_tratamento;
 
 

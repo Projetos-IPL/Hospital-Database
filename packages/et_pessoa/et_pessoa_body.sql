@@ -2,11 +2,17 @@ CREATE OR REPLACE PACKAGE BODY et_pessoa AS
 
     -- Procedimento para adicionar uma pessoa, como a entidade pessoa tem
     -- uma disjunção obrigatória não é efetuado o commit neste procedimento.
+    -- Como este procedimento não é para ser utilizado individualmente o controlo da transação
+    -- não é feito neste nível.
     PROCEDURE adicionar_pessoa(p_rec_pessoa IN pessoa%ROWTYPE) IS
     BEGIN
         INSERT INTO pessoa VALUES p_rec_pessoa;
 				
         EXCEPTION
+            WHEN et_pessoa.ex_menor_de_idade THEN
+                exception_handler.handle_user_exception('menor_de_idade');
+            WHEN et_pessoa.ex_nome_invalido THEN
+                exception_handler.handle_user_exception('nome_invalido');
             WHEN OTHERS THEN
                 exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
     END adicionar_pessoa;
@@ -25,6 +31,7 @@ CREATE OR REPLACE PACKAGE BODY et_pessoa AS
     IS
         rec_pessoa pessoa%ROWTYPE;
     BEGIN
+        SET TRANSACTION READ WRITE NAME 'Adicionar Paciente';
         rec_pessoa.nif := p_nif;
         rec_pessoa.prim_nome := p_prim_nome;
         rec_pessoa.ult_nome := p_ult_nome;
@@ -32,17 +39,23 @@ CREATE OR REPLACE PACKAGE BODY et_pessoa AS
         rec_pessoa.telefone := p_telefone;
         rec_pessoa.dta_nasc := p_dta_nasc;
 
-        SET TRANSACTION READ WRITE NAME 'Adicionar paciente';
+        et_tratamento.registar_primeiro_tratamento(p_nif, p_id_area_atuacao);
 
         adicionar_pessoa(rec_pessoa);
 
-        et_tratamento.registar_primeiro_tratamento(p_nif, p_id_area_atuacao);
-
         INSERT INTO paciente
             VALUES (p_nif, p_n_utente_saude);
+
         COMMIT;
 
         EXCEPTION
+            WHEN ex_paciente_sem_tratamento THEN
+                exception_handler.handle_user_exception('paciente_sem_tratamento');
+            -- Exceção acionada pelo proc. et_tratamento_registar_primeiro_tratamento
+            WHEN et_tratamento.ex_paciente_ja_tem_tratamento THEN
+                et_tratamento.print_error_log;
+                et_tratamento.limpar_error_log;
+                exception_handler.handle_user_exception('paciente_ja_tem_tratamento');
             WHEN OTHERS THEN
                 exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
     END adicionar_paciente;

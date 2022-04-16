@@ -5,8 +5,10 @@ CREATE OR REPLACE PACKAGE exception_handler AS
 
     -- Procedimento para adicionar uma exceção ao histórico
     PROCEDURE log_exception(
-        p_code IN INT,
-        p_stacktrace IN VARCHAR2);
+        p_code       IN INT,
+        p_stacktrace IN VARCHAR2,
+        p_errm       IN VARCHAR2
+        );
 
     -- Procedimento para adicionar uma user exception
     PROCEDURE add_user_exception (

@@ -6,12 +6,11 @@ SELECT  p.prim_nome,
         aa.descricao,
         t.dta_inicio,
         t.dta_alta
-  FROM tratamento       t,
+FROM tratamento       t,
        area_atuacao     aa,
        pessoa           p
 WHERE t.nif = p.nif
-  AND t.id_area_atuacao = aa.id_area_atuacao
-;
+  AND t.id_area_atuacao = aa.id_area_atuacao;
 /
 
 COMMIT;

@@ -9,7 +9,6 @@ BEGIN
 END;
 /
 
-
 -- Tabela tipo_cirurgia
 
 CREATE OR REPLACE TRIGGER tbi_tipo_cirurgia
@@ -28,7 +27,6 @@ CREATE OR REPLACE TRIGGER tbi_pessoa
     FOR EACH ROW
 DECLARE
     n_idade NUMBER;
-    v_nome_completo VARCHAR2(61);
 BEGIN
     -- Validar idade
     n_idade := MONTHS_BETWEEN(SYSDATE, :NEW.dta_nasc) / 12;
@@ -42,14 +40,6 @@ BEGIN
         RAISE et_pessoa.ex_nome_invalido;
     END IF;
 
-
-EXCEPTION
-    WHEN et_pessoa.ex_menor_de_idade THEN
-        exception_handler.handle_user_exception('menor_de_idade');
-    WHEN et_pessoa.ex_nome_invalido THEN
-        exception_handler.handle_user_exception('nome_invalido');
-    WHEN OTHERS THEN
-        exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
 END tbi_pessoa;
 /
 
@@ -71,11 +61,6 @@ BEGIN
         RAISE et_pessoa.ex_paciente_sem_tratamento;
     END IF;
 
-    EXCEPTION
-        WHEN et_pessoa.ex_paciente_sem_tratamento THEN
-            exception_handler.handle_user_exception('paciente_sem_tratamento');
-        WHEN OTHERS THEN
-            exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
 END tai_paciente;
 /
 

@@ -185,6 +185,7 @@ CREATE TABLE exception_log (
     id_exception_log INTEGER,
     code INTEGER,
     logged_at TIMESTAMP(2),
+    errm VARCHAR2(500),
     stacktrace VARCHAR2(500),
     CONSTRAINT pk_exception_log PRIMARY KEY (id_exception_log)
 );

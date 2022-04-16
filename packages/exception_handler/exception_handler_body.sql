@@ -21,20 +21,23 @@ CREATE OR REPLACE PACKAGE BODY exception_handler AS
 
     -- Procedimento para adicionar uma exceção ao histórico
     PROCEDURE log_exception(
-        p_code IN INT,
-        p_stacktrace IN VARCHAR2)
+        p_code       IN INT,
+        p_stacktrace IN VARCHAR2,
+        p_errm       IN VARCHAR2
+        )
     IS
     BEGIN
-        SET TRANSACTION READ WRITE NAME 'Add User Exception to Log';
+        SET TRANSACTION READ WRITE NAME 'Log Exception';
         
-        INSERT INTO exception_log (code, logged_at, stacktrace)
-            VALUES (p_code, CURRENT_TIMESTAMP, p_stacktrace);
+        INSERT INTO exception_log (code, logged_at, errm, stacktrace)
+            VALUES (p_code, CURRENT_TIMESTAMP, p_errm, p_stacktrace);
         
         COMMIT;
 
         EXCEPTION
             WHEN OTHERS THEN
-                dbms_output.PUT_LINE(sqlerrm);
+                dbms_output.put_line(UTL_Call_Stack.Concatenate_Subprogram(UTL_Call_Stack.Subprogram(1)));
+                dbms_output.put_line(sqlerrm);
                 ROLLBACK;
     END log_exception;
     
@@ -70,31 +73,35 @@ CREATE OR REPLACE PACKAGE BODY exception_handler AS
         n_code user_exception.code%TYPE;
         v_errm user_exception.errm%TYPE;
     BEGIN
+        ROLLBACK;
 
-        IF n_recursive_loop_count <> 0 THEN
+        -- Verificar se o handle_user_exception entrou em um ciclo recursivo infinito, apenas
+        -- acontece quando a exceção 'exception_not_defined' não existe na tabela user_exception
+        IF n_recursive_loop_count > 1 THEN
             dbms_output.put_line('Erro no handle_user_exception, as exceções internas não estão definidas.');
+            dbms_output.put_line(n_recursive_loop_count);
             RETURN;
         END IF;
 
+        -- Limpar contador de ciclos recursivos
         n_recursive_loop_count := 0;
 
+        -- Fazer log da exceção
         SELECT code, errm
             INTO n_code, v_errm
             FROM user_exception
             WHERE name = UPPER(p_name);
 
-        -- Fazer log da exceção
-        log_exception(n_code, get_stack_trace());
+        log_exception(n_code, get_stack_trace(), v_errm);
 
         RAISE_APPLICATION_ERROR(
             n_code,
             v_errm
         );
 
-        ROLLBACK;
-
         EXCEPTION
             WHEN NO_DATA_FOUND THEN
+                -- Incrementar contador de ciclos recursivos porque é feita uma chamada recursiva.
                 n_recursive_loop_count := n_recursive_loop_count + 1;
                 handle_user_exception('exception_not_defined');
     END handle_user_exception;
@@ -107,15 +114,13 @@ CREATE OR REPLACE PACKAGE BODY exception_handler AS
     IS
         v_stacktrace VARCHAR2(500) := get_stack_trace();
     BEGIN
-
-        log_exception(p_code, v_stacktrace);
-        
-        -- A instrução seguinte imprime o nome do programa que chamou a função handle_sys_exception
+        ROLLBACK;
         dbms_output.PUT_LINE(v_stacktrace);
         dbms_output.PUT_LINE(p_errm);
-
-        ROLLBACK;
+        log_exception(p_code, v_stacktrace, p_errm);
+        handle_user_exception('system_exception');
     END handle_sys_exception;
 
 END exception_handler;
 /
+
