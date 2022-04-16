@@ -51,7 +51,9 @@ CREATE OR REPLACE PACKAGE BODY et_pessoa AS
     PROCEDURE adicionar_funcionario(p_rec_pessoa IN pessoa%ROWTYPE) IS
     BEGIN
         SET TRANSACTION READ WRITE NAME 'Adicionar Funcionário';
+				
         adicionar_pessoa(p_rec_pessoa);
+
         INSERT INTO funcionario
             VALUES (p_rec_pessoa.nif);
         COMMIT;
