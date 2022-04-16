@@ -20,6 +20,7 @@ CREATE OR REPLACE PACKAGE BODY et_cirurgia AS
         END IF;
 
         -- Criar relatório para a cirurgia
+				-- O primeiro médico na lista fica associado ao relatório da cirurgia criada
         n_id_relatorio := et_relatorio.adicionar_relatorio(
                 p_nif => p_t_nif(1),
                 p_texto => p_relatorio,
