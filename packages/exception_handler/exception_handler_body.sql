@@ -8,6 +8,7 @@ CREATE OR REPLACE PACKAGE BODY exception_handler AS
         -- Começa no 2 para não colocar o get_stack_trace
         FOR j IN REVERSE 2..UTL_Call_Stack.Dynamic_Depth() LOOP
           v_stacktrace := v_stacktrace || UTL_Call_Stack.Concatenate_Subprogram(UTL_Call_Stack.Subprogram(j)) || ', ';
+          dbms_output.put_line('get_stack_trace');
         END LOOP;
 
 		-- Remover os dois últimos caracteres da string
@@ -84,6 +85,7 @@ CREATE OR REPLACE PACKAGE BODY exception_handler AS
 
         EXCEPTION
             WHEN NO_DATA_FOUND THEN
+                dbms_output.put_line('handle_user_exception');
                 handle_user_exception('exception_not_defined');
     END handle_user_exception;
 
