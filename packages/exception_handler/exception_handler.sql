@@ -2,7 +2,7 @@ CREATE OR REPLACE PACKAGE exception_handler AS
 
     exception_code_out_of_bounds EXCEPTION;
     ex_mal_formatada EXCEPTION;
-    
+
     -- Procedimento para adicionar uma exceção ao histórico
     PROCEDURE log_exception(
         p_code IN INT,
