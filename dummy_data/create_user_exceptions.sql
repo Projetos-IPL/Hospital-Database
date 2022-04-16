@@ -6,6 +6,12 @@ BEGIN
         'Exceção não definida.'
     );
 
+		exception_handler.add_user_exception(
+        -20002,
+        'generic_exception',
+        'Exceção genérica!'
+    );
+
 		COMMIT;
 
 		exception_handler.add_user_exception(
