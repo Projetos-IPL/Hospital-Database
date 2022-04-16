@@ -8,7 +8,7 @@ BEGIN
 				p_telefone => '910123001',
 				p_dta_nasc => TO_DATE('01-04-2000', 'dd-mm-yyyy'),
 				p_n_utente_saude => 123123101,
-				p_id_area_atuacao => 1
+				p_id_area_atuacao => 4
 		);
 
 		et_pessoa.adicionar_paciente(
@@ -19,7 +19,7 @@ BEGIN
 				p_telefone => '910123002',
 				p_dta_nasc => TO_DATE('12-07-2002', 'dd-mm-yyyy'),
 				p_n_utente_saude => 123123102,
-				p_id_area_atuacao => 3
+				p_id_area_atuacao => 2
 		);
 
 		et_pessoa.adicionar_paciente(
