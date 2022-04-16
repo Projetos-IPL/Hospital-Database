@@ -6,7 +6,7 @@ CREATE OR REPLACE TRIGGER tbi_area_atuacao
     FOR EACH ROW
 BEGIN
     :new.id_area_atuacao := pk_area_atuacao_seq.nextval;
-END;
+END tbi_area_atuacao;
 /
 
 -- Tabela tipo_cirurgia
@@ -16,9 +16,18 @@ CREATE OR REPLACE TRIGGER tbi_tipo_cirurgia
     FOR EACH ROW
 BEGIN
     :new.id_tipo_cirurgia := pk_tipo_cirurgia_seq.nextval;
-END;
+END tbi_tipo_cirurgia;
 /
 
+-- Tabela estado paciente
+
+CREATE OR REPLACE TRIGGER tbi_estado_paciente
+    BEFORE INSERT ON estado_paciente
+    FOR EACH ROW
+BEGIN
+    :NEW.id_estado_paciente := pk_estado_paciente_seq.nextval;
+END tbi_estado_paciente;
+/
 
 -- Tabela pessoa
 
@@ -184,7 +193,7 @@ CREATE OR REPLACE TRIGGER tai_consulta
 BEGIN
     -- O estado do tratamento é atualizado quando uma consulta é adicionada
     et_tratamento.atualizar_estado_tratamento(:NEW.id_tratamento, :NEW.id_estado_paciente);
-END;
+END tai_consulta;
 /
 
 -- Tabela consulta
@@ -217,7 +226,7 @@ BEGIN
             exception_handler.handle_user_exception('area_atuacao_nao_corresponde');
         WHEN OTHERS THEN
             exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
-END;
+END tbi_cirurgia;
 /
 
 CREATE OR REPLACE TRIGGER tbud_cirurgia
@@ -286,7 +295,7 @@ BEGIN
             exception_handler.handle_user_exception('excecao_mal_formatada');
         WHEN OTHERS THEN
             exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
-END;
+END tbi_user_exception;
 /
 
 
@@ -297,7 +306,7 @@ CREATE OR REPLACE TRIGGER tbi_exception_log
     FOR EACH ROW
 BEGIN
     :new.id_exception_log := pk_exception_log_seq.nextval;
-END;
+END tbi_exception_log;
 /
 
 
