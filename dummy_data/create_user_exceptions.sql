@@ -1,7 +1,14 @@
 BEGIN
-    SET TRANSACTION READ WRITE NAME 'create_user_exceptions';
 
-	exception_handler.add_user_exception(
+		exception_handler.add_user_exception(
+        -20001,
+        'exception_not_defined',
+        'Exceção não definida.'
+    );
+
+		COMMIT;
+
+		exception_handler.add_user_exception(
         -20799,
         'consulta_em_tratamento_finalizado',
         'Tentativa de registo de consulta em tratamento já finalizado.'
@@ -25,10 +32,10 @@ BEGIN
         'Paciente sem tratamento registado.'
     );
 
-	exception_handler.add_user_exception(
-            -20887,
-            'nome_invalido',
-            'Nome da pessoa inválido. O nome não pode conter números ou carateres especiais'
+		exception_handler.add_user_exception(
+				-20887,
+				'nome_invalido',
+				'Nome da pessoa inválido. O nome não pode conter números ou carateres especiais'
     );
 
     exception_handler.add_user_exception(
@@ -67,10 +74,10 @@ BEGIN
         'Nome/código de exceção mal formatada.'
     );
 
-	exception_handler.add_user_exception(
-		-20501,
-		'alteracao_cirurgia',
-		'Alteração/remoção de uma cirurgia não permitida!'
+		exception_handler.add_user_exception(
+				-20501,
+				'alteracao_cirurgia',
+				'Alteração/remoção de uma cirurgia não permitida!'
 		);
 
     COMMIT;
