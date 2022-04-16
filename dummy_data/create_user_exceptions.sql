@@ -74,13 +74,11 @@ BEGIN
         'Nome/código de exceção mal formatada.'
     );
 
-	exception_handler.add_user_exception(
+		exception_handler.add_user_exception(
 				-20501,
 				'alteracao_cirurgia',
 				'Alteração/remoção de uma cirurgia não permitida!'
 		);
-
-
 
     COMMIT;
 
