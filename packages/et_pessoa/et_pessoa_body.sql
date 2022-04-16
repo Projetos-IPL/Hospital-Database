@@ -61,7 +61,6 @@ CREATE OR REPLACE PACKAGE BODY et_pessoa AS
     END adicionar_paciente;
 
 
-
     -- Como este procedimento não é para ser utilizado individualmente o controlo da transação
     -- não é feito neste nível. O tratamento das exceções não é feito pelo mesmo motivo.
     PROCEDURE adicionar_funcionario(p_rec_pessoa IN pessoa%ROWTYPE) IS
