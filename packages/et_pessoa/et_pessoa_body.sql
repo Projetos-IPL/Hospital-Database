@@ -61,19 +61,18 @@ CREATE OR REPLACE PACKAGE BODY et_pessoa AS
     END adicionar_paciente;
 
 
+
+    -- Como este procedimento não é para ser utilizado individualmente o controlo da transação
+    -- não é feito neste nível. O tratamento das exceções não é feito pelo mesmo motivo.
     PROCEDURE adicionar_funcionario(p_rec_pessoa IN pessoa%ROWTYPE) IS
     BEGIN
-        SET TRANSACTION READ WRITE NAME 'Adicionar Funcionário';
-				
+
         adicionar_pessoa(p_rec_pessoa);
 
         INSERT INTO funcionario
             VALUES (p_rec_pessoa.nif);
         COMMIT;
 
-        EXCEPTION
-            WHEN OTHERS THEN
-                exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
     END adicionar_funcionario;
     
     
