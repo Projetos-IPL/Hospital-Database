@@ -62,6 +62,8 @@ CREATE OR REPLACE PACKAGE BODY exception_handler AS
         EXCEPTION
             WHEN exception_code_out_of_bounds THEN
                 handle_user_exception('exception_code_out_of_bounds');
+            WHEN exception_handler.ex_mal_formatada THEN
+                exception_handler.handle_user_exception('excecao_mal_formatada');
             WHEN OTHERS THEN
                 handle_sys_exception(SQLCODE, SQLERRM);
     END add_user_exception;

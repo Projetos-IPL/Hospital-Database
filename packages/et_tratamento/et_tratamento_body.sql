@@ -54,6 +54,8 @@ CREATE OR REPLACE PACKAGE BODY et_tratamento AS
         COMMIT;
 
         EXCEPTION
+            WHEN et_tratamento.ex_tratamento_repetido THEN
+                exception_handler.handle_user_exception('tratamento_repetido');
             WHEN OTHERS THEN
                 exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
     END registar_tratamento;
@@ -85,6 +87,12 @@ CREATE OR REPLACE PACKAGE BODY et_tratamento AS
                     p_nif,
                     p_id_area_atuacao
                    );
+
+        EXCEPTION
+            WHEN et_tratamento.ex_tratamento_repetido THEN
+                exception_handler.handle_user_exception('tratamento_repetido');
+            WHEN OTHERS THEN
+                exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
     END registar_primeiro_tratamento;
 
 
@@ -114,6 +122,8 @@ CREATE OR REPLACE PACKAGE BODY et_tratamento AS
                 exception_handler.handle_user_exception('tratamento_repetido');
             WHEN ex_tratamento_ja_finalizado THEN
                 exception_handler.handle_user_exception('tratamento_ja_finalizado');
+            WHEN et_tratamento.ex_alteracao_invalida THEN
+                exception_handler.handle_user_exception('alteracao_invalida');
             WHEN OTHERS THEN
                 exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
     END finalizar_tratamento;
