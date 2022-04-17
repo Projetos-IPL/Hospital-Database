@@ -54,7 +54,7 @@ BEGIN
 
     exception_handler.add_user_exception(
             -20996,
-            'finalizacao_repetida',
+            'tratamento_ja_finalizado',
             'Tentativa de finalizar tratamento já finalizado.');
 
     exception_handler.add_user_exception(

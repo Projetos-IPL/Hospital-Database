@@ -81,18 +81,18 @@ CREATE OR REPLACE PACKAGE BODY exception_handler AS
         -- acontece quando a exceção 'exception_not_defined' não existe na tabela user_exception
         IF n_recursive_loop_count > 1 THEN
             dbms_output.put_line('Erro no handle_user_exception, as exceções internas não estão definidas.');
-            dbms_output.put_line(n_recursive_loop_count);
             RETURN;
         END IF;
 
-        -- Limpar contador de ciclos recursivos
-        n_recursive_loop_count := 0;
 
         -- Fazer log da exceção
         SELECT code, errm
             INTO n_code, v_errm
             FROM user_exception
             WHERE name = UPPER(p_name);
+
+        -- Limpar contador de ciclos recursivos
+        n_recursive_loop_count := 0;
 
         log_exception(n_code, get_stack_trace(), v_errm);
 
