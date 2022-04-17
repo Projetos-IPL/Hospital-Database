@@ -5,7 +5,7 @@ CREATE OR REPLACE PACKAGE BODY et_cirurgia AS
         p_id_tratamento     IN cirurgia.id_tratamento%TYPE,
         p_id_tipo_cirurgia  IN cirurgia.id_tipo_cirurgia%TYPE,
         p_relatorio         IN relatorio.texto%TYPE,
-        p_t_nif             IN et_pessoa.t_nif)
+        p_t_nif_medicos     IN et_pessoa.t_nif)
     IS
         n_id_relatorio               INTEGER;
         n_id_cirurgia                INTEGER;
@@ -14,13 +14,13 @@ CREATE OR REPLACE PACKAGE BODY et_cirurgia AS
         validar_cirurgia(
                 p_id_tratamento=>p_id_tratamento,
                 p_id_tipo_cirurgia=>p_id_tipo_cirurgia,
-                p_t_nif=>p_t_nif
+                p_t_nif_medicos=>p_t_nif_medicos
         );
 
         -- Criar relatório para a cirurgia
 		-- O primeiro médico na lista fica associado ao relatório da cirurgia criada
         n_id_relatorio := et_relatorio.adicionar_relatorio(
-                p_nif => p_t_nif(1),
+                p_nif => p_t_nif_medicos(1),
                 p_texto => p_relatorio,
                 p_categoria => 'CIR'
             );
@@ -31,10 +31,10 @@ CREATE OR REPLACE PACKAGE BODY et_cirurgia AS
         RETURNING id_cirurgia INTO n_id_cirurgia;
 
         -- Inserir médicos na tabela de relação
-        FOR i IN p_t_nif.first..p_t_nif.last
+        FOR i IN p_t_nif_medicos.first..p_t_nif_medicos.last
             LOOP
                 INSERT INTO medico_cirurgia
-                VALUES (p_t_nif(i), n_id_cirurgia);
+                VALUES (p_t_nif_medicos(i), n_id_cirurgia);
             END LOOP;
 
         COMMIT;
@@ -54,7 +54,7 @@ CREATE OR REPLACE PACKAGE BODY et_cirurgia AS
     PROCEDURE validar_cirurgia(
         p_id_tratamento     IN cirurgia.id_tratamento%TYPE,
         p_id_tipo_cirurgia  IN cirurgia.id_tipo_cirurgia%TYPE,
-        p_t_nif             IN et_pessoa.t_nif)
+        p_t_nif_medicos     IN et_pessoa.t_nif)
     IS
         n_id_area_atuacao_medico     INTEGER;
         n_id_area_atuacao_tratamento INTEGER;
@@ -77,12 +77,12 @@ CREATE OR REPLACE PACKAGE BODY et_cirurgia AS
         WHERE id_tratamento = p_id_tratamento;
 
         -- Verificar se a área de atuacao dos médicos corresponde à do tratamento
-        FOR i IN p_t_nif.first..p_t_nif.last
+        FOR i IN p_t_nif_medicos.first..p_t_nif_medicos.last
             LOOP
                 SELECT id_area_atuacao
                 INTO n_id_area_atuacao_medico
                 FROM medico
-                WHERE nif = p_t_nif(i);
+                WHERE nif = p_t_nif_medicos(i);
 
                 IF n_id_area_atuacao_medico <> n_id_area_atuacao_tratamento THEN
                     RAISE ex_area_atuacao_nao_corresponde;
