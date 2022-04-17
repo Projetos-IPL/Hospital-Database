@@ -11,16 +11,14 @@ CREATE OR REPLACE PACKAGE BODY et_cirurgia AS
         n_id_cirurgia                INTEGER;
     BEGIN
 
-        IF NOT validar_cirurgia(
+        validar_cirurgia(
                 p_id_tratamento=>p_id_tratamento,
                 p_id_tipo_cirurgia=>p_id_tipo_cirurgia,
-                p_t_nif=>p_t_nif)
-        THEN
-            RAISE ex_area_atuacao_nao_corresponde;
-        END IF;
+                p_t_nif=>p_t_nif
+        );
 
         -- Criar relatório para a cirurgia
-				-- O primeiro médico na lista fica associado ao relatório da cirurgia criada
+		-- O primeiro médico na lista fica associado ao relatório da cirurgia criada
         n_id_relatorio := et_relatorio.adicionar_relatorio(
                 p_nif => p_t_nif(1),
                 p_texto => p_relatorio,
@@ -42,6 +40,10 @@ CREATE OR REPLACE PACKAGE BODY et_cirurgia AS
         COMMIT;
 
     EXCEPTION
+        WHEN ex_cirurgia_em_tratamento_finalizado THEN
+            exception_handler.handle_user_exception('cirurgia_em_tratamento_finalizado');
+        WHEN et_tratamento.ex_tratamento_nao_encontrado THEN
+            exception_handler.handle_user_exception('tratamento_nao_encontrado');
         WHEN ex_area_atuacao_nao_corresponde THEN
             exception_handler.handle_user_exception('area_atuacao_nao_corresponde');
         WHEN OTHERS THEN
@@ -49,15 +51,25 @@ CREATE OR REPLACE PACKAGE BODY et_cirurgia AS
     END registar_cirurgia;
 
 
-    FUNCTION validar_cirurgia(
+    PROCEDURE validar_cirurgia(
         p_id_tratamento     IN cirurgia.id_tratamento%TYPE,
         p_id_tipo_cirurgia  IN cirurgia.id_tipo_cirurgia%TYPE,
         p_t_nif             IN et_pessoa.t_nif)
-    RETURN BOOLEAN IS
+    IS
         n_id_area_atuacao_medico     INTEGER;
         n_id_area_atuacao_tratamento INTEGER;
         n_id_area_atuacao_cirurgia   INTEGER;
+        dt_dta_alta DATE;
     BEGIN
+
+        -- Verificar se o tratamento ainda está ativa
+        SELECT dta_alta INTO dt_dta_alta
+            FROM tratamento
+            WHERE id_tratamento = p_id_tratamento;
+
+        IF dt_dta_alta IS NOT NULL THEN
+            RAISE ex_cirurgia_em_tratamento_finalizado;
+        END IF;
 
         SELECT id_area_atuacao
         INTO n_id_area_atuacao_tratamento
@@ -87,13 +99,9 @@ CREATE OR REPLACE PACKAGE BODY et_cirurgia AS
             RAISE ex_area_atuacao_nao_corresponde;
         END IF;
 
-        RETURN TRUE;
-
     EXCEPTION
         WHEN no_data_found THEN
-            RETURN FALSE;
-        WHEN ex_area_atuacao_nao_corresponde THEN
-            RETURN FALSE;
+            RAISE et_tratamento.ex_tratamento_nao_encontrado;
     END validar_cirurgia;
 
 END et_cirurgia;

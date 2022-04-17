@@ -59,7 +59,7 @@ BEGIN
 
     exception_handler.add_user_exception(
             -20995,
-            'alteracao_invalida',
+            'alteracao_tratamento_invalida',
             'Tentativa de alteração do tratamento não permitida.');
 
     exception_handler.add_user_exception(
@@ -76,6 +76,11 @@ BEGIN
             -20501,
             'alteracao_cirurgia',
             'Alteração/remoção de uma cirurgia não permitida!');
+
+    exception_handler.add_user_exception(
+        -20502,
+        'cirurgia_em_tratamento_finalizado',
+        'Tentativa de registo de consulta em tratamento já finalizado.');
 
 END;
 /

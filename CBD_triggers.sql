@@ -184,9 +184,19 @@ CREATE OR REPLACE TRIGGER tbi_cirurgia
 DECLARE
     n_id_area_atuacao_tipo_cirugia INTEGER;
     n_id_area_atuacao_tratamento INTEGER;
+    dt_dta_alta DATE;
 BEGIN
     :new.id_cirurgia := pk_cirurgia_seq.nextval;
     :new.dta_realizacao := SYSDATE;
+
+        -- Verificar se o tratamento ainda está ativa
+    SELECT dta_alta INTO dt_dta_alta
+        FROM tratamento
+        WHERE id_tratamento = :NEW.id_tratamento;
+
+    IF dt_dta_alta IS NOT NULL THEN
+        RAISE et_cirurgia.ex_cirurgia_em_tratamento_finalizado;
+    END IF;
 
     -- Verificar se cirurgia é da área de atuação do tratamento e lançar exceção se não for.
     SELECT id_area_atuacao INTO n_id_area_atuacao_tratamento

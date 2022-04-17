@@ -123,7 +123,7 @@ CREATE OR REPLACE PACKAGE BODY et_tratamento AS
             WHEN ex_tratamento_ja_finalizado THEN
                 exception_handler.handle_user_exception('tratamento_ja_finalizado');
             WHEN et_tratamento.ex_alteracao_invalida THEN
-                exception_handler.handle_user_exception('alteracao_invalida');
+                exception_handler.handle_user_exception('alteracao_tratamento_invalida');
             WHEN OTHERS THEN
                 exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
     END finalizar_tratamento;
