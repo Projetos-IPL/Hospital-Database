@@ -105,6 +105,7 @@ CREATE OR REPLACE PACKAGE BODY exception_handler AS
             WHEN NO_DATA_FOUND THEN
                 -- Incrementar contador de ciclos recursivos porque é feita uma chamada recursiva.
                 n_recursive_loop_count := n_recursive_loop_count + 1;
+                dbms_output.put_line(p_name);
                 handle_user_exception('exception_not_defined');
     END handle_user_exception;
 
