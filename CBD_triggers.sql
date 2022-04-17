@@ -102,11 +102,6 @@ BEGIN
             END IF;
         END LOOP;
 
-EXCEPTION
-    WHEN et_tratamento.ex_tratamento_repetido THEN
-        exception_handler.handle_user_exception('tratamento_repetido');
-    WHEN OTHERS THEN
-        exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
 END tbi_tratamento;
 /
 
@@ -142,11 +137,6 @@ BEGIN
         RAISE et_tratamento.ex_alteracao_invalida;
     END IF;
 
-EXCEPTION
-    WHEN et_tratamento.ex_alteracao_invalida THEN
-        exception_handler.handle_user_exception('alteracao_invalida');
-    WHEN OTHERS THEN
-        exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
 END tbu_tratamento;
 /
 
@@ -164,11 +154,6 @@ BEGIN
         RAISE et_consulta.ex_consulta_em_tratamento_finalizado;
     END IF;
 
-    EXCEPTION
-        WHEN et_consulta.ex_consulta_em_tratamento_finalizado THEN
-            exception_handler.handle_user_exception('consulta_em_tratamento_finalizado');
-        WHEN OTHERS THEN
-            exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
 END tbi_consulta;
 /
 
@@ -179,11 +164,6 @@ BEGIN
     -- Como não é permitido atualizar ou apagar consultas, lançar exceção
     RAISE et_consulta.ex_alteracao_consulta;
 
-    EXCEPTION
-        WHEN et_consulta.ex_alteracao_consulta THEN
-            exception_handler.handle_user_exception('alteracao_consulta');
-        WHEN OTHERS THEN
-            exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
 END tbud_consulta;
 /
 
@@ -221,11 +201,6 @@ BEGIN
         RAISE et_cirurgia.ex_area_atuacao_nao_corresponde;
     END IF;
 
-    EXCEPTION
-        WHEN et_cirurgia.ex_area_atuacao_nao_corresponde THEN
-            exception_handler.handle_user_exception('area_atuacao_nao_corresponde');
-        WHEN OTHERS THEN
-            exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
 END tbi_cirurgia;
 /
 
@@ -235,12 +210,6 @@ CREATE OR REPLACE TRIGGER tbud_cirurgia
 BEGIN
     -- Como não é permitido atualizar ou apagar uma cirurgia, lançar exceção
     RAISE et_cirurgia.ex_alteracao_cirurgia;
-
-    EXCEPTION
-        WHEN et_cirurgia.ex_alteracao_cirurgia THEN
-            exception_handler.handle_user_exception('alteracao_cirurgia');
-        WHEN OTHERS THEN
-            exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
 END tbud_cirurgia;
 /
 
@@ -260,13 +229,6 @@ CREATE OR REPLACE TRIGGER tbud_relatorio
 BEGIN
     -- Como não é permitido atualizar ou apagar relatório, lançar exceção
     RAISE et_relatorio.ex_alteracao_relatorio;
-
-    EXCEPTION
-        WHEN et_relatorio.ex_alteracao_relatorio THEN
-            dbms_output.put_line('3');
-            exception_handler.handle_user_exception('alteracao_relatorio');
-        WHEN OTHERS THEN
-            exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
 END tbud_relatorio;
 /
 
@@ -290,11 +252,6 @@ BEGIN
     -- converter para upper case
     :NEW.name := UPPER(:NEW.name);
 
-    EXCEPTION
-        WHEN exception_handler.ex_mal_formatada THEN
-            exception_handler.handle_user_exception('excecao_mal_formatada');
-        WHEN OTHERS THEN
-            exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
 END tbi_user_exception;
 /
 
