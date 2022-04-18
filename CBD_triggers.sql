@@ -91,10 +91,8 @@ BEGIN
     :new.id_tratamento := pk_tratamento_seq.nextval;
     :new.dta_inicio := SYSDATE;
 
-    /*
-        Procurar registos ativos do paciente e lançar exceção se encontrar um
-        tratamento para a mesma área de atuação do novo tratamento.
-     */
+    -- Procurar registos ativos do paciente e lançar exceção se encontrar um
+    -- tratamento para a mesma área de atuação do novo tratamento.
     FOR rec_tratamento IN cur_tratamentos_ativos
         LOOP
             IF :new.id_area_atuacao = rec_tratamento.id_area_atuacao THEN
@@ -150,7 +148,7 @@ BEGIN
     :NEW.id_consulta := pk_consulta_seq.nextval;
     :NEW.dta_realizacao := SYSDATE;
 
-    IF et_consulta.validar_nova_consulta(:NEW.id_tratamento) = FALSE THEN
+    IF NOT et_consulta.validar_nova_consulta(:NEW.id_tratamento) THEN
         RAISE et_consulta.ex_consulta_em_tratamento_finalizado;
     END IF;
 
