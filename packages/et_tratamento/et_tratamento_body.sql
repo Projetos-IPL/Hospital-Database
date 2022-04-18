@@ -178,10 +178,6 @@ CREATE OR REPLACE PACKAGE BODY et_tratamento AS
     BEGIN
         UPDATE tratamento SET id_estado_paciente = p_id_estado_paciente
             WHERE id_tratamento = p_id_tratamento;
-
-        EXCEPTION
-            WHEN OTHERS THEN
-                exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
     END atualizar_estado_tratamento;
 
 END et_tratamento;
