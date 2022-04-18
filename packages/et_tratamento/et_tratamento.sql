@@ -22,8 +22,8 @@ CREATE OR REPLACE PACKAGE et_tratamento AS
     PROCEDURE finalizar_tratamento(
         p_id_tratamento IN tratamento.id_tratamento%TYPE);
 
-    /** Procedimento para validar alterações num tratamento.
-      Devolve TRUE se as alterações respeitarem os requisitos. */
+    -- Procedimento para validar alterações num tratamento.
+    -- Devolve TRUE se as alterações respeitarem os requisitos.
     FUNCTION validar_alteracao(
         p_rec_novo_trat     IN tratamento%rowtype,
         p_rec_antigo_trat   IN tratamento%rowtype)
