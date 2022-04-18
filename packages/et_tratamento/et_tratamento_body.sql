@@ -88,11 +88,6 @@ CREATE OR REPLACE PACKAGE BODY et_tratamento AS
                     p_id_area_atuacao
                    );
 
-        EXCEPTION
-            WHEN et_tratamento.ex_tratamento_repetido THEN
-                exception_handler.handle_user_exception('tratamento_repetido');
-            WHEN OTHERS THEN
-                exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
     END registar_primeiro_tratamento;
 
 

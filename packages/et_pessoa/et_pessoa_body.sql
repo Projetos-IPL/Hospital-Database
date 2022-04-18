@@ -53,6 +53,8 @@ CREATE OR REPLACE PACKAGE BODY et_pessoa AS
                 et_tratamento.print_error_log;
                 et_tratamento.limpar_error_log;
                 exception_handler.handle_user_exception('paciente_ja_tem_tratamento');
+            WHEN et_tratamento.ex_tratamento_repetido THEN
+                exception_handler.handle_user_exception('tratamento_repetido');
             WHEN OTHERS THEN
                 exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
     END adicionar_paciente;
