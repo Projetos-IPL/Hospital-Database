@@ -174,7 +174,7 @@ BEGIN
 END tai_consulta;
 /
 
--- Tabela consulta
+-- Tabela cirurgia
 
 CREATE OR REPLACE TRIGGER tbi_cirurgia
     BEFORE INSERT ON cirurgia
@@ -247,9 +247,9 @@ CREATE OR REPLACE TRIGGER tbi_user_exception
     BEFORE INSERT ON user_exception
     FOR EACH ROW
 BEGIN
-    -- verifica se o código da exceção não contém espaços
-    IF INSTR(:NEW.code, ' ') <> 0 THEN
-        RAISE exception_handler.ex_mal_formatada;
+    -- verifica se o código da exceção se encontra no intervalo correto
+    IF :NEW.code NOT BETWEEN -20999 AND -20000 THEN
+        RAISE exception_handler.exception_code_out_of_bounds;
     END IF;
 
     -- verifica se o nome da exceção não contém espaços
