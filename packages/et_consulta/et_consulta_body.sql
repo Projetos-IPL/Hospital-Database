@@ -22,11 +22,7 @@ CREATE OR REPLACE PACKAGE BODY et_consulta AS
         END IF;
         
         -- verifica se tratamento ainda está ativo
-        SELECT dta_alta INTO d_dta_alta
-            FROM tratamento
-            WHERE id_tratamento = p_id_tratamento;
-            
-        IF d_dta_alta IS NOT NULL THEN
+        IF NOT validar_nova_consulta(p_id_tratamento) THEN
             RAISE ex_consulta_em_tratamento_finalizado;
         END IF;
         
