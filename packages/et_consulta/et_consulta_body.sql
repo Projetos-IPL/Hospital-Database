@@ -44,6 +44,8 @@ CREATE OR REPLACE PACKAGE BODY et_consulta AS
                 exception_handler.handle_user_exception('consulta_em_tratamento_finalizado');
             WHEN et_tratamento.ex_tratamento_nao_encontrado THEN
                 exception_handler.handle_user_exception('tratamento_nao_encontrado');
+            WHEN et_tratamento.ex_alteracao_invalida THEN
+                exception_handler.handle_user_exception('alteracao_tratamento_invalida');
             WHEN OTHERS THEN
                 exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
     END registar_consulta;
