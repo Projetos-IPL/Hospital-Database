@@ -14,9 +14,6 @@ CREATE OR REPLACE PACKAGE BODY et_relatorio AS
 
         RETURN n_id_relatorio;
 
-        EXCEPTION
-            WHEN OTHERS THEN
-                exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
     END adicionar_relatorio;
 
 END et_relatorio;
