@@ -14,8 +14,8 @@ BEGIN
 
     exception_handler.add_user_exception(
             -20799,
-            'consulta_em_tratamento_finalizado',
-            'Tentativa de registo de consulta em tratamento já finalizado.');
+            'consulta_em_processo_finalizado',
+            'Tentativa de registo de consulta em processo já finalizado.');
 
     exception_handler.add_user_exception(
             -20798,
@@ -29,8 +29,8 @@ BEGIN
 
     exception_handler.add_user_exception(
             -20888,
-            'paciente_sem_tratamento',
-            'Paciente sem tratamento registado.');
+            'paciente_sem_processo',
+            'Paciente sem processo registado.');
 
     exception_handler.add_user_exception(
             -20887,
@@ -44,23 +44,23 @@ BEGIN
 
     exception_handler.add_user_exception(
             -20998,
-            'tratamento_repetido',
-            'Tentativa de abertura de tratamento repetido para o mesmo paciente.');
+            'processo_repetido',
+            'Tentativa de abertura de processo repetido para o mesmo paciente.');
 
     exception_handler.add_user_exception(
             -20997,
-            'tratamento_nao_encontrado',
-            'Tratamento não encontrado.');
+            'processo_nao_encontrado',
+            'processo não encontrado.');
 
     exception_handler.add_user_exception(
             -20996,
-            'tratamento_ja_finalizado',
-            'Tentativa de finalizar tratamento já finalizado.');
+            'processo_ja_finalizado',
+            'Tentativa de finalizar processo já finalizado.');
 
     exception_handler.add_user_exception(
             -20995,
-            'alteracao_tratamento_invalida',
-            'Tentativa de alteração do tratamento não permitida.');
+            'alteracao_processo_invalida',
+            'Tentativa de alteração do processo não permitida.');
 
     exception_handler.add_user_exception(
             -20101,
@@ -79,8 +79,8 @@ BEGIN
 
     exception_handler.add_user_exception(
         -20502,
-        'cirurgia_em_tratamento_finalizado',
-        'Tentativa de registo de consulta em tratamento já finalizado.');
+        'cirurgia_em_processo_finalizado',
+        'Tentativa de registo de consulta em processo já finalizado.');
 
 END;
 /

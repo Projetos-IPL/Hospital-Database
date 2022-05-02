@@ -11,7 +11,7 @@ SET SERVEROUTPUT ON;
 @@ exception_handler_body.sql
 
 @@ et_pessoa.sql
-@@ et_tratamento.sql
+@@ et_processo.sql
 @@ et_cirurgia.sql
 @@ et_consulta.sql
 @@ et_relatorio.sql
@@ -22,7 +22,7 @@ SET SERVEROUTPUT ON;
 @@ et_consulta_body.sql
 @@ et_pessoa_body.sql
 @@ et_relatorio_body.sql
-@@ et_tratamento_body.sql
+@@ et_processo_body.sql
 
 @@ CBD_triggers.sql
 

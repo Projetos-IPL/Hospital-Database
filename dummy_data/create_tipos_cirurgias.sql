@@ -1,23 +1,23 @@
 INSERT INTO tipo_cirurgia (id_area_atuacao, nome)
-    VALUES (1, 'Tratamento não cirúrgico de lesões traumáticas ou degenerativas');
+    VALUES (1, 'processo não cirúrgico de lesões traumáticas ou degenerativas');
 
 INSERT INTO tipo_cirurgia (id_area_atuacao, nome)
-    VALUES (1, 'Tratamento cirúrgico, incluindo artroscópico, das instabilidades e luxações do ombro e cotovelo');
+    VALUES (1, 'processo cirúrgico, incluindo artroscópico, das instabilidades e luxações do ombro e cotovelo');
 
 INSERT INTO tipo_cirurgia (id_area_atuacao, nome)
-    VALUES (1, 'Tratamento cirúrgico, nomeadamente artroscópico, das roturas e tendinites cálcicas dos tendões do ombro');
+    VALUES (1, 'processo cirúrgico, nomeadamente artroscópico, das roturas e tendinites cálcicas dos tendões do ombro');
 
 INSERT INTO tipo_cirurgia (id_area_atuacao, nome)
-    VALUES (1, 'Tratamento cirúrgico das fraturas na região do ombro e cotovelo');
+    VALUES (1, 'processo cirúrgico das fraturas na região do ombro e cotovelo');
 
 INSERT INTO tipo_cirurgia (id_area_atuacao, nome)
     VALUES (1, 'Artroplastias do ombro e cotovelo em situações degenerativas ou traumáticas');
 
 INSERT INTO tipo_cirurgia (id_area_atuacao, nome)
-    VALUES (2, 'Tratamento cirúrgico à anca');
+    VALUES (2, 'processo cirúrgico à anca');
 
 INSERT INTO tipo_cirurgia (id_area_atuacao, nome)
-    VALUES (2, 'Tratamento cirúrgico à bacia');
+    VALUES (2, 'processo cirúrgico à bacia');
 
 INSERT INTO tipo_cirurgia (id_area_atuacao, nome)
     VALUES (3, 'Cirurgia da hérnia discal cervical');
@@ -41,10 +41,10 @@ INSERT INTO tipo_cirurgia (id_area_atuacao, nome)
     VALUES (3, 'Vertebroplastia (colocação de cimento na vértebra)');
 
 INSERT INTO tipo_cirurgia (id_area_atuacao, nome)
-    VALUES (3, 'Tratamento de fraturas de vértebras');
+    VALUES (3, 'processo de fraturas de vértebras');
 
 INSERT INTO tipo_cirurgia (id_area_atuacao, nome)
-    VALUES (3, 'Tratamento da dor ciática');
+    VALUES (3, 'processo da dor ciática');
 
 INSERT INTO tipo_cirurgia (id_area_atuacao, nome)
     VALUES (3, 'Correção das deformidades da coluna no adulto (escolioses ou cifoses)');

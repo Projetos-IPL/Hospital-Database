@@ -1,4 +1,4 @@
-CREATE OR REPLACE PACKAGE BODY et_tratamento AS
+CREATE OR REPLACE PACKAGE BODY et_processo AS
 
     -- Esta variável é utilizada para registar erros, por exemplo, alterações inválidas que
     -- são detetadas durante o procedimento de validação de alterações.
@@ -33,19 +33,19 @@ CREATE OR REPLACE PACKAGE BODY et_tratamento AS
     -- Procedimento para imprimir o registo de erro
     PROCEDURE print_error_log IS
     BEGIN
-        dbms_output.put_line('et_tratamento error logs');
+        dbms_output.put_line('et_processo error logs');
         dbms_output.put_line(v_error_logs);
     END;
 
 
-    PROCEDURE registar_tratamento(
-        p_nif                IN tratamento.nif%TYPE,
-        p_id_area_atuacao    IN tratamento.id_area_atuacao%TYPE
+    PROCEDURE registar_processo(
+        p_nif                IN processo.nif%TYPE,
+        p_id_area_atuacao    IN processo.id_area_atuacao%TYPE
     )
     IS
     BEGIN
-        SET TRANSACTION READ WRITE NAME 'Registar tratamento';
-            INSERT INTO tratamento
+        SET TRANSACTION READ WRITE NAME 'Registar processo';
+            INSERT INTO processo
                 (nif, id_area_atuacao)
                 VALUES (
                         p_nif,
@@ -54,104 +54,104 @@ CREATE OR REPLACE PACKAGE BODY et_tratamento AS
         COMMIT;
 
         EXCEPTION
-            WHEN et_tratamento.ex_tratamento_repetido THEN
-                exception_handler.handle_user_exception('tratamento_repetido');
+            WHEN et_processo.ex_processo_repetido THEN
+                exception_handler.handle_user_exception('processo_repetido');
             WHEN OTHERS THEN
                 exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
-    END registar_tratamento;
+    END registar_processo;
 
 
     -- Como este procedimento é apenas utilizado no procedimento et_pessoa.adicionar_paciente
     -- e não é suposto ser usado individualmente as suas exceções não são tratadas aqui.
     -- O controlo da transação também não é feito aqui pelo mesmo motivo.
-    PROCEDURE registar_primeiro_tratamento(
-            p_nif                IN tratamento.nif%TYPE,
-            p_id_area_atuacao    IN tratamento.id_area_atuacao%TYPE
+    PROCEDURE registar_primeiro_processo(
+            p_nif                IN processo.nif%TYPE,
+            p_id_area_atuacao    IN processo.id_area_atuacao%TYPE
         )
     IS
         n_count_trat INT;
     BEGIN
-        -- Verificar se o paciente já tem algum tratamento associado
+        -- Verificar se o paciente já tem algum processo associado
         SELECT COUNT(1) INTO n_count_trat
-            FROM tratamento
+            FROM processo
             WHERE nif = p_nif;
 
         IF n_count_trat <> 0 THEN
-            adicionar_error_log('Paciente com nif:' || p_nif || ' já tem pelo menos um tratamento associado.');
-            RAISE ex_paciente_ja_tem_tratamento;
+            adicionar_error_log('Paciente com nif:' || p_nif || ' já tem pelo menos um processo associado.');
+            RAISE ex_paciente_ja_tem_processo;
         END IF;
 
-        INSERT INTO tratamento
+        INSERT INTO processo
             (nif, id_area_atuacao)
             VALUES (
                     p_nif,
                     p_id_area_atuacao
                    );
 
-    END registar_primeiro_tratamento;
+    END registar_primeiro_processo;
 
 
-    PROCEDURE finalizar_tratamento(
-        p_id_tratamento IN tratamento.id_tratamento%TYPE
+    PROCEDURE finalizar_processo(
+        p_id_processo IN processo.id_processo%TYPE
     )
     IS
         dt_dta_alta DATE;
     BEGIN
-        -- Obter data de alta do tratamento
+        -- Obter data de alta do processo
         SELECT dta_alta INTO dt_dta_alta
-            FROM tratamento
-            WHERE id_tratamento = p_id_tratamento;
+            FROM processo
+            WHERE id_processo = p_id_processo;
 
         IF dt_dta_alta IS NOT NULL THEN
-            RAISE ex_tratamento_ja_finalizado;
+            RAISE ex_processo_ja_finalizado;
         END IF;
 
         SET TRANSACTION READ WRITE NAME 'Finalizar registo';
-        UPDATE tratamento
+        UPDATE processo
             SET dta_alta = SYSDATE
-            WHERE id_tratamento = p_id_tratamento;
+            WHERE id_processo = p_id_processo;
         COMMIT;
 
         EXCEPTION
             WHEN NO_DATA_FOUND THEN
-                exception_handler.handle_user_exception('tratamento_repetido');
-            WHEN ex_tratamento_ja_finalizado THEN
-                exception_handler.handle_user_exception('tratamento_ja_finalizado');
-            WHEN et_tratamento.ex_alteracao_invalida THEN
-                exception_handler.handle_user_exception('alteracao_tratamento_invalida');
+                exception_handler.handle_user_exception('processo_repetido');
+            WHEN ex_processo_ja_finalizado THEN
+                exception_handler.handle_user_exception('processo_ja_finalizado');
+            WHEN et_processo.ex_alteracao_invalida THEN
+                exception_handler.handle_user_exception('alteracao_processo_invalida');
             WHEN OTHERS THEN
                 exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
-    END finalizar_tratamento;
+    END finalizar_processo;
 
 
     FUNCTION validar_alteracao(
-        p_rec_novo_trat     IN tratamento%rowtype,
-        p_rec_antigo_trat   IN tratamento%rowtype)
+        p_rec_novo_trat     IN processo%rowtype,
+        p_rec_antigo_trat   IN processo%rowtype)
     RETURN BOOLEAN IS
         b_valid BOOLEAN := TRUE;
     BEGIN
         -- SE A DATA DE ALTA JÁ FOI ATRIBUIDA NÃO É PERMITIDO EFETUAR ALTERAÇÕES NO ESTADO DO PACIENTE, ELE ESTÁ BEM.
         IF p_rec_antigo_trat.dta_alta IS NOT NULL THEN
-            adicionar_error_log('Tentativa de alteração de tratamento após alta atribuida.');
+            adicionar_error_log('Tentativa de alteração de processo após alta atribuida.');
             b_valid := FALSE;
         END IF;
 
         --  VERIFICAR SE EXISTE ALTERAÇÕES EM CAMPOS QUE NÃO PODEM SER ALTERADOS.
         -- Alteração PK
-        IF p_rec_novo_trat.id_tratamento <> p_rec_antigo_trat.id_tratamento THEN
-            adicionar_error_log('Tentativa de alteração do id_tratamento do tratamento.');
+        IF p_rec_novo_trat.id_processo <> p_rec_antigo_trat.id_processo THEN
+            adicionar_error_log('Tentativa de alteração do id_processo do processo.');
             b_valid := FALSE;
         END IF;
 
         -- Alteração paciente
         IF p_rec_novo_trat.nif <> p_rec_antigo_trat.nif THEN
-            adicionar_error_log('Tentativa de alteração do nif do tratamento.');
+            adicionar_error_log('Tentativa de alteração do nif do processo.');
             b_valid := FALSE;
         END IF;
 
         -- Alteração da área de atuação
         IF p_rec_novo_trat.id_area_atuacao <> p_rec_antigo_trat.id_area_atuacao THEN
-            adicionar_error_log('Tentativa de alteração da área de atuação no tratamento');
+            adicionar_error_log('Tentativa de alteração da área de atuação no processo');
             b_valid := FALSE;
         END IF;
 
@@ -171,14 +171,14 @@ CREATE OR REPLACE PACKAGE BODY et_tratamento AS
     END validar_alteracao;
 
     -- Procedimento para atualizar o estado de um paciente
-    PROCEDURE atualizar_estado_tratamento(
-        p_id_tratamento tratamento.id_tratamento%TYPE,
-        p_id_estado_paciente tratamento.id_estado_paciente%TYPE
+    PROCEDURE atualizar_estado_processo(
+        p_id_processo processo.id_processo%TYPE,
+        p_id_estado_paciente processo.id_estado_paciente%TYPE
     ) IS
     BEGIN
-        UPDATE tratamento SET id_estado_paciente = p_id_estado_paciente
-            WHERE id_tratamento = p_id_tratamento;
-    END atualizar_estado_tratamento;
+        UPDATE processo SET id_estado_paciente = p_id_estado_paciente
+            WHERE id_processo = p_id_processo;
+    END atualizar_estado_processo;
 
-END et_tratamento;
+END et_processo;
 /

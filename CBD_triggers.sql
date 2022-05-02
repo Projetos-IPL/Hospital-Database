@@ -61,65 +61,65 @@ CREATE OR REPLACE TRIGGER tai_paciente
 DECLARE
     n_count_paciente INTEGER;
 BEGIN
-    -- Verificar se paciente tem tratamento associado
+    -- Verificar se paciente tem processo associado
     SELECT COUNT(nif) INTO n_count_paciente
-        FROM tratamento
+        FROM processo
         WHERE nif = :NEW.nif;
 
     IF n_count_paciente = 0 THEN
-        RAISE et_pessoa.ex_paciente_sem_tratamento;
+        RAISE et_pessoa.ex_paciente_sem_processo;
     END IF;
 
 END tai_paciente;
 /
 
 
--- Tabela tratamento
+-- Tabela processo
 
-CREATE OR REPLACE TRIGGER tbi_tratamento
-    BEFORE INSERT ON tratamento
+CREATE OR REPLACE TRIGGER tbi_processo
+    BEFORE INSERT ON processo
     FOR EACH ROW
 DECLARE
-    CURSOR cur_tratamentos_ativos IS
+    CURSOR cur_processos_ativos IS
         SELECT *
-        FROM tratamento
+        FROM processo
         WHERE nif = :new.nif
           AND dta_alta IS NULL
     ;
-    rec_tratamento tratamento%ROWTYPE;
+    rec_processo processo%ROWTYPE;
 BEGIN
-    :new.id_tratamento := pk_tratamento_seq.nextval;
+    :new.id_processo := pk_processo_seq.nextval;
     :new.dta_inicio := SYSDATE;
 
     -- Procurar registos ativos do paciente e lançar exceção se encontrar um
-    -- tratamento para a mesma área de atuação do novo tratamento.
-    FOR rec_tratamento IN cur_tratamentos_ativos
+    -- processo para a mesma área de atuação do novo processo.
+    FOR rec_processo IN cur_processos_ativos
         LOOP
-            IF :new.id_area_atuacao = rec_tratamento.id_area_atuacao THEN
-                RAISE et_tratamento.ex_tratamento_repetido;
+            IF :new.id_area_atuacao = rec_processo.id_area_atuacao THEN
+                RAISE et_processo.ex_processo_repetido;
             END IF;
         END LOOP;
 
-END tbi_tratamento;
+END tbi_processo;
 /
 
-CREATE OR REPLACE TRIGGER tbu_tratamento
-    BEFORE UPDATE ON tratamento
+CREATE OR REPLACE TRIGGER tbu_processo
+    BEFORE UPDATE ON processo
     FOR EACH ROW
 DECLARE
     b_alteracao_valida BOOLEAN;
-    rec_novo_trat      tratamento%ROWTYPE;
-    rec_antigo_trat    tratamento%ROWTYPE;
+    rec_novo_trat      processo%ROWTYPE;
+    rec_antigo_trat    processo%ROWTYPE;
 BEGIN
     -- Passar dados do new e old para as variáveis
-    rec_novo_trat.id_tratamento := :new.id_tratamento;
+    rec_novo_trat.id_processo := :new.id_processo;
     rec_novo_trat.nif := :new.nif;
     rec_novo_trat.id_area_atuacao := :new.id_area_atuacao;
     rec_novo_trat.id_estado_paciente := :new.id_estado_paciente;
     rec_novo_trat.dta_inicio := :new.dta_inicio;
     rec_novo_trat.dta_alta := :new.dta_alta;
 
-    rec_antigo_trat.id_tratamento := :old.id_tratamento;
+    rec_antigo_trat.id_processo := :old.id_processo;
     rec_antigo_trat.nif := :old.nif;
     rec_antigo_trat.id_area_atuacao := :old.id_area_atuacao;
     rec_antigo_trat.id_estado_paciente := :old.id_estado_paciente;
@@ -127,15 +127,15 @@ BEGIN
     rec_antigo_trat.dta_alta := :old.dta_alta;
 
     -- Validar alterações
-    b_alteracao_valida := et_tratamento.validar_alteracao(rec_novo_trat, rec_antigo_trat);
+    b_alteracao_valida := et_processo.validar_alteracao(rec_novo_trat, rec_antigo_trat);
 
     -- Se as validações forem inválidas lançar exceção.
     IF b_alteracao_valida = FALSE THEN
-        et_tratamento.print_error_log();
-        RAISE et_tratamento.ex_alteracao_invalida;
+        et_processo.print_error_log();
+        RAISE et_processo.ex_alteracao_invalida;
     END IF;
 
-END tbu_tratamento;
+END tbu_processo;
 /
 
 
@@ -148,8 +148,8 @@ BEGIN
     :NEW.id_consulta := pk_consulta_seq.nextval;
     :NEW.dta_realizacao := SYSDATE;
 
-    IF NOT et_consulta.validar_nova_consulta(:NEW.id_tratamento) THEN
-        RAISE et_consulta.ex_consulta_em_tratamento_finalizado;
+    IF NOT et_consulta.validar_nova_consulta(:NEW.id_processo) THEN
+        RAISE et_consulta.ex_consulta_em_processo_finalizado;
     END IF;
 
 END tbi_consulta;
@@ -169,8 +169,8 @@ CREATE OR REPLACE TRIGGER tai_consulta
     AFTER INSERT ON consulta
     FOR EACH ROW
 BEGIN
-    -- O estado do tratamento é atualizado quando uma consulta é adicionada
-    et_tratamento.atualizar_estado_tratamento(:NEW.id_tratamento, :NEW.id_estado_paciente);
+    -- O estado do processo é atualizado quando uma consulta é adicionada
+    et_processo.atualizar_estado_processo(:NEW.id_processo, :NEW.id_estado_paciente);
 END tai_consulta;
 /
 
@@ -181,31 +181,31 @@ CREATE OR REPLACE TRIGGER tbi_cirurgia
     FOR EACH ROW
 DECLARE
     n_id_area_atuacao_tipo_cirugia INTEGER;
-    n_id_area_atuacao_tratamento INTEGER;
+    n_id_area_atuacao_processo INTEGER;
     dt_dta_alta DATE;
 BEGIN
     :new.id_cirurgia := pk_cirurgia_seq.nextval;
     :new.dta_realizacao := SYSDATE;
 
-        -- Verificar se o tratamento ainda está ativa
+        -- Verificar se o processo ainda está ativa
     SELECT dta_alta INTO dt_dta_alta
-        FROM tratamento
-        WHERE id_tratamento = :NEW.id_tratamento;
+        FROM processo
+        WHERE id_processo = :NEW.id_processo;
 
     IF dt_dta_alta IS NOT NULL THEN
-        RAISE et_cirurgia.ex_cirurgia_em_tratamento_finalizado;
+        RAISE et_cirurgia.ex_cirurgia_em_processo_finalizado;
     END IF;
 
-    -- Verificar se cirurgia é da área de atuação do tratamento e lançar exceção se não for.
-    SELECT id_area_atuacao INTO n_id_area_atuacao_tratamento
-        FROM tratamento
-        WHERE id_tratamento = :NEW.id_tratamento;
+    -- Verificar se cirurgia é da área de atuação do processo e lançar exceção se não for.
+    SELECT id_area_atuacao INTO n_id_area_atuacao_processo
+        FROM processo
+        WHERE id_processo = :NEW.id_processo;
 
     SELECT id_area_atuacao INTO n_id_area_atuacao_tipo_cirugia
         FROM tipo_cirurgia
         WHERE id_tipo_cirurgia = :NEW.id_tipo_cirurgia;
 
-    IF n_id_area_atuacao_tratamento <> n_id_area_atuacao_tipo_cirugia THEN
+    IF n_id_area_atuacao_processo <> n_id_area_atuacao_tipo_cirugia THEN
         RAISE et_cirurgia.ex_area_atuacao_nao_corresponde;
     END IF;
 

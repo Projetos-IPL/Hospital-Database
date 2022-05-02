@@ -14,8 +14,8 @@ CREATE SEQUENCE pk_relatorio_seq
     NOCACHE;
 
 
--- Tratamento
-CREATE SEQUENCE pk_tratamento_seq
+-- processo
+CREATE SEQUENCE pk_processo_seq
     INCREMENT BY 1
     MINVALUE 1
     MAXVALUE 999999999

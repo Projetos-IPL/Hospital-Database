@@ -35,9 +35,17 @@ CREATE TABLE pessoa
     prim_nome VARCHAR2(30)  NOT NULL,
     ult_nome  VARCHAR2(30)  NOT NULL,
     morada    VARCHAR2(200) NOT NULL,
-    telefone  VARCHAR2(9)   NOT NULL,
     dta_nasc  DATE          NOT NULL,
     CONSTRAINT pk_pessoa PRIMARY KEY (nif)
+);
+
+
+CREATE TABLE telefone
+(
+    nif      NUMBER(9),
+    telefone VARCHAR2(9),
+    CONSTRAINT pk_telefone PRIMARY KEY (nif, telefone),
+    CONSTRAINT fk_telefone_pessoa FOREIGN KEY (nif) REFERENCES pessoa
 );
 
 
@@ -98,22 +106,22 @@ CREATE TABLE relatorio
 
 
 
-CREATE TABLE tratamento
+CREATE TABLE processo
 (
-    id_tratamento      INTEGER,
+    id_processo      INTEGER,
     nif                NUMBER(9),
     id_area_atuacao    INTEGER,
     id_estado_paciente INTEGER,
     dta_inicio         DATE,
     dta_alta           DATE,
-    CONSTRAINT pk_tratamento PRIMARY KEY (id_tratamento),
+    CONSTRAINT pk_processo PRIMARY KEY (id_processo),
     /*
-    Esta constraint é deferida para permitir a inserção do tratamento antes do paciente
-    para validar no trigger after insert do paciente se existe um tratamento associado a ele.
+    Esta constraint é deferida para permitir a inserção do processo antes do paciente
+    para validar no trigger after insert do paciente se existe um processo associado a ele.
      */
-    CONSTRAINT fk_tratamento_paciente FOREIGN KEY (nif)
+    CONSTRAINT fk_processo_paciente FOREIGN KEY (nif)
         REFERENCES paciente (nif) DEFERRABLE INITIALLY DEFERRED,
-    CONSTRAINT fk_tratamento_area_atuacao FOREIGN KEY (id_area_atuacao)
+    CONSTRAINT fk_processo_area_atuacao FOREIGN KEY (id_area_atuacao)
         REFERENCES area_atuacao (id_area_atuacao)
 );
 
@@ -122,14 +130,14 @@ CREATE TABLE tratamento
 CREATE TABLE consulta
 (
     id_consulta        INTEGER,
-    id_tratamento      INTEGER,
+    id_processo      INTEGER,
     nif_funcionario    NUMBER(9),
     id_relatorio       INTEGER,
     id_estado_paciente INTEGER,
     dta_realizacao     DATE,
     CONSTRAINT pk_consulta PRIMARY KEY (id_consulta),
-    CONSTRAINT fk_consulta_tratamento FOREIGN KEY (id_tratamento)
-        REFERENCES tratamento (id_tratamento),
+    CONSTRAINT fk_consulta_processo FOREIGN KEY (id_processo)
+        REFERENCES processo (id_processo),
     CONSTRAINT fk_consulta_funcionario FOREIGN KEY (nif_funcionario)
         REFERENCES funcionario (nif),
     CONSTRAINT fk_consulta_relatorio FOREIGN KEY (id_relatorio)
@@ -143,13 +151,13 @@ CREATE TABLE consulta
 CREATE TABLE cirurgia
 (
     id_cirurgia      INTEGER,
-    id_tratamento    INTEGER,
+    id_processo    INTEGER,
     id_relatorio     INTEGER,
     id_tipo_cirurgia INTEGER,
     dta_realizacao   DATE,
     CONSTRAINT pk_cirurgia PRIMARY KEY (id_cirurgia),
-    CONSTRAINT fk_cirurgia_tratamento FOREIGN KEY (id_tratamento)
-        REFERENCES tratamento (id_tratamento),
+    CONSTRAINT fk_cirurgia_processo FOREIGN KEY (id_processo)
+        REFERENCES processo (id_processo),
     CONSTRAINT fk_cirurgia_relatorio FOREIGN KEY (id_relatorio)
         REFERENCES relatorio (id_relatorio),
     CONSTRAINT fk_cirurgia_tipo_cirurgia FOREIGN KEY (id_tipo_cirurgia)

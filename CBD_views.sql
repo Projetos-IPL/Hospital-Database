@@ -1,14 +1,14 @@
-CREATE OR REPLACE VIEW tratamento_dados_view AS
+CREATE OR REPLACE VIEW processo_dados_view AS
 SELECT  p.nif,
         p.prim_nome,
         p.ult_nome,
         p.dta_nasc,
-        t.id_tratamento,
+        t.id_processo,
        aa.id_area_atuacao,
         aa.descricao AS "Descricao Area Atuacao",
         t.dta_inicio,
         t.dta_alta
-FROM tratamento       t,
+FROM processo       t,
      area_atuacao     aa,
      pessoa           p
 WHERE t.nif = p.nif
