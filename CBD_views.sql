@@ -67,6 +67,22 @@ WHERE t.nif = p.nif
   AND t.dta_alta IS NULL;
 /
 
+CREATE OR REPLACE VIEW processo_total_consultas_view AS
+SELECT pro.id_processo                                                             "Id Processo",
+       pes.prim_nome || ' ' || pes.ult_nome                                        "Nome Paciente",
+       aa.descricao                                                                "Área Atuação",
+       (CASE
+           WHEN pro.dta_alta IS NULL THEN 'Em andamento'
+           ELSE 'Finalizado'
+        END)                                                                       "Estado",
+       pro.dta_inicio                                                              "Data de ínicio",
+       pro.dta_alta                                                                "Data de alta",
+       (SELECT COUNT(1) FROM cirurgia cir WHERE cir.id_processo = pro.id_processo) "Total cirurgias",
+       (SELECT COUNT(1) FROM consulta con WHERE con.id_processo = pro.id_processo) "Total consultas"
+FROM processo pro, pessoa pes, area_atuacao aa
+WHERE pro.nif             = pes.nif
+  AND pro.id_area_atuacao = aa.id_area_atuacao;
+
 
 COMMIT;
 

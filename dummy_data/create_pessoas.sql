@@ -1,6 +1,5 @@
 BEGIN
 
-
     et_pessoa.adicionar_paciente(
             p_nif => 123123001,
             p_prim_nome => 'João',

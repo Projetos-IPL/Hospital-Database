@@ -1,6 +1,5 @@
 
 -- Tabela area_atuacao
-
 CREATE OR REPLACE TRIGGER tbi_area_atuacao
     BEFORE INSERT ON area_atuacao
     FOR EACH ROW

@@ -97,6 +97,8 @@ CREATE OR REPLACE PACKAGE BODY et_processo AS
     IS
         dt_dta_alta DATE;
     BEGIN
+        SET TRANSACTION READ WRITE NAME 'Finalizar registo';
+
         -- Obter data de alta do processo
         SELECT dta_alta INTO dt_dta_alta
             FROM processo
@@ -106,10 +108,11 @@ CREATE OR REPLACE PACKAGE BODY et_processo AS
             RAISE ex_processo_ja_finalizado;
         END IF;
 
-        SET TRANSACTION READ WRITE NAME 'Finalizar registo';
+
         UPDATE processo
             SET dta_alta = SYSDATE
             WHERE id_processo = p_id_processo;
+
         COMMIT;
 
         EXCEPTION
