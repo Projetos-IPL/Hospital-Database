@@ -34,6 +34,9 @@ CREATE OR REPLACE PACKAGE et_processo AS
         p_id_processo processo.id_processo%TYPE,
         p_id_estado_paciente processo.id_estado_paciente%TYPE);
 
+    -- Procedimento para validar um novo processo
+    PROCEDURE validar_novo_processo(p_rec_processo IN processo%rowtype);
+
     -- Procedimento para imprimir o registo de erros
     PROCEDURE print_error_log;
 

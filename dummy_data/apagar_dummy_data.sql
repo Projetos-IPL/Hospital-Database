@@ -59,5 +59,6 @@ BEGIN
 END;
 /
 
-SELECT *
-FROM user_objects;
+BEGIN
+    internal_delete_all_data_do_not_user_or_you_will_be_fired;
+END;

@@ -3,6 +3,8 @@ CREATE OR REPLACE PACKAGE et_pessoa AS
     ex_menor_de_idade EXCEPTION;
     ex_nome_invalido EXCEPTION;
     ex_paciente_sem_processo EXCEPTION;
+    ex_alteracao_invalida EXCEPTION;
+    ex_tentativa_eliminar EXCEPTION;
 
     c_carateres_nome_validos CONSTANT VARCHAR2(100) :='aáàâãbcdeéèêfghiíìîjklmnoóòõôpqrstuúùûvwxyzç';
     TYPE t_nif IS TABLE OF pessoa.nif%TYPE;
@@ -46,7 +48,17 @@ CREATE OR REPLACE PACKAGE et_pessoa AS
     FUNCTION validar_nome(p_nome IN VARCHAR2) RETURN BOOLEAN;
 
     -- Procedimento para validar uma nova pessoa
-    PROCEDURE validar_nova_pessoa(p_rec_pessoa IN pessoa%ROWTYPE);
+    PROCEDURE validar_pessoa(p_rec_pessoa IN pessoa%ROWTYPE);
+
+    -- Procedimento para validar um novo paciente
+    PROCEDURE validar_novo_paciente(p_rec_paciente IN paciente%ROWTYPE);
+
+    -- Procedimento para validar alterações a pessoas
+    PROCEDURE validar_alteracao_pessoa(p_rec_pessoa_antigo IN pessoa%ROWTYPE,
+                                       p_rec_pessoa_novo   IN pessoa%ROWTYPE);
+
+
+
 
 END et_pessoa;
 /

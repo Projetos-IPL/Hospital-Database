@@ -40,7 +40,6 @@ CREATE OR REPLACE PACKAGE BODY et_pessoa AS
         rec_pessoa.morada := p_morada;
         rec_pessoa.dta_nasc := p_dta_nasc;
 
-
         -- Verificar se pessoa já existe no sistema e adicionar pessoa se não existir
         SELECT COUNT(1) INTO n_count_pessoa
           FROM pessoa
@@ -54,6 +53,8 @@ CREATE OR REPLACE PACKAGE BODY et_pessoa AS
 
         INSERT INTO paciente
             VALUES (p_nif, p_n_utente_saude);
+
+        COMMIT;
 
         EXCEPTION
             WHEN et_pessoa.ex_menor_de_idade THEN
@@ -122,6 +123,8 @@ CREATE OR REPLACE PACKAGE BODY et_pessoa AS
         INSERT INTO enfermeiro
             VALUES (p_nif);
 
+        COMMIT;
+
         EXCEPTION
             WHEN et_pessoa.ex_menor_de_idade THEN
                 exception_handler.handle_user_exception('menor_de_idade');
@@ -159,6 +162,8 @@ CREATE OR REPLACE PACKAGE BODY et_pessoa AS
         INSERT INTO medico
             VALUES (p_nif, p_id_area_atuacao, p_cedula);
 
+        COMMIT;
+
         EXCEPTION
             WHEN et_pessoa.ex_menor_de_idade THEN
                 exception_handler.handle_user_exception('menor_de_idade');
@@ -187,9 +192,45 @@ CREATE OR REPLACE PACKAGE BODY et_pessoa AS
 
     END validar_nome;
 
-        PROCEDURE validar_nova_pessoa(p_rec_pessoa IN pessoa%ROWTYPE)
-        IS BEGI
+    PROCEDURE validar_pessoa(p_rec_pessoa IN pessoa%ROWTYPE) IS
+    BEGIN
+        -- Validar idade
+        IF MONTHS_BETWEEN(SYSDATE, p_rec_pessoa.dta_nasc) / 12 < 18 THEN
+            RAISE et_pessoa.ex_menor_de_idade;
+        END IF;
 
+        -- Validar nome da pessoa, não pode conter números ou carateres especiais.
+        IF et_pessoa.validar_nome(p_rec_pessoa.prim_nome || p_rec_pessoa.ult_nome) THEN
+            RAISE et_pessoa.ex_nome_invalido;
+        END IF;
+
+    END;
+
+    PROCEDURE validar_novo_paciente(p_rec_paciente IN paciente%rowtype)
+    IS
+        n_count_paciente INT;
+    BEGIN
+        -- Verificar se paciente tem processo associado
+        SELECT COUNT(nif) INTO n_count_paciente
+            FROM processo
+            WHERE nif = p_rec_paciente.nif;
+
+        IF n_count_paciente = 0 THEN
+            RAISE et_pessoa.ex_paciente_sem_processo;
+        END IF;
+
+    END;
+
+    PROCEDURE validar_alteracao_pessoa(p_rec_pessoa_antigo IN pessoa%ROWTYPE,
+                                       p_rec_pessoa_novo   IN pessoa%ROWTYPE)
+    IS
+    BEGIN
+        IF p_rec_pessoa_antigo.nif      <> p_rec_pessoa_novo.nif
+        OR p_rec_pessoa_antigo.dta_nasc <> p_rec_pessoa_novo.dta_nasc
+        THEN
+            RAISE ex_alteracao_invalida;
+        END IF;
+    END;
 
 END et_pessoa;
 /

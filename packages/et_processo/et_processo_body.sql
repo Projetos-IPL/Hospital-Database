@@ -180,5 +180,24 @@ CREATE OR REPLACE PACKAGE BODY et_processo AS
             WHERE id_processo = p_id_processo;
     END atualizar_estado_processo;
 
+    PROCEDURE validar_novo_processo(p_rec_processo IN processo%rowtype)
+    IS
+        CURSOR cur_processos_ativos IS
+            SELECT *
+            FROM processo
+            WHERE nif = p_rec_processo.nif
+              AND dta_alta IS NULL
+        ;
+    BEGIN
+        -- Procurar registos ativos do paciente e lançar exceção se encontrar um
+        -- processo para a mesma área de atuação do novo processo.
+        FOR rec_processo IN cur_processos_ativos
+            LOOP
+                IF p_rec_processo.id_area_atuacao = rec_processo.id_area_atuacao THEN
+                    RAISE et_processo.ex_processo_repetido;
+                END IF;
+            END LOOP;
+    END;
+
 END et_processo;
 /

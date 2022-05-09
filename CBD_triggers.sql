@@ -35,23 +35,39 @@ CREATE OR REPLACE TRIGGER tbi_pessoa
     BEFORE INSERT ON pessoa
     FOR EACH ROW
 DECLARE
-    n_idade NUMBER;
+    rec_pessoa pessoa%ROWTYPE;
 BEGIN
-    -- Validar idade
-    n_idade := MONTHS_BETWEEN(SYSDATE, :NEW.dta_nasc) / 12;
-
-    IF n_idade < 18 THEN
-        RAISE et_pessoa.ex_menor_de_idade;
-    END IF;
-
-    -- Validar nome da pessoa, não pode conter números ou carateres especiais.
-    IF et_pessoa.validar_nome(:NEW.prim_nome || :NEW.ult_nome) THEN
-        RAISE et_pessoa.ex_nome_invalido;
-    END IF;
-
+    rec_pessoa.nif := :NEW.nif;
+    rec_pessoa.prim_nome := :NEW.prim_nome;
+    rec_pessoa.ult_nome := :NEW.ult_nome;
+    rec_pessoa.morada := :NEW.morada;
+    rec_pessoa.dta_nasc := :NEW.dta_nasc;
+    et_pessoa.validar_pessoa(rec_pessoa);
 END tbi_pessoa;
 /
 
+CREATE OR REPLACE TRIGGER tbu_pessoa
+    BEFORE UPDATE ON pessoa
+    FOR EACH ROW
+DECLARE
+    rec_pessoa pessoa%ROWTYPE;
+    rec_pessoa_old pessoa%ROWTYPE;
+BEGIN
+    rec_pessoa.nif := :NEW.nif;
+    rec_pessoa.prim_nome := :NEW.prim_nome;
+    rec_pessoa.ult_nome := :NEW.ult_nome;
+    rec_pessoa.morada := :NEW.morada;
+    rec_pessoa.dta_nasc := :NEW.dta_nasc;
+
+    rec_pessoa_old.nif := :OLD.nif;
+    rec_pessoa_old.prim_nome := :OLD.prim_nome;
+    rec_pessoa_old.ult_nome := :OLD.ult_nome;
+    rec_pessoa_old.morada := :OLD.morada;
+    rec_pessoa_old.dta_nasc := :OLD.dta_nasc;
+
+    et_pessoa.validar_alteracao_pessoa(rec_pessoa, rec_pessoa_old);
+END;
+/
 
 -- Tabela paciente
 
@@ -59,20 +75,21 @@ CREATE OR REPLACE TRIGGER tai_paciente
     AFTER INSERT ON paciente
     FOR EACH ROW
 DECLARE
-    n_count_paciente INTEGER;
+    rec_paciente     paciente%ROWTYPE;
 BEGIN
-    -- Verificar se paciente tem processo associado
-    SELECT COUNT(nif) INTO n_count_paciente
-        FROM processo
-        WHERE nif = :NEW.nif;
-
-    IF n_count_paciente = 0 THEN
-        RAISE et_pessoa.ex_paciente_sem_processo;
-    END IF;
-
+    rec_paciente.nif := :NEW.nif;
+    rec_paciente.n_utente_saude := :NEW.n_utente_saude;
+    et_pessoa.validar_novo_paciente(rec_paciente);
 END tai_paciente;
 /
 
+CREATE OR REPLACE TRIGGER tbd_paciente
+    BEFORE DELETE ON paciente
+    FOR EACH ROW
+DECLARE
+BEGIN
+    RAISE et_pessoa.ex_tentativa_eliminar;
+END;
 
 -- Tabela processo
 
@@ -80,25 +97,19 @@ CREATE OR REPLACE TRIGGER tbi_processo
     BEFORE INSERT ON processo
     FOR EACH ROW
 DECLARE
-    CURSOR cur_processos_ativos IS
-        SELECT *
-        FROM processo
-        WHERE nif = :new.nif
-          AND dta_alta IS NULL
-    ;
-    rec_processo processo%ROWTYPE;
+    rec_processo processo%rowtype;
 BEGIN
-    :new.id_processo := pk_processo_seq.nextval;
-    :new.dta_inicio := SYSDATE;
+    :NEW.id_processo := pk_processo_seq.nextval;
+    :NEW.dta_inicio := SYSDATE;
 
-    -- Procurar registos ativos do paciente e lançar exceção se encontrar um
-    -- processo para a mesma área de atuação do novo processo.
-    FOR rec_processo IN cur_processos_ativos
-        LOOP
-            IF :new.id_area_atuacao = rec_processo.id_area_atuacao THEN
-                RAISE et_processo.ex_processo_repetido;
-            END IF;
-        END LOOP;
+    rec_processo.nif := :NEW.nif;
+    rec_processo.dta_alta := :NEW.dta_alta;
+    rec_processo.id_area_atuacao := :NEW.id_area_atuacao;
+    rec_processo.id_estado_paciente := :NEW.id_estado_paciente;
+    rec_processo.dta_inicio := :NEW.dta_inicio;
+    rec_processo.id_processo := :NEW.id_processo;
+
+    et_processo.validar_novo_processo(rec_processo);
 
 END tbi_processo;
 /
