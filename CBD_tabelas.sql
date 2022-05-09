@@ -66,18 +66,18 @@ CREATE TABLE enfermeiro
 );
 
 
-
 CREATE TABLE medico
 (
     nif             NUMBER(9),
     id_area_atuacao INTEGER,
+    cedula          VARCHAR2(10) NOT NULL,
     CONSTRAINT pk_medico PRIMARY KEY (nif),
     CONSTRAINT fk_medico_funcionario FOREIGN KEY (nif)
         REFERENCES funcionario (nif),
     CONSTRAINT fk_medico_area_atuacao FOREIGN KEY (id_area_atuacao)
-        REFERENCES area_atuacao (id_area_atuacao)
+        REFERENCES area_atuacao (id_area_atuacao),
+    CONSTRAINT uq_medico_cedula UNIQUE (cedula)
 );
-
 
 
 CREATE TABLE paciente

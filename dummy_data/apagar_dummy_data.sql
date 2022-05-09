@@ -1,4 +1,5 @@
-DECLARE
+CREATE OR REPLACE PROCEDURE internal_delete_all_data_do_not_user_or_you_will_be_fired
+IS
     CURSOR cur_user_table_names IS
         SELECT table_name
         FROM user_tables;

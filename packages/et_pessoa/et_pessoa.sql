@@ -38,11 +38,15 @@ CREATE OR REPLACE PACKAGE et_pessoa AS
         p_morada            IN pessoa.morada%TYPE,
         p_dta_nasc          IN pessoa.dta_nasc%TYPE,
         p_id_area_atuacao   IN medico.id_area_atuacao%TYPE,
-        p_t_telefone          IN t_telefone
+        p_t_telefone        IN t_telefone,
+        p_cedula            IN medico.cedula%TYPE
     );
 
     -- Função para validar o nome, devolve verdadeiro se for válido e falso se não.
     FUNCTION validar_nome(p_nome IN VARCHAR2) RETURN BOOLEAN;
+
+    -- Procedimento para validar uma nova pessoa
+    PROCEDURE validar_nova_pessoa(p_rec_pessoa IN pessoa%ROWTYPE);
 
 END et_pessoa;
 /
