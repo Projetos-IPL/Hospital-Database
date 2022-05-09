@@ -28,4 +28,21 @@ WHERE p.nif = m.nif
   AND m.id_area_atuacao = aa.id_area_atuacao;
 /
 
+
+CREATE OR REPLACE VIEW dados_paciente_view AS
+SELECT pe.nif,
+       pe.prim_nome,
+       pe.ult_nome,
+       pe.morada,
+       pa.n_utente_saude,
+       te.telefone
+FROM   pessoa pe,
+       paciente pa,
+       telefone te
+WHERE  pe.nif = pa.nif
+       AND pe.nif = te.nif;
+/
+
+
 COMMIT;
+
