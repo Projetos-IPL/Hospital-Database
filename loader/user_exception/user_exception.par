@@ -1,4 +1,4 @@
-userid=PROJETO@PROJETO/Projeto_22
+userid=userOptim/userOptim
 control=user_exception.ctl
 data=../csv_data/USER_EXCEPTION_DATA_TABLE.csv
 direct=true
