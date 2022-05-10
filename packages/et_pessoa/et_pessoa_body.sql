@@ -195,7 +195,7 @@ CREATE OR REPLACE PACKAGE BODY et_pessoa AS
     PROCEDURE validar_pessoa(p_rec_pessoa IN pessoa%ROWTYPE) IS
     BEGIN
         -- Validar idade
-        IF MONTHS_BETWEEN(SYSDATE, p_rec_pessoa.dta_nasc) / 12 < 18 THEN
+        IF calcular_idade(p_rec_pessoa.dta_nasc) < 18 THEN
             RAISE et_pessoa.ex_menor_de_idade;
         END IF;
 
@@ -230,6 +230,12 @@ CREATE OR REPLACE PACKAGE BODY et_pessoa AS
         THEN
             RAISE ex_alteracao_invalida;
         END IF;
+    END;
+
+    FUNCTION calcular_idade(p_data IN DATE)
+    RETURN NUMBER IS
+    BEGIN
+        RETURN FLOOR(MONTHS_BETWEEN(SYSDATE, p_data) / 12);
     END;
 
 END et_pessoa;

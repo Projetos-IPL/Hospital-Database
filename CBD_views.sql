@@ -1,21 +1,21 @@
 CREATE OR REPLACE VIEW processo_dados_view AS
-SELECT  p.nif,
-        p.prim_nome,
-        p.ult_nome,
-        p.dta_nasc,
-        t.id_processo,
+SELECT  pe.nif,
+        pe.prim_nome,
+        pe.ult_nome,
+        pe.dta_nasc,
+        p.id_processo,
         aa.id_area_atuacao,
         aa.descricao AS "Descricao Area Atuacao",
-        t.dta_inicio,
-        t.dta_alta,
+        p.dta_inicio,
+        p.dta_alta,
         ep.descricao
-FROM processo         t,
+FROM processo         p,
      area_atuacao     aa,
-     pessoa           p,
+     pessoa           pe,
      estado_paciente  ep
-WHERE t.nif = p.nif
-  AND t.id_area_atuacao = aa.id_area_atuacao
-  AND t.id_estado_paciente = ep.id_estado_paciente;
+WHERE p.nif = pe.nif
+  AND p.id_area_atuacao = aa.id_area_atuacao
+  AND p.id_estado_paciente = ep.id_estado_paciente;
 /
 
 CREATE OR REPLACE VIEW medico_area_atuacao_view AS
@@ -47,24 +47,24 @@ WHERE  pe.nif = pa.nif
 /
 
 CREATE OR REPLACE VIEW processo_andamento_dados_view AS
-SELECT  p.nif,
-        p.prim_nome,
-        p.ult_nome,
-        p.dta_nasc,
-        t.id_processo,
+SELECT  pe.nif,
+        pe.prim_nome,
+        pe.ult_nome,
+        pe.dta_nasc,
+        p.id_processo,
         aa.id_area_atuacao,
         aa.descricao AS "Descricao Area Atuacao",
-        t.dta_inicio,
-        t.dta_alta,
+        p.dta_inicio,
+        p.dta_alta,
         ep.descricao
-FROM processo         t,
+FROM processo         p,
      area_atuacao     aa,
-     pessoa           p,
+     pessoa           pe,
      estado_paciente  ep
-WHERE t.nif = p.nif
-  AND t.id_area_atuacao = aa.id_area_atuacao
-  AND t.id_estado_paciente = ep.id_estado_paciente
-  AND t.dta_alta IS NULL;
+WHERE p.nif = pe.nif
+  AND p.id_area_atuacao = aa.id_area_atuacao
+  AND p.id_estado_paciente = ep.id_estado_paciente
+  AND p.dta_alta IS NULL;
 /
 
 CREATE OR REPLACE VIEW processo_total_consultas_view AS
@@ -82,6 +82,33 @@ SELECT pro.id_processo                                                          
 FROM processo pro, pessoa pes, area_atuacao aa
 WHERE pro.nif             = pes.nif
   AND pro.id_area_atuacao = aa.id_area_atuacao;
+/
+
+CREATE OR REPLACE VIEW processos_ativos_view AS
+SELECT  p.id_processo,
+        pe.nif,
+        pe.prim_nome || ' ' || pe.ult_nome "Paciente",
+        et_pessoa.calcular_idade(pe.dta_nasc) "Idade",
+        aa.descricao AS "Área de atuação",
+        p.dta_inicio AS "Data de ínicio",
+        ep.descricao AS "Estado",
+        c.dta_realizacao AS "Última Consulta"
+FROM processo         p,
+     area_atuacao     aa,
+     pessoa           pe,
+     estado_paciente  ep,
+     consulta         c
+WHERE p.nif = pe.nif
+  AND p.id_area_atuacao = aa.id_area_atuacao
+  AND p.id_estado_paciente = ep.id_estado_paciente
+  AND p.dta_alta IS NULL
+  AND p.id_processo = c.id_processo
+  AND c.dta_realizacao = (
+    SELECT MAX(dta_realizacao)
+        FROM consulta
+        WHERE consulta.id_processo = c.id_processo 
+    );
+/
 
 
 COMMIT;

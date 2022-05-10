@@ -57,7 +57,8 @@ CREATE OR REPLACE PACKAGE et_pessoa AS
     PROCEDURE validar_alteracao_pessoa(p_rec_pessoa_antigo IN pessoa%ROWTYPE,
                                        p_rec_pessoa_novo   IN pessoa%ROWTYPE);
 
-
+    -- Função para calcular idade
+    FUNCTION calcular_idade(p_data IN DATE ) RETURN NUMBER;
 
 
 END et_pessoa;
