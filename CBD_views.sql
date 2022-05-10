@@ -129,8 +129,6 @@ SELECT  t.role,
 FROM    role_sys_privs t
 WHERE
         role IN ('APPLICATION', 'DEVELOPER');
-        
-    SELECT * from role_sys_privs;
 /
 
 
