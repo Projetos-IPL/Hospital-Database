@@ -111,5 +111,28 @@ WHERE p.nif = pe.nif
 /
 
 
+CREATE OR REPLACE VIEW dados_privs_roles_obj_view
+AS
+SELECT  t.role,
+        t.table_name,
+        t.privilege
+FROM    role_tab_privs t
+WHERE
+        role IN ('APPLICATION', 'DEVELOPER');
+/
+
+
+CREATE OR REPLACE VIEW dados_privs_roles_sys_view
+AS
+SELECT  t.role,
+        t.privilege
+FROM    role_sys_privs t
+WHERE
+        role IN ('APPLICATION', 'DEVELOPER');
+        
+    SELECT * from role_sys_privs;
+/
+
+
 COMMIT;
 
