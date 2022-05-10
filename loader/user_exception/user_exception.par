@@ -1,0 +1,5 @@
+userid=PROJETO@PROJETO/Projeto_22
+control=user_exception.ctl
+log=user_exception.log
+data=../csv_data/USER_EXCEPTION_DATA_TABLE.csv
+direct=true
