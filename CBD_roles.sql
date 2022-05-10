@@ -2,9 +2,8 @@ CREATE ROLE developer;
 CREATE ROLE application;
 
 DECLARE
-
-    schema_name VARCHAR2(100) := 'PROJETO';
-   TYPE t_varchar2 IS TABLE OF VARCHAR2(100);
+		schema_name VARCHAR2(100) := 'PROJETO';
+		TYPE t_varchar2 IS TABLE OF VARCHAR2(100);
 
     debug_current_iteration VARCHAR2(100);
 
