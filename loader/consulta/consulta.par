@@ -1,0 +1,4 @@
+userid=userOptim/userOptim
+control=consulta.ctl
+data=../csv_data/consulta_data.csv
+direct=true

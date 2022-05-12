@@ -1,0 +1,4 @@
+userid=userOptim/userOptim
+control=pessoa.ctl
+data=../csv_data/pessoa_data.csv
+direct=true

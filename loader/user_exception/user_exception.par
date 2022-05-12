@@ -1,0 +1,4 @@
+userid=userOptim/userOptim
+control=user_exception.ctl
+data=../csv_data/user_exception_data.csv
+direct=true

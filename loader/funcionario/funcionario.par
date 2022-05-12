@@ -1,0 +1,4 @@
+userid=userOptim/userOptim
+control=funcionario.ctl
+data=../csv_data/funcionario_data.csv
+direct=true
