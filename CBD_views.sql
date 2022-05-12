@@ -101,6 +101,7 @@ FROM area_atuacao aa,
      processo p
 WHERE aa.id_area_atuacao = p.id_area_atuacao
 GROUP BY aa.id_area_atuacao, aa.descricao;
+/
 
 
 CREATE OR REPLACE VIEW estatisticas_hospital_view AS
@@ -115,3 +116,25 @@ SELECT (SELECT COUNT(1) FROM processo)                                  "Total P
        (SELECT COUNT(1) FROM enfermeiro)                                "Total Enfermeiros",
        (SELECT COUNT(1) FROM medico)                                    "Total Medicos"
 FROM dual;
+/
+
+
+CREATE OR REPLACE VIEW dados_privs_roles_obj_view
+AS
+SELECT  t.role,
+        t.table_name,
+        t.privilege
+FROM    role_tab_privs t
+WHERE
+        role IN ('APPLICATION', 'DEVELOPER');
+/
+
+
+CREATE OR REPLACE VIEW dados_privs_roles_sys_view
+AS
+SELECT  t.role,
+        t.privilege
+FROM    role_sys_privs t
+WHERE
+        role IN ('APPLICATION', 'DEVELOPER');
+/
