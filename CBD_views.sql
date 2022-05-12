@@ -115,7 +115,3 @@ SELECT (SELECT COUNT(1) FROM processo)                                  "Total P
        (SELECT COUNT(1) FROM enfermeiro)                                "Total Enfermeiros",
        (SELECT COUNT(1) FROM medico)                                    "Total Medicos"
 FROM dual;
-
-BEGIN
-    dbms_stats.GATHER_DATABASE_STATS;
-END;
