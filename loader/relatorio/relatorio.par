@@ -1,0 +1,4 @@
+userid=userOptim/userOptim
+control=relatorio.ctl
+data=../csv_data/relatorio_data.csv
+direct=true

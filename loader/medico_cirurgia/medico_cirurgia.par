@@ -1,0 +1,4 @@
+userid=userOptim/userOptim
+control=medico_cirurgia.ctl
+data=../csv_data/medico_cirurgia_data.csv
+direct=true

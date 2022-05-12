@@ -1,0 +1,4 @@
+userid=userOptim/userOptim
+control=enfermeiro.ctl
+data=../csv_data/enfermeiro_data.csv
+direct=true
