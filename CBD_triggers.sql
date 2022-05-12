@@ -4,7 +4,9 @@ CREATE OR REPLACE TRIGGER tbi_area_atuacao
     BEFORE INSERT ON area_atuacao
     FOR EACH ROW
 BEGIN
-    :new.id_area_atuacao := pk_area_atuacao_seq.nextval;
+    IF :NEW.id_area_atuacao IS NULL THEN
+        :NEW.id_area_atuacao := pk_area_atuacao_seq.nextval;
+    END IF;
 END tbi_area_atuacao;
 /
 
@@ -14,7 +16,9 @@ CREATE OR REPLACE TRIGGER tbi_tipo_cirurgia
     BEFORE INSERT ON tipo_cirurgia
     FOR EACH ROW
 BEGIN
-    :new.id_tipo_cirurgia := pk_tipo_cirurgia_seq.nextval;
+    IF :NEW.id_tipo_cirurgia IS NULL THEN
+        :NEW.id_tipo_cirurgia := pk_tipo_cirurgia_seq.nextval;
+    END IF;
 END tbi_tipo_cirurgia;
 /
 
@@ -24,7 +28,9 @@ CREATE OR REPLACE TRIGGER tbi_estado_paciente
     BEFORE INSERT ON estado_paciente
     FOR EACH ROW
 BEGIN
-    :NEW.id_estado_paciente := pk_estado_paciente_seq.nextval;
+    IF :NEW.id_estado_paciente IS NULL THEN
+        :NEW.id_estado_paciente := pk_estado_paciente_seq.nextval;
+    END IF;
 END tbi_estado_paciente;
 /
 
@@ -74,7 +80,7 @@ CREATE OR REPLACE TRIGGER tai_paciente
     AFTER INSERT ON paciente
     FOR EACH ROW
 DECLARE
-    rec_paciente     paciente%ROWTYPE;
+    rec_paciente paciente%ROWTYPE;
 BEGIN
     rec_paciente.nif := :NEW.nif;
     rec_paciente.n_utente_saude := :NEW.n_utente_saude;
@@ -82,12 +88,12 @@ BEGIN
 END tai_paciente;
 /
 
-CREATE OR REPLACE TRIGGER tbd_paciente
-    BEFORE DELETE ON paciente
+CREATE OR REPLACE TRIGGER tbud_paciente
+    BEFORE DELETE OR UPDATE ON paciente
     FOR EACH ROW
 DECLARE
 BEGIN
-    RAISE et_pessoa.ex_tentativa_eliminar;
+    RAISE et_pessoa.ex_alteracao_invalida;
 END;
 
 -- Tabela processo
@@ -98,7 +104,10 @@ CREATE OR REPLACE TRIGGER tbi_processo
 DECLARE
     rec_processo processo%rowtype;
 BEGIN
-    :NEW.id_processo := pk_processo_seq.nextval;
+    IF :NEW.id_processo IS NULL THEN
+        :NEW.id_processo := pk_processo_seq.nextval;
+    END IF;
+
     :NEW.dta_inicio := SYSDATE;
 
     rec_processo.nif := :NEW.nif;
@@ -155,7 +164,10 @@ CREATE OR REPLACE TRIGGER tbi_consulta
     BEFORE INSERT ON consulta
     FOR EACH ROW
 BEGIN
-    :NEW.id_consulta := pk_consulta_seq.nextval;
+    IF :NEW.id_consulta IS NULL THEN
+        :NEW.id_consulta := pk_consulta_seq.nextval;
+    END IF;
+
     :NEW.dta_realizacao := SYSDATE;
 
     IF NOT et_consulta.validar_nova_consulta(:NEW.id_processo) THEN
@@ -194,8 +206,11 @@ DECLARE
     n_id_area_atuacao_processo INTEGER;
     dt_dta_alta DATE;
 BEGIN
-    :new.id_cirurgia := pk_cirurgia_seq.nextval;
-    :new.dta_realizacao := SYSDATE;
+    IF :NEW.id_cirurgia IS NULL THEN
+        :NEW.id_cirurgia := pk_cirurgia_seq.nextval;
+    END IF;
+
+    :NEW.dta_realizacao := SYSDATE;
 
         -- Verificar se o processo ainda está ativa
     SELECT dta_alta INTO dt_dta_alta
@@ -237,7 +252,9 @@ CREATE OR REPLACE TRIGGER tbi_relatorio
     BEFORE INSERT ON relatorio
     FOR EACH ROW
 BEGIN
-    :NEW.id_relatorio := pk_relatorio_seq.nextval;
+    IF :NEW.id_relatorio IS NULL THEN
+        :NEW.id_relatorio := pk_relatorio_seq.nextval;
+    END IF;
 END;
 /
 
@@ -280,7 +297,7 @@ CREATE OR REPLACE TRIGGER tbi_exception_log
     BEFORE INSERT ON exception_log
     FOR EACH ROW
 BEGIN
-    :new.id_exception_log := pk_exception_log_seq.nextval;
+    :NEW.id_exception_log := pk_exception_log_seq.nextval;
 END tbi_exception_log;
 /
 

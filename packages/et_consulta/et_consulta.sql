@@ -15,6 +15,10 @@ CREATE OR REPLACE PACKAGE et_consulta AS
         p_id_processo      IN consulta.id_processo%TYPE)
     RETURN BOOLEAN;
 
+     -- Função para obter a data da última consulta realizada num processo
+    FUNCTION obter_data_ultima_consulta(p_id_processo IN consulta.id_processo%TYPE)
+    RETURN DATE DETERMINISTIC;
+
 
 END et_consulta;
 /

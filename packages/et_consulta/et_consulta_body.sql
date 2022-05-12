@@ -68,5 +68,19 @@ CREATE OR REPLACE PACKAGE BODY et_consulta AS
                 RETURN FALSE;
     END validar_nova_consulta;
 
+    FUNCTION obter_data_ultima_consulta(p_id_processo IN consulta.id_processo%TYPE)
+    RETURN DATE DETERMINISTIC IS
+        d_data_ultima_consulta DATE;
+    BEGIN
+        SELECT MAX(dta_realizacao)
+            INTO d_data_ultima_consulta
+            FROM consulta
+            WHERE p_id_processo IN id_processo;
+
+        EXCEPTION
+            WHEN NO_DATA_FOUND THEN
+                exception_handler.handle_sys_exception(SQLCODE, SQLERRM);
+    END obter_data_ultima_consulta;
+
 END et_consulta;
 /
