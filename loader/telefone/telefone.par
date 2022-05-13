@@ -1,4 +1,4 @@
 userid=userOptim/userOptim
 control=telefone.ctl
-data=../csv_data/telefone_data.csv
+data=../csv_data/telefone_data_table.csv
 direct=true

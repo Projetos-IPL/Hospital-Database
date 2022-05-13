@@ -1,4 +1,4 @@
 userid=userOptim/userOptim
 control=area_atuacao.ctl
-data=../csv_data/area_atuacao_data.csv
+data=../csv_data/area_atuacao_data_table.csv
 direct=true

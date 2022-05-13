@@ -1,4 +1,6 @@
 load data into table RELATORIO
+characterset UTF8
+truncate
 insert
 fields terminated by ","
 (
