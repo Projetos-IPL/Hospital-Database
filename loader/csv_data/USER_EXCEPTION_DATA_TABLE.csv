@@ -1,4 +1,3 @@
-CODE,NAME,ERRM
 -20001,EXCEPTION_NOT_DEFINED,Exceção não definida.
 -20002,SYSTEM_EXCEPTION,Exceção de sistema ou genérica acionada no "EXCEPTION WHEN OTHERS THEN ..."
 -20799,CONSULTA_EM_PROCESSO_FINALIZADO,Tentativa de registo de consulta em processo já finalizado.
