@@ -1,5 +1,4 @@
 load data into table CONSULTA
-characterset UTF8
 truncate
 insert
 fields terminated by ","

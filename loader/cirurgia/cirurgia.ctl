@@ -1,5 +1,4 @@
 load data into table CIRURGIA
-characterset UTF8
 truncate
 insert
 fields terminated by ","

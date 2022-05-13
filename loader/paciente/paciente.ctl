@@ -1,5 +1,4 @@
 load data into table PACIENTE
-characterset UTF8
 truncate
 insert
 fields terminated by ","
