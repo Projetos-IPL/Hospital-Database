@@ -1,5 +1,4 @@
 load data into table PACIENTE
-truncate
 insert
 fields terminated by ","
 (

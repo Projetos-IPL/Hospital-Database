@@ -1,5 +1,4 @@
 load data into table TIPO_CIRURGIA
-truncate
 insert
 fields terminated by ","
 (

@@ -1,5 +1,4 @@
 load data into table CONSULTA
-truncate
 insert
 fields terminated by ","
 (

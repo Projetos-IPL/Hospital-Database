@@ -1,5 +1,4 @@
 load data into table PROCESSO
-truncate
 insert
 fields terminated by ","
 (

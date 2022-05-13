@@ -1,5 +1,4 @@
 load data into table MEDICO
-truncate
 insert
 fields terminated by ","
 (

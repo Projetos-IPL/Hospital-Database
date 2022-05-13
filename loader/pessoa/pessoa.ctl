@@ -1,5 +1,4 @@
 load data into table PESSOA
-truncate
 insert
 fields terminated by ","
 (

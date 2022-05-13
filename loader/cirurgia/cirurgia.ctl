@@ -1,5 +1,4 @@
 load data into table CIRURGIA
-truncate
 insert
 fields terminated by ","
 (
