@@ -1,3 +1,7 @@
+-- Projeto CBD - 2021/2022
+-- Grupo 5 (Afonso Santos - 2210640, Iúri Raimundo - 2210651)
+-- Descrição: Corpo do pacote ET_CIRURGIA
+
 CREATE OR REPLACE PACKAGE BODY et_cirurgia AS
 
     -- Registar uma nova cirurgia, associando a um processo
