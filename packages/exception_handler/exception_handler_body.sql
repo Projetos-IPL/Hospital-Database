@@ -1,3 +1,7 @@
+-- Projeto CBD - 2021/2022
+-- Grupo 5 (Afonso Santos - 2210640, Iúri Raimundo - 2210651)
+-- Descrição: Corpo do pacote EXCEPTION_HANDLER
+
 CREATE OR REPLACE PACKAGE BODY exception_handler AS
 
     -- Esta variável serve para contar o número de ciclos recursivos para impedir ciclos infinitos

@@ -1,6 +1,9 @@
+-- Projeto CBD - 2021/2022
+-- Grupo 5 (Afonso Santos - 2210640, Iúri Raimundo - 2210651)
+-- Descrição: script para criação de roles e atribuição de privilégios
+
 CREATE ROLE developer;
 CREATE ROLE application;
-
 
 DECLARE
 	schema_name VARCHAR2(100) := 'PROJETO';

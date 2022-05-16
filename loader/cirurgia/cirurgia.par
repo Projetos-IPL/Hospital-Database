@@ -1,4 +1,4 @@
 userid=userOptim/userOptim
 control=cirurgia.ctl
-data=../csv_data/cirurgia_data.csv
+data=../csv_data/cirurgia_data_table.csv
 direct=true

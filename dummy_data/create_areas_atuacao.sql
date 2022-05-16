@@ -1,3 +1,7 @@
+-- Projeto CBD - 2021/2022
+-- Grupo 5 (Afonso Santos - 2210640, Iúri Raimundo - 2210651)
+-- Descrição: Script para criação de áreas de atuação.
+
 INSERT INTO area_atuacao (descricao)
     VALUES ('Unidade do Ombro e Cotovelo');
     

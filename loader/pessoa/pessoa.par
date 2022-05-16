@@ -1,4 +1,4 @@
 userid=userOptim/userOptim
 control=pessoa.ctl
-data=../csv_data/pessoa_data.csv
+data=../csv_data/pessoa_data_table.csv
 direct=true
