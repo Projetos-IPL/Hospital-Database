@@ -8,7 +8,7 @@ CREATE TABLE area_atuacao
     descricao       VARCHAR2(100) NOT NULL,
     CONSTRAINT pk_area_atuacao PRIMARY KEY (id_area_atuacao),
     CONSTRAINT uq_area_atuacao_descricao UNIQUE (descricao)
-);
+) TABLESPACE tbs_tables;
 
 
 
@@ -20,7 +20,7 @@ CREATE TABLE tipo_cirurgia
     CONSTRAINT pk_tipo_cirurgia PRIMARY KEY (id_tipo_cirurgia),
     CONSTRAINT fk_tipo_cirurgia_area_atuacao FOREIGN KEY (id_area_atuacao) REFERENCES area_atuacao (id_area_atuacao),
     CONSTRAINT uq_tipo_cirurgia_nome UNIQUE (nome)
-);
+) TABLESPACE tbs_tables;
 
 
 
@@ -29,7 +29,7 @@ CREATE TABLE estado_paciente
     id_estado_paciente INTEGER,
     descricao          VARCHAR2(50) NOT NULL,
     CONSTRAINT pk_estado_paciente PRIMARY KEY (id_estado_paciente)
-);
+) TABLESPACE tbs_tables;
 
 
 
@@ -41,7 +41,7 @@ CREATE TABLE pessoa
     morada    VARCHAR2(200) NOT NULL,
     dta_nasc  DATE          NOT NULL,
     CONSTRAINT pk_pessoa PRIMARY KEY (nif)
-);
+) TABLESPACE tbs_tables;
 
 
 CREATE TABLE telefone
@@ -50,7 +50,7 @@ CREATE TABLE telefone
     telefone VARCHAR2(9),
     CONSTRAINT pk_telefone PRIMARY KEY (nif, telefone),
     CONSTRAINT fk_telefone_pessoa FOREIGN KEY (nif) REFERENCES pessoa
-);
+) TABLESPACE tbs_tables;
 
 
 CREATE TABLE funcionario
@@ -58,7 +58,7 @@ CREATE TABLE funcionario
     nif NUMBER(9),
     CONSTRAINT pk_funcionario PRIMARY KEY (nif),
     CONSTRAINT fk_funcionario_pessoa FOREIGN KEY (nif) REFERENCES pessoa (nif)
-);
+) TABLESPACE tbs_tables;
 
 
 
@@ -67,7 +67,7 @@ CREATE TABLE enfermeiro
     nif NUMBER(9),
     CONSTRAINT pk_enfermeiro PRIMARY KEY (nif),
     CONSTRAINT fk_enfermeiro_funcionario FOREIGN KEY (nif) REFERENCES funcionario (nif)
-);
+) TABLESPACE tbs_tables;
 
 
 CREATE TABLE medico
@@ -81,7 +81,8 @@ CREATE TABLE medico
     CONSTRAINT fk_medico_area_atuacao FOREIGN KEY (id_area_atuacao)
         REFERENCES area_atuacao (id_area_atuacao),
     CONSTRAINT uq_medico_cedula UNIQUE (cedula)
-);
+) TABLESPACE tbs_tables;
+
 
 
 CREATE TABLE paciente
@@ -92,7 +93,7 @@ CREATE TABLE paciente
     CONSTRAINT fk_paciente_pessoa FOREIGN KEY (nif)
         REFERENCES pessoa (nif),
     CONSTRAINT uq_paciente_n_utente_saude UNIQUE (n_utente_saude)
-);
+) TABLESPACE tbs_tables;
 
 
 
@@ -106,7 +107,7 @@ CREATE TABLE relatorio
     CONSTRAINT fk_relatorio_funcionario FOREIGN KEY (nif)
         REFERENCES funcionario (nif),
     CONSTRAINT ck_relatorio_categoria CHECK (categoria IN ('CON', 'CIR'))
-);
+) TABLESPACE tbs_tables;
 
 
 
@@ -129,9 +130,10 @@ CREATE TABLE processo
         REFERENCES area_atuacao (id_area_atuacao)
 ) PARTITION BY LIST (dta_alta)
 (
-    PARTITION ativos VALUES (NULL),
-    PARTITION arquivados VALUES (default)
-) ENABLE ROW MOVEMENT;
+    PARTITION ativos VALUES (NULL) TABLESPACE tbs_tables,
+    PARTITION arquivados VALUES (default) TABLESPACE tbs_tables
+) ENABLE ROW MOVEMENT
+TABLESPACE tbs_tables;
 
 
 
@@ -152,7 +154,7 @@ CREATE TABLE consulta
         REFERENCES relatorio (id_relatorio),
     CONSTRAINT fk_consulta_estado_paciente FOREIGN KEY (id_estado_paciente)
         REFERENCES estado_paciente (id_estado_paciente)
-);
+) TABLESPACE tbs_tables;
 
 
 
@@ -170,7 +172,7 @@ CREATE TABLE cirurgia
         REFERENCES relatorio (id_relatorio),
     CONSTRAINT fk_cirurgia_tipo_cirurgia FOREIGN KEY (id_tipo_cirurgia)
         REFERENCES tipo_cirurgia (id_tipo_cirurgia)
-);
+) TABLESPACE tbs_tables;
 
 
 
@@ -183,7 +185,7 @@ CREATE TABLE medico_cirurgia
         REFERENCES medico (nif),
     CONSTRAINT fk_medico_cirurgia_cirurgia FOREIGN KEY (id_cirurgia)
         REFERENCES cirurgia (id_cirurgia)
-);
+) TABLESPACE tbs_tables;
 
 
 
@@ -193,7 +195,7 @@ CREATE TABLE user_exception (
     errm VARCHAR2(200),
     CONSTRAINT pk_user_exception PRIMARY KEY (code),
     CONSTRAINT uq_user_exception_name UNIQUE (name)
-);
+) TABLESPACE tbs_tables;
 
 
 
@@ -204,5 +206,9 @@ CREATE TABLE exception_log (
     errm VARCHAR2(500),
     stacktrace VARCHAR2(500),
     CONSTRAINT pk_exception_log PRIMARY KEY (id_exception_log)
-);
+) TABLESPACE tbs_tables;
+
+
+
+
 

@@ -33,7 +33,7 @@ CREATE OR REPLACE PACKAGE BODY et_pessoa AS
         p_id_area_atuacao IN processo.id_area_atuacao%TYPE,
         p_t_telefone      IN t_telefone
     )
-    IS
+     IS
         rec_pessoa pessoa%ROWTYPE;
         n_count_pessoa INTEGER;
     BEGIN
