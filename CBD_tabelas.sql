@@ -123,7 +123,11 @@ CREATE TABLE processo
         REFERENCES paciente (nif) DEFERRABLE INITIALLY DEFERRED,
     CONSTRAINT fk_processo_area_atuacao FOREIGN KEY (id_area_atuacao)
         REFERENCES area_atuacao (id_area_atuacao)
-);
+) PARTITION BY LIST (dta_alta)
+(
+    PARTITION ativos VALUES (NULL),
+    PARTITION arquivados VALUES (default)
+) ENABLE ROW MOVEMENT;
 
 
 

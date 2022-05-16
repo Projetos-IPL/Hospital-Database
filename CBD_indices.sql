@@ -1,5 +1,4 @@
 
-
 -- Indice para otimizar queries a consultas por processo
 CREATE INDEX idx_consulta_id_processo ON consulta (id_processo);
 
