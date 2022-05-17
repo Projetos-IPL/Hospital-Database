@@ -72,21 +72,20 @@ WHERE pro.nif = pes.nif
 
 CREATE OR REPLACE VIEW processos_ativos_view AS
 SELECT /*+ parallel(p,5) */
-       p.id_processo,
-       pe.nif,
-       pe.prim_nome || ' ' || pe.ult_nome    "Paciente",
-       et_pessoa.calcular_idade(pe.dta_nasc) "Idade",
-       aa.descricao     AS                   "Área de atuação",
-       p.dta_inicio     AS                   "Data de ínicio",
-       ep.descricao     AS                   "Estado",
-       c.dta_realizacao AS                   "Última Consulta"
-FROM processo p,
+    p.id_processo,
+    pe.nif,
+    pe.prim_nome || ' ' || pe.ult_nome    "Paciente",
+    et_pessoa.calcular_idade(pe.dta_nasc) "Idade",
+    aa.descricao     AS                   "Área de atuação",
+    p.dta_inicio     AS                   "Data de ínicio",
+    ep.descricao     AS                   "Estado",
+    c.dta_realizacao AS                   "Última Consulta"
+FROM processo PARTITION (ativos) p,
      area_atuacao aa,
      pessoa pe,
      estado_paciente ep,
      consulta c
 WHERE p.nif = pe.nif
-  AND p.dta_alta IS NULL
   AND p.id_processo = c.id_processo (+)
   AND p.id_estado_paciente = ep.id_estado_paciente (+)
   AND p.id_area_atuacao = aa.id_area_atuacao
@@ -109,36 +108,33 @@ GROUP BY aa.id_area_atuacao, aa.descricao;
 
 
 CREATE OR REPLACE VIEW estatisticas_hospital_view AS
-SELECT (SELECT COUNT(1) FROM processo)                                  "Total Processos",
+SELECT /*+ parallel(5) */
+       (SELECT COUNT(1) FROM processo)                                        "Total Processos",
        ((SELECT COUNT(1) FROM processo) - (SELECT COUNT(1)
-                                           FROM processo
-                                           WHERE dta_alta IS NOT NULL)) "Processos Ativos",
-       (SELECT COUNT(1) FROM paciente)                                  "Total Pacientes",
-       (SELECT COUNT(DISTINCT pr.nif)
-        FROM processo pr
-        WHERE pr.dta_alta IS NOT NULL)                                  "Pacientes no hospital",
-       (SELECT COUNT(1) FROM enfermeiro)                                "Total Enfermeiros",
-       (SELECT COUNT(1) FROM medico)                                    "Total Medicos"
+                                           FROM processo PARTITION (ativos))) "Processos Ativos",
+       (SELECT COUNT(1) FROM paciente)                                        "Total Pacientes",
+       (SELECT COUNT(DISTINCT nif)
+        FROM processo PARTITION (ativos))                                     "Pacientes no hospital",
+       (SELECT COUNT(1) FROM enfermeiro)                                      "Total Enfermeiros",
+       (SELECT COUNT(1) FROM medico)                                          "Total Medicos"
 FROM dual;
 /
 
 
 CREATE OR REPLACE VIEW dados_privs_roles_obj_view
 AS
-SELECT  t.role,
-        t.table_name,
-        t.privilege
-FROM    role_tab_privs t
-WHERE
-        role IN ('APPLICATION', 'DEVELOPER');
+SELECT t.role,
+       t.table_name,
+       t.privilege
+FROM role_tab_privs t
+WHERE role IN ('APPLICATION', 'DEVELOPER');
 /
 
 
 CREATE OR REPLACE VIEW dados_privs_roles_sys_view
 AS
-SELECT  t.role,
-        t.privilege
-FROM    role_sys_privs t
-WHERE
-        role IN ('APPLICATION', 'DEVELOPER');
+SELECT t.role,
+       t.privilege
+FROM role_sys_privs t
+WHERE role IN ('APPLICATION', 'DEVELOPER');
 /

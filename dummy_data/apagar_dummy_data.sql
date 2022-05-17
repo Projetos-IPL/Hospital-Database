@@ -2,7 +2,7 @@
 -- Grupo 5 (Afonso Santos - 2210640, Iúri Raimundo - 2210651)
 -- Descrição: Script para remover os registos das tabelas.
 
-CREATE OR REPLACE PROCEDURE internal_delete_all_data_do_not_user_or_you_will_be_fired
+CREATE OR REPLACE PROCEDURE internal_delete_all_data_use_at_your_own_risk
 IS
     CURSOR cur_user_table_names IS
         SELECT table_name
@@ -64,5 +64,5 @@ END;
 /
 
 BEGIN
-    internal_delete_all_data_do_not_user_or_you_will_be_fired;
+    internal_delete_all_data_use_at_your_own_risk;
 END;
