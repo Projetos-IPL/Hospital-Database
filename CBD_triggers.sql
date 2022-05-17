@@ -98,6 +98,7 @@ DECLARE
 BEGIN
     RAISE et_pessoa.ex_alteracao_invalida;
 END;
+/
 
 -- Tabela processo
 
