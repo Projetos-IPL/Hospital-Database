@@ -50,7 +50,11 @@ BEGIN
     rec_pessoa.ult_nome := :NEW.ult_nome;
     rec_pessoa.morada := :NEW.morada;
     rec_pessoa.dta_nasc := :NEW.dta_nasc;
+
     et_pessoa.validar_pessoa(rec_pessoa);
+	
+		-- encriptar morada
+		:NEW.morada := encryption_utils.encrypt_str(rec_pessoa.morada);
 END tbi_pessoa;
 /
 

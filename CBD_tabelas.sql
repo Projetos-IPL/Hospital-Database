@@ -209,6 +209,7 @@ CREATE TABLE exception_log (
 ) TABLESPACE tbs_tables;
 
 
-
-
-
+CREATE TABLE encryption_key (
+		key VARCHAR2(200),
+		CONSTRAINT pk_encryption_key PRIMARY KEY (key)
+) TABLESPACE tbs_tables;
