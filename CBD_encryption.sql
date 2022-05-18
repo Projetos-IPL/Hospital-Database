@@ -7,17 +7,15 @@ INSERT INTO encryption_key (key) VALUES ('1234567890999899');
 
 COMMIT;
 
+
 CREATE OR REPLACE PACKAGE encryption_utils AS
 
-	FUNCTION get_encryption_key RETURN VARCHAR2 DETERMINISTIC;
+	FUNCTION encrypt_str (p_str IN VARCHAR2) RETURN RAW DETERMINISTIC;
 
-	FUNCTION encrypt_str(p_str IN VARCHAR2) RETURN VARCHAR2 DETERMINISTIC;
-
-	FUNCTION decrypt_str(p_str IN VARCHAR2) RETURN VARCHAR2 DETERMINISTIC;
+	FUNCTION decrypt_str (p_str IN VARCHAR2) RETURN VARCHAR2 DETERMINISTIC;
 
 END encryption_utils;
 /
-
 
 CREATE OR REPLACE PACKAGE BODY encryption_utils AS
 
@@ -38,7 +36,7 @@ CREATE OR REPLACE PACKAGE BODY encryption_utils AS
 
 	FUNCTION encrypt_str
 		(p_str IN VARCHAR2)
-		RETURN VARCHAR2 DETERMINISTIC
+		RETURN RAW DETERMINISTIC
 	AS
 		v_key VARCHAR2(200);
 		n_mod NUMBER
@@ -70,21 +68,21 @@ CREATE OR REPLACE PACKAGE BODY encryption_utils AS
 			:=	dbms_crypto.encrypt_aes128
 				+ dbms_crypto.chain_cbc
 				+ dbms_crypto.pad_pkcs5;
-		r_decrypted_raw        	RAW (2000);
-		r_return 								RAW (2000);
+		r_decrypted_raw        	RAW (5000);
+		r_return 								VARCHAR2 (5000);
 	BEGIN
-		v_key := get_encryption_key();
+		v_key := encryption_utils.get_encryption_key();
 
 		r_decrypted_raw :=
 			dbms_crypto.decrypt(
 				p_str,
 				n_mod,
-				utl_i18n.string_to_raw (v_key, 'AL32UTF8')
+				utl_i18n.string_to_raw(v_key, 'AL32UTF8')
 			);
 		
 		r_return := utl_i18n.raw_to_char(r_decrypted_raw);
 
-		RETURN r_decrypted_raw;
+		RETURN r_return;
 	END decrypt_str;
 
 END encryption_utils;

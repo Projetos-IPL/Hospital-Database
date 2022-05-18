@@ -138,3 +138,12 @@ SELECT t.role,
 FROM role_sys_privs t
 WHERE role IN ('APPLICATION', 'DEVELOPER');
 /
+
+
+CREATE OR REPLACE VIEW dados_moradas_pessoas
+AS
+SELECT	p.prim_nome,
+      	p.ult_nome,
+				encryption_utils.decrypt_str(p.morada) "Morada"
+FROM 	pessoa p;
+/
