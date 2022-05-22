@@ -2,6 +2,7 @@
 -- Grupo 5 (Afonso Santos - 2210640, Iúri Raimundo - 2210651)
 -- Descrição: script para criação de índices
 
+
 -- Indice para otimizar queries a consultas por processo
 CREATE INDEX idx_consulta_id_processo ON consulta (id_processo)
     TABLESPACE tbs_indexes;

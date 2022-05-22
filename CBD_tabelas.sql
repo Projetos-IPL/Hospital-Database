@@ -2,6 +2,7 @@
 -- Grupo 5 (Afonso Santos - 2210640, Iúri Raimundo - 2210651)
 -- Descrição: script para criação de tabelas
 
+
 CREATE TABLE area_atuacao
 (
     id_area_atuacao INTEGER,
@@ -9,7 +10,6 @@ CREATE TABLE area_atuacao
     CONSTRAINT pk_area_atuacao PRIMARY KEY (id_area_atuacao),
     CONSTRAINT uq_area_atuacao_descricao UNIQUE (descricao)
 ) TABLESPACE tbs_tables;
-
 
 
 CREATE TABLE tipo_cirurgia
@@ -23,14 +23,12 @@ CREATE TABLE tipo_cirurgia
 ) TABLESPACE tbs_tables;
 
 
-
 CREATE TABLE estado_paciente
 (
     id_estado_paciente INTEGER,
     descricao          VARCHAR2(50) NOT NULL,
     CONSTRAINT pk_estado_paciente PRIMARY KEY (id_estado_paciente)
 ) TABLESPACE tbs_tables;
-
 
 
 CREATE TABLE pessoa
@@ -61,7 +59,6 @@ CREATE TABLE funcionario
 ) TABLESPACE tbs_tables;
 
 
-
 CREATE TABLE enfermeiro
 (
     nif NUMBER(9),
@@ -84,7 +81,6 @@ CREATE TABLE medico
 ) TABLESPACE tbs_tables;
 
 
-
 CREATE TABLE paciente
 (
     nif            NUMBER(9),
@@ -94,7 +90,6 @@ CREATE TABLE paciente
         REFERENCES pessoa (nif),
     CONSTRAINT uq_paciente_n_utente_saude UNIQUE (n_utente_saude)
 ) TABLESPACE tbs_tables;
-
 
 
 CREATE TABLE relatorio
@@ -108,7 +103,6 @@ CREATE TABLE relatorio
         REFERENCES funcionario (nif),
     CONSTRAINT ck_relatorio_categoria CHECK (categoria IN ('CON', 'CIR'))
 ) TABLESPACE tbs_tables;
-
 
 
 CREATE TABLE processo
@@ -136,7 +130,6 @@ CREATE TABLE processo
 TABLESPACE tbs_tables;
 
 
-
 CREATE TABLE consulta
 (
     id_consulta        INTEGER,
@@ -157,7 +150,6 @@ CREATE TABLE consulta
 ) TABLESPACE tbs_tables;
 
 
-
 CREATE TABLE cirurgia
 (
     id_cirurgia      INTEGER,
@@ -175,7 +167,6 @@ CREATE TABLE cirurgia
 ) TABLESPACE tbs_tables;
 
 
-
 CREATE TABLE medico_cirurgia
 (
     nif         NUMBER(9),
@@ -188,7 +179,6 @@ CREATE TABLE medico_cirurgia
 ) TABLESPACE tbs_tables;
 
 
-
 CREATE TABLE user_exception (
     code INT,
     name VARCHAR2(60),
@@ -196,7 +186,6 @@ CREATE TABLE user_exception (
     CONSTRAINT pk_user_exception PRIMARY KEY (code),
     CONSTRAINT uq_user_exception_name UNIQUE (name)
 ) TABLESPACE tbs_tables;
-
 
 
 CREATE TABLE exception_log (

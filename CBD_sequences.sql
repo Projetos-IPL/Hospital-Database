@@ -2,6 +2,7 @@
 -- Grupo 5 (Afonso Santos - 2210640, Iúri Raimundo - 2210651)
 -- Descrição: script para criação de sequências
 
+
 -- Área de atuação
 CREATE SEQUENCE pk_area_atuacao_seq
     INCREMENT BY 1

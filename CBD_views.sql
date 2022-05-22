@@ -2,6 +2,7 @@
 -- Grupo 5 (Afonso Santos - 2210640, Iúri Raimundo - 2210651)
 -- Descrição: script para criação de views
 
+
 CREATE OR REPLACE VIEW processo_dados_view AS
 SELECT pe.nif,
        pe.prim_nome,
@@ -140,7 +141,7 @@ WHERE role IN ('APPLICATION', 'DEVELOPER');
 /
 
 
-CREATE OR REPLACE VIEW dados_moradas_pessoas
+CREATE OR REPLACE VIEW dados_moradas_pessoas_view
 AS
 SELECT	p.prim_nome,
       	p.ult_nome,

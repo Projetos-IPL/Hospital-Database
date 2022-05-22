@@ -2,8 +2,10 @@
 -- Grupo 5 (Afonso Santos - 2210640, Iúri Raimundo - 2210651)
 -- Descrição: script para criação de roles e atribuição de privilégios
 
+
 CREATE ROLE developer;
 CREATE ROLE application;
+CREATE ROLE manager;
 
 DECLARE
 	schema_name VARCHAR2(100) := 'PROJETO';
@@ -19,6 +21,10 @@ DECLARE
     t_application_allowed_packages t_varchar2 := t_varchar2('et_pessoa', 'et_cirurgia', 'et_consulta', 'et_processo', 'et_relatorio');
     t_application_allowed_views    t_varchar2 := t_varchar2('dados_paciente_view', 'medico_area_atuacao_view', 'processo_dados_view', 'processo_total_consultas_view', 'processos_ativos_view');
     t_application_privileges       t_varchar2 := t_varchar2('CREATE SESSION');
+
+		t_manager_allowed_packages     t_varchar2 := t_varchar2('et_pessoa', 'et_cirurgia', 'et_consulta', 'et_processo', 'et_relatorio');
+		t_manager_allowed_views        t_varchar2 := t_varchar2('dados_paciente_view', 'medico_area_atuacao_view', 'processo_dados_view', 'processo_total_consultas_view', 'processos_ativos_view, 'dados_moradas_pessoas_view');
+		t_manager_privileges					 t_varchar2 := t_varchar2('CREATE SESSION');
 
     PROCEDURE grantCommandOnObjectsToRole(p_command IN VARCHAR2, p_objects IN t_varchar2, p_role IN VARCHAR2) IS
     BEGIN
@@ -59,6 +65,14 @@ BEGIN
     grantCommandOnObjectsToRole('SELECT', t_application_allowed_views, 'application');
     -- Privileges
     grantPrivilegeToRole(t_application_privileges, 'application');
+
+		-- Manager grants
+    -- Package
+    grantCommandOnObjectsToRole('EXECUTE',  t_manager_allowed_packages, 'manager');
+    -- Views
+    grantCommandOnObjectsToRole('SELECT', t_manager_allowed_views, 'manager');
+    -- Privileges
+    grantPrivilegeToRole(t_manager_privileges, 'manager');
 
     EXCEPTION
         WHEN OTHERS THEN
