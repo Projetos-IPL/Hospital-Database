@@ -5,9 +5,6 @@
 
 SET SERVEROUTPUT ON;
 
--- Delete user and schema
-@@ CBD_eliminar.sql
-
 -- User and schema
 @@ CBD_schema.sql
 
