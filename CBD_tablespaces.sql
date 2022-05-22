@@ -8,8 +8,10 @@ DROP TABLESPACE tbs_indexes;
 
 CREATE TABLESPACE tbs_tables
     DATAFILE 'tbs_tables.dbf'
-    SIZE 1024M;
+    SIZE 1024M
+		REUSE;
 
 CREATE TABLESPACE tbs_indexes
     DATAFILE 'tbs_indexes.dbf'
-    SIZE 1024M;
+    SIZE 1024M
+		REUSE;
