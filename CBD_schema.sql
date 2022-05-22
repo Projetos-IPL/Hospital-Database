@@ -3,13 +3,13 @@
 -- Descrição: script para criação de utilizador e schema.
 
 
-CONN sys/sys AS sysdba
+CONN sys/sys AS sysdba;
 
 DROP USER PROJETO CASCADE;
 
 CREATE USER PROJETO
   IDENTIFIED BY Projeto_22;
 
-GRANT dba TO PROJETO;
+GRANT DBA TO PROJETO;
 
-CONN PROJETO/Projeto_22
+CONN PROJETO/Projeto_22;
