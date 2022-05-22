@@ -3,6 +3,8 @@
 -- Descrição: script para criação de tabelas
 
 
+EXECUTE dbms_output.put_line('> Creating tables...');
+
 CREATE TABLE area_atuacao
 (
     id_area_atuacao INTEGER,

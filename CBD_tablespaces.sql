@@ -3,6 +3,8 @@
 -- Descrição: Tablespaces
 
 
+EXECUTE dbms_output.put_line('> Creating tablespaces...');
+
 DROP TABLESPACE tbs_tables;
 DROP TABLESPACE tbs_indexes;
 

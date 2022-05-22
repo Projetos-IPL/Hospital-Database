@@ -3,6 +3,8 @@
 -- Descrição: script para criação de roles e atribuição de privilégios
 
 
+EXECUTE dbms_output.put_line('> Creating roles...');
+
 DROP ROLE developer;
 DROP ROLE application;
 DROP ROLE manager;

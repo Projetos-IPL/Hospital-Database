@@ -3,6 +3,8 @@
 -- Descrição: script para criação de triggers
 
 
+EXECUTE dbms_output.put_line('> Creating triggers...');
+
 -- Tabela area_atuacao
 CREATE OR REPLACE TRIGGER tbi_area_atuacao
     BEFORE INSERT ON area_atuacao

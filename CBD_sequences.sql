@@ -3,6 +3,8 @@
 -- Descrição: script para criação de sequências
 
 
+EXECUTE dbms_output.put_line('> Creating sequences...');
+
 -- Área de atuação
 CREATE SEQUENCE pk_area_atuacao_seq
     INCREMENT BY 1

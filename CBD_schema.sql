@@ -3,6 +3,8 @@
 -- Descrição: script para criação de utilizador e schema.
 
 
+EXECUTE dbms_output.put_line('> Creating user and schema...');
+
 CONN sys/sys AS sysdba;
 
 DROP USER PROJETO CASCADE;

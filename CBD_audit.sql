@@ -3,6 +3,8 @@
 -- Descrição: script para configuração de auditoria.
 
 
+EXECUTE dbms_output.put_line('> Creating audit...');
+
 AUDIT
 	UPDATE
 ON

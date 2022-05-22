@@ -3,6 +3,8 @@
 -- Descrição: script para criação de índices
 
 
+EXECUTE dbms_output.put_line('> Creating indexes...');
+
 -- Indice para otimizar queries a consultas por processo
 CREATE INDEX idx_consulta_id_processo ON consulta (id_processo)
     TABLESPACE tbs_indexes;

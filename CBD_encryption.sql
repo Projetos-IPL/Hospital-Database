@@ -3,6 +3,8 @@
 -- Descrição: objetos relacionados com encriptação
 
 
+EXECUTE dbms_output.put_line('> Creating encryption...');
+
 INSERT INTO encryption_key (key) VALUES ('1234567890999899');
 
 COMMIT;

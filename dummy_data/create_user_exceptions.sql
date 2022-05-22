@@ -2,8 +2,11 @@
 -- Grupo 5 (Afonso Santos - 2210640, Iúri Raimundo - 2210651)
 -- Descrição: Script para criação de exceções.
 
-BEGIN
 
+EXECUTE dbms_output.put_line('> Creating user exceptions...');
+
+
+BEGIN
     EXECUTE IMMEDIATE 'TRUNCATE TABLE user_exception';
 
     exception_handler.add_user_exception(
@@ -85,6 +88,5 @@ BEGIN
         -20502,
         'cirurgia_em_processo_finalizado',
         'Tentativa de registo de consulta em processo já finalizado.');
-
 END;
 /

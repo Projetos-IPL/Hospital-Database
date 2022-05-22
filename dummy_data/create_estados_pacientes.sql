@@ -2,6 +2,9 @@
 -- Grupo 5 (Afonso Santos - 2210640, Iúri Raimundo - 2210651)
 -- Descrição: Script para criação de estados de pacientes.
 
+
+EXECUTE dbms_output.put_line('> Creating estados de pacientes...');
+
 INSERT INTO estado_paciente (descricao)
     VALUES ('Cuidados Mínimos');
 

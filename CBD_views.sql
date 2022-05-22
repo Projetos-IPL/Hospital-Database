@@ -3,6 +3,8 @@
 -- Descrição: script para criação de views
 
 
+EXECUTE dbms_output.put_line('> Creating views...');
+
 CREATE OR REPLACE VIEW processo_dados_view AS
 SELECT pe.nif,
        pe.prim_nome,
