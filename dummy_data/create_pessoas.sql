@@ -3,6 +3,7 @@
 -- Descrição: Script para criação de pessoas (pacientes, enfermeiros e médicos).
 
 
+SET SERVEROUTPUT ON;
 EXECUTE dbms_output.put_line('> Creating pessoas...');
 
 BEGIN

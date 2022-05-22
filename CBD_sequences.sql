@@ -3,6 +3,7 @@
 -- Descrição: script para criação de sequências
 
 
+SET SERVEROUTPUT ON;
 EXECUTE dbms_output.put_line('> Creating sequences...');
 
 -- Área de atuação

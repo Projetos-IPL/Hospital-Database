@@ -3,6 +3,7 @@
 -- Descrição: script para criação de views
 
 
+SET SERVEROUTPUT ON;
 EXECUTE dbms_output.put_line('> Creating views...');
 
 CREATE OR REPLACE VIEW processo_dados_view AS

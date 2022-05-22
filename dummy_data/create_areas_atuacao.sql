@@ -3,6 +3,7 @@
 -- Descrição: Script para criação de áreas de atuação.
 
 
+SET SERVEROUTPUT ON;
 EXECUTE dbms_output.put_line('> Creating areas de atuacao...');
 
 INSERT INTO area_atuacao (descricao)

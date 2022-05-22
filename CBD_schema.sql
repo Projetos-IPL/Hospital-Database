@@ -3,6 +3,7 @@
 -- Descrição: script para criação de utilizador e schema.
 
 
+SET SERVEROUTPUT ON;
 EXECUTE dbms_output.put_line('> Creating user and schema...');
 
 CONN sys/sys AS sysdba;

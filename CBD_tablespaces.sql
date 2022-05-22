@@ -3,6 +3,7 @@
 -- Descrição: Tablespaces
 
 
+SET SERVEROUTPUT ON;
 EXECUTE dbms_output.put_line('> Creating tablespaces...');
 
 DROP TABLESPACE tbs_tables;

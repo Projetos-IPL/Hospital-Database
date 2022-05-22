@@ -3,6 +3,7 @@
 -- Descrição: script para criação de tabelas
 
 
+SET SERVEROUTPUT ON;
 EXECUTE dbms_output.put_line('> Creating tables...');
 
 CREATE TABLE area_atuacao

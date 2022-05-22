@@ -3,6 +3,7 @@
 -- Descrição: script para criação de índices
 
 
+SET SERVEROUTPUT ON;
 EXECUTE dbms_output.put_line('> Creating indexes...');
 
 -- Indice para otimizar queries a consultas por processo

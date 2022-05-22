@@ -3,7 +3,9 @@
 -- Descrição: Script para criação de tipos de cirurgias.
 
 
+SET SERVEROUTPUT ON;
 EXECUTE dbms_output.put_line('> Creating tipos de cirurgias...');
+
 
 INSERT INTO tipo_cirurgia (id_area_atuacao, nome)
     VALUES (1, 'processo não cirúrgico de lesões traumáticas ou degenerativas');

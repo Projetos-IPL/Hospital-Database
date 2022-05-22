@@ -3,6 +3,7 @@
 -- Descrição: script para configuração de auditoria.
 
 
+SET SERVEROUTPUT ON;
 EXECUTE dbms_output.put_line('> Creating audit...');
 
 AUDIT

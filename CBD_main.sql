@@ -4,7 +4,6 @@
 
 
 SET SERVEROUTPUT ON;
-
 EXECUTE dbms_output.put_line('> Starting main script...');
 
 -- User and schema

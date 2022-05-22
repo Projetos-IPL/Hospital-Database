@@ -3,6 +3,7 @@
 -- Descrição: Script para criação de cirurgias.
 
 
+SET SERVEROUTPUT ON;
 EXECUTE dbms_output.put_line('> Creating cirurgias...');
 
 BEGIN

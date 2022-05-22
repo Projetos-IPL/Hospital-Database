@@ -3,6 +3,7 @@
 -- Descrição: Script para criação de exceções.
 
 
+SET SERVEROUTPUT ON;
 EXECUTE dbms_output.put_line('> Creating user exceptions...');
 
 

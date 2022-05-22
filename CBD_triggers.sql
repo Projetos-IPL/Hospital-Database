@@ -3,6 +3,7 @@
 -- Descrição: script para criação de triggers
 
 
+SET SERVEROUTPUT ON;
 EXECUTE dbms_output.put_line('> Creating triggers...');
 
 -- Tabela area_atuacao
