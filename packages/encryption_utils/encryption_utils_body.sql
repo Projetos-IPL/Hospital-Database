@@ -32,7 +32,7 @@ CREATE OR REPLACE PACKAGE BODY encryption_utils AS
 		r_encrypted_raw        	RAW (2000);
 		r_return 								RAW (2000);
 	BEGIN
-		v_key := get_encryption_key();
+		v_key := encryption_utils.get_encryption_key();
 
 		r_encrypted_raw :=
 			dbms_crypto.encrypt(

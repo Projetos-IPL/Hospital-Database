@@ -6,7 +6,7 @@
 SET SERVEROUTPUT ON;
 EXECUTE dbms_output.put_line('> Creating user and schema...');
 
-CONN sys/sys AS sysdba;
+CONN / AS sysdba;
 
 DROP USER PROJETO CASCADE;
 
