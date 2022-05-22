@@ -3,6 +3,10 @@
 -- Descrição: script para criação de roles e atribuição de privilégios
 
 
+DROP ROLE developer;
+DROP ROLE application;
+DROP ROLE manager;
+
 CREATE ROLE developer;
 CREATE ROLE application;
 CREATE ROLE manager;
