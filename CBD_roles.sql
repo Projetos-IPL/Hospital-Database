@@ -27,7 +27,7 @@ DECLARE
     t_application_privileges       t_varchar2 := t_varchar2('CREATE SESSION');
 
 		t_manager_allowed_packages     t_varchar2 := t_varchar2('et_pessoa', 'et_cirurgia', 'et_consulta', 'et_processo', 'et_relatorio');
-		t_manager_allowed_views        t_varchar2 := t_varchar2('dados_paciente_view', 'medico_area_atuacao_view', 'processo_dados_view', 'processo_total_consultas_view', 'processos_ativos_view, 'dados_moradas_pessoas_view');
+		t_manager_allowed_views        t_varchar2 := t_varchar2('dados_paciente_view', 'medico_area_atuacao_view', 'processo_dados_view', 'processo_total_consultas_view', 'processos_ativos_view', 'dados_moradas_pessoas_view');
 		t_manager_privileges					 t_varchar2 := t_varchar2('CREATE SESSION');
 
     PROCEDURE grantCommandOnObjectsToRole(p_command IN VARCHAR2, p_objects IN t_varchar2, p_role IN VARCHAR2) IS
