@@ -3,6 +3,9 @@
 -- Descrição: Tablespaces
 
 
+DROP TABLESPACE tbs_tables;
+DROP TABLESPACE tbs_indexes;
+
 CREATE TABLESPACE tbs_tables
     DATAFILE 'tbs_tables.dbf'
     SIZE 1024M;
