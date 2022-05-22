@@ -6,7 +6,7 @@
 SET SERVEROUTPUT ON;
 EXECUTE dbms_output.put_line('> Creating tables...');
 
-CREATE TABLE area_atuacao
+CREATE TABLE PROJETO.area_atuacao
 (
     id_area_atuacao INTEGER,
     descricao       VARCHAR2(100) NOT NULL,
@@ -15,7 +15,7 @@ CREATE TABLE area_atuacao
 ) TABLESPACE tbs_tables;
 
 
-CREATE TABLE tipo_cirurgia
+CREATE TABLE PROJETO.tipo_cirurgia
 (
     id_tipo_cirurgia INTEGER,
     id_area_atuacao  INTEGER,
@@ -26,7 +26,7 @@ CREATE TABLE tipo_cirurgia
 ) TABLESPACE tbs_tables;
 
 
-CREATE TABLE estado_paciente
+CREATE TABLE PROJETO.estado_paciente
 (
     id_estado_paciente INTEGER,
     descricao          VARCHAR2(50) NOT NULL,
@@ -34,7 +34,7 @@ CREATE TABLE estado_paciente
 ) TABLESPACE tbs_tables;
 
 
-CREATE TABLE pessoa
+CREATE TABLE PROJETO.pessoa
 (
     nif       NUMBER(9),
     prim_nome VARCHAR2(30)  NOT NULL,
@@ -45,7 +45,7 @@ CREATE TABLE pessoa
 ) TABLESPACE tbs_tables;
 
 
-CREATE TABLE telefone
+CREATE TABLE PROJETO.telefone
 (
     nif      NUMBER(9),
     telefone VARCHAR2(9),
@@ -54,7 +54,7 @@ CREATE TABLE telefone
 ) TABLESPACE tbs_tables;
 
 
-CREATE TABLE funcionario
+CREATE TABLE PROJETO.funcionario
 (
     nif NUMBER(9),
     CONSTRAINT pk_funcionario PRIMARY KEY (nif),
@@ -62,7 +62,7 @@ CREATE TABLE funcionario
 ) TABLESPACE tbs_tables;
 
 
-CREATE TABLE enfermeiro
+CREATE TABLE PROJETO.enfermeiro
 (
     nif NUMBER(9),
     CONSTRAINT pk_enfermeiro PRIMARY KEY (nif),
@@ -70,7 +70,7 @@ CREATE TABLE enfermeiro
 ) TABLESPACE tbs_tables;
 
 
-CREATE TABLE medico
+CREATE TABLE PROJETO.medico
 (
     nif             NUMBER(9),
     id_area_atuacao INTEGER,
@@ -84,7 +84,7 @@ CREATE TABLE medico
 ) TABLESPACE tbs_tables;
 
 
-CREATE TABLE paciente
+CREATE TABLE PROJETO.paciente
 (
     nif            NUMBER(9),
     n_utente_saude NUMBER(9) NOT NULL,
@@ -95,7 +95,7 @@ CREATE TABLE paciente
 ) TABLESPACE tbs_tables;
 
 
-CREATE TABLE relatorio
+CREATE TABLE PROJETO.relatorio
 (
     id_relatorio INTEGER,
     nif          NUMBER(9),
@@ -108,7 +108,7 @@ CREATE TABLE relatorio
 ) TABLESPACE tbs_tables;
 
 
-CREATE TABLE processo
+CREATE TABLE PROJETO.processo
 (
     id_processo      INTEGER,
     nif                NUMBER(9),
@@ -133,7 +133,7 @@ CREATE TABLE processo
 TABLESPACE tbs_tables;
 
 
-CREATE TABLE consulta
+CREATE TABLE PROJETO.consulta
 (
     id_consulta        INTEGER,
     id_processo      INTEGER,
@@ -153,7 +153,7 @@ CREATE TABLE consulta
 ) TABLESPACE tbs_tables;
 
 
-CREATE TABLE cirurgia
+CREATE TABLE PROJETO.cirurgia
 (
     id_cirurgia      INTEGER,
     id_processo    INTEGER,
@@ -170,7 +170,7 @@ CREATE TABLE cirurgia
 ) TABLESPACE tbs_tables;
 
 
-CREATE TABLE medico_cirurgia
+CREATE TABLE PROJETO.medico_cirurgia
 (
     nif         NUMBER(9),
     id_cirurgia INTEGER,
@@ -182,7 +182,7 @@ CREATE TABLE medico_cirurgia
 ) TABLESPACE tbs_tables;
 
 
-CREATE TABLE user_exception (
+CREATE TABLE PROJETO.user_exception (
     code INT,
     name VARCHAR2(60),
     errm VARCHAR2(200),
@@ -191,7 +191,7 @@ CREATE TABLE user_exception (
 ) TABLESPACE tbs_tables;
 
 
-CREATE TABLE exception_log (
+CREATE TABLE PROJETO.exception_log (
     id_exception_log INTEGER,
     code INTEGER,
     logged_at TIMESTAMP(2),
@@ -201,7 +201,7 @@ CREATE TABLE exception_log (
 ) TABLESPACE tbs_tables;
 
 
-CREATE TABLE encryption_key (
+CREATE TABLE PROJETO.encryption_key (
 		key VARCHAR2(200),
 		CONSTRAINT pk_encryption_key PRIMARY KEY (key)
 ) TABLESPACE tbs_tables;

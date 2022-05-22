@@ -6,10 +6,13 @@
 SET SERVEROUTPUT ON;
 EXECUTE dbms_output.put_line('> Creating roles...');
 
+
+-- remove roles if exist
 DROP ROLE developer;
 DROP ROLE application;
 DROP ROLE manager;
 
+-- create roles
 CREATE ROLE developer;
 CREATE ROLE application;
 CREATE ROLE manager;

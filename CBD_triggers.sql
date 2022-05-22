@@ -17,6 +17,7 @@ BEGIN
 END tbi_area_atuacao;
 /
 
+
 -- Tabela tipo_cirurgia
 
 CREATE OR REPLACE TRIGGER tbi_tipo_cirurgia
@@ -28,6 +29,7 @@ BEGIN
     END IF;
 END tbi_tipo_cirurgia;
 /
+
 
 -- Tabela estado paciente
 
@@ -41,9 +43,10 @@ BEGIN
 END tbi_estado_paciente;
 /
 
+
 -- Tabela pessoa
 
-CREATE OR REPLACE TRIGGER tbi_pessoa
+CREATE OR REPLACE TRIGGER PROJETO.tbi_pessoa
     BEFORE INSERT ON pessoa
     FOR EACH ROW
 DECLARE
@@ -62,7 +65,8 @@ BEGIN
 END tbi_pessoa;
 /
 
-CREATE OR REPLACE TRIGGER tbu_pessoa
+
+CREATE OR REPLACE TRIGGER PROJETO.tbu_pessoa
     BEFORE UPDATE ON pessoa
     FOR EACH ROW
 DECLARE
@@ -85,9 +89,10 @@ BEGIN
 END;
 /
 
+
 -- Tabela paciente
 
-CREATE OR REPLACE TRIGGER tai_paciente
+CREATE OR REPLACE TRIGGER PROJETO.tai_paciente
     AFTER INSERT ON paciente
     FOR EACH ROW
 DECLARE
@@ -99,7 +104,8 @@ BEGIN
 END tai_paciente;
 /
 
-CREATE OR REPLACE TRIGGER tbud_paciente
+
+CREATE OR REPLACE TRIGGER PROJETO.tbud_paciente
     BEFORE DELETE OR UPDATE ON paciente
     FOR EACH ROW
 DECLARE
@@ -108,9 +114,10 @@ BEGIN
 END;
 /
 
+
 -- Tabela processo
 
-CREATE OR REPLACE TRIGGER tbi_processo
+CREATE OR REPLACE TRIGGER PROJETO.tbi_processo
     BEFORE INSERT ON processo
     FOR EACH ROW
 DECLARE
@@ -134,7 +141,8 @@ BEGIN
 END tbi_processo;
 /
 
-CREATE OR REPLACE TRIGGER tbu_processo
+
+CREATE OR REPLACE TRIGGER PROJETO.tbu_processo
     BEFORE UPDATE ON processo
     FOR EACH ROW
 DECLARE
@@ -172,7 +180,7 @@ END tbu_processo;
 
 -- Tabela consulta
 
-CREATE OR REPLACE TRIGGER tbi_consulta
+CREATE OR REPLACE TRIGGER PROJETO.tbi_consulta
     BEFORE INSERT ON consulta
     FOR EACH ROW
 BEGIN
@@ -189,7 +197,8 @@ BEGIN
 END tbi_consulta;
 /
 
-CREATE OR REPLACE TRIGGER tbud_consulta
+
+CREATE OR REPLACE TRIGGER PROJETO.tbud_consulta
     BEFORE UPDATE OR DELETE ON consulta
     FOR EACH ROW
 BEGIN
@@ -199,7 +208,8 @@ BEGIN
 END tbud_consulta;
 /
 
-CREATE OR REPLACE TRIGGER tai_consulta
+
+CREATE OR REPLACE TRIGGER PROJETO.tai_consulta
     AFTER INSERT ON consulta
     FOR EACH ROW
 BEGIN
@@ -208,9 +218,10 @@ BEGIN
 END tai_consulta;
 /
 
+
 -- Tabela cirurgia
 
-CREATE OR REPLACE TRIGGER tbi_cirurgia
+CREATE OR REPLACE TRIGGER PROJETO.tbi_cirurgia
     BEFORE INSERT ON cirurgia
     FOR EACH ROW
 DECLARE
@@ -249,7 +260,8 @@ BEGIN
 END tbi_cirurgia;
 /
 
-CREATE OR REPLACE TRIGGER tbud_cirurgia
+
+CREATE OR REPLACE TRIGGER PROJETO.tbud_cirurgia
     BEFORE UPDATE OR DELETE ON cirurgia
     FOR EACH ROW
 BEGIN
@@ -258,9 +270,10 @@ BEGIN
 END tbud_cirurgia;
 /
 
+
 -- Tabela relatorio
 
-CREATE OR REPLACE TRIGGER tbi_relatorio
+CREATE OR REPLACE TRIGGER PROJETO.tbi_relatorio
     BEFORE INSERT ON relatorio
     FOR EACH ROW
 BEGIN
@@ -270,7 +283,8 @@ BEGIN
 END;
 /
 
-CREATE OR REPLACE TRIGGER tbud_relatorio
+
+CREATE OR REPLACE TRIGGER PROJETO.tbud_relatorio
     BEFORE UPDATE OR DELETE ON relatorio
     FOR EACH ROW
 BEGIN
@@ -282,7 +296,7 @@ END tbud_relatorio;
 
 -- Tabela user_exception
 
-CREATE OR REPLACE TRIGGER tbi_user_exception
+CREATE OR REPLACE TRIGGER PROJETO.tbi_user_exception
     BEFORE INSERT ON user_exception
     FOR EACH ROW
 BEGIN
@@ -305,7 +319,7 @@ END tbi_user_exception;
 
 -- Tabela exception log
 
-CREATE OR REPLACE TRIGGER tbi_exception_log
+CREATE OR REPLACE TRIGGER PROJETO.tbi_exception_log
     BEFORE INSERT ON exception_log
     FOR EACH ROW
 BEGIN

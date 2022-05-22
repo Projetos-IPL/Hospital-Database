@@ -7,7 +7,7 @@ SET SERVEROUTPUT ON;
 EXECUTE dbms_output.put_line('> Creating sequences...');
 
 -- Área de atuação
-CREATE SEQUENCE pk_area_atuacao_seq
+CREATE SEQUENCE PROJETO.pk_area_atuacao_seq
     INCREMENT BY 1
     MINVALUE 1
     MAXVALUE 9999
@@ -15,7 +15,7 @@ CREATE SEQUENCE pk_area_atuacao_seq
 
 
 -- Relatório
-CREATE SEQUENCE pk_relatorio_seq
+CREATE SEQUENCE PROJETO.pk_relatorio_seq
     INCREMENT BY 1
     MINVALUE 1
     MAXVALUE 999999999
@@ -23,7 +23,7 @@ CREATE SEQUENCE pk_relatorio_seq
 
 
 -- processo
-CREATE SEQUENCE pk_processo_seq
+CREATE SEQUENCE PROJETO.pk_processo_seq
     INCREMENT BY 1
     MINVALUE 1
     MAXVALUE 999999999
@@ -31,7 +31,7 @@ CREATE SEQUENCE pk_processo_seq
 
 
 -- Tipo de Cirurgia
-CREATE SEQUENCE pk_tipo_cirurgia_seq
+CREATE SEQUENCE PROJETO.pk_tipo_cirurgia_seq
     INCREMENT BY 1
     MINVALUE 1
     MAXVALUE 9999
@@ -39,7 +39,7 @@ CREATE SEQUENCE pk_tipo_cirurgia_seq
     
 
 -- Cirurgia
-CREATE SEQUENCE pk_cirurgia_seq
+CREATE SEQUENCE PROJETO.pk_cirurgia_seq
     INCREMENT BY 1
     MINVALUE 1
     MAXVALUE 999999999
@@ -47,7 +47,7 @@ CREATE SEQUENCE pk_cirurgia_seq
     
 
 -- Consulta
-CREATE SEQUENCE pk_consulta_seq
+CREATE SEQUENCE PROJETO.pk_consulta_seq
     INCREMENT BY 1
     MINVALUE 1
     MAXVALUE 999999999
@@ -55,7 +55,7 @@ CREATE SEQUENCE pk_consulta_seq
 
 
 -- Estado do Paciente
-CREATE SEQUENCE pk_estado_paciente_seq
+CREATE SEQUENCE PROJETO.pk_estado_paciente_seq
     INCREMENT BY 1
     MINVALUE 1
     MAXVALUE 9999
@@ -63,7 +63,7 @@ CREATE SEQUENCE pk_estado_paciente_seq
 
 
 -- Histórico de Exceções
-CREATE SEQUENCE pk_exception_log_seq
+CREATE SEQUENCE PROJETO.pk_exception_log_seq
     INCREMENT BY 1
     MINVALUE 1
     MAXVALUE 999999999

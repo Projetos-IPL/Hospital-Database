@@ -8,7 +8,7 @@ EXECUTE dbms_output.put_line('> Creating consultas...');
 
 DECLARE
 	CURSOR cur_processos IS
-		SELECT id_processo FROM processo;
+		SELECT id_processo FROM PROJETO.processo;
 BEGIN
 		FOR rec_processo IN cur_processos
 		LOOP

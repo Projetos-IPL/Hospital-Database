@@ -6,16 +6,16 @@
 SET SERVEROUTPUT ON;
 EXECUTE dbms_output.put_line('> Creating estados de pacientes...');
 
-INSERT INTO estado_paciente (descricao)
+INSERT INTO PROJETO.estado_paciente (descricao)
     VALUES ('Cuidados Mínimos');
 
-INSERT INTO estado_paciente (descricao)
+INSERT INTO PROJETO.estado_paciente (descricao)
     VALUES ('Cuidados Intermediários');
 
-INSERT INTO estado_paciente (descricao)
+INSERT INTO PROJETO.estado_paciente (descricao)
     VALUES ('Cuidados Semi-Intensivos');
 
-INSERT INTO estado_paciente (descricao)
+INSERT INTO PROJETO.estado_paciente (descricao)
     VALUES ('Cuidados Intensivos');
 
 COMMIT;

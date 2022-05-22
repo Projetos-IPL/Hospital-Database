@@ -6,6 +6,6 @@
 SET SERVEROUTPUT ON;
 EXECUTE dbms_output.put_line('> Creating encryption...');
 
-INSERT INTO encryption_key (key) VALUES ('1234567890999899');
+INSERT INTO PROJETO.encryption_key (key) VALUES ('1234567890999899');
 
 COMMIT;
