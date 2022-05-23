@@ -1,5 +1,5 @@
 load data into table PACIENTE
-insert
+append
 fields terminated by ","
 (
 nif, n_utente_saude

@@ -1,0 +1,4 @@
+userid=PROJETO/Projeto_22
+control=encryption_key.ctl
+data=../csv_data/encryption_key_data_table.csv
+direct=false

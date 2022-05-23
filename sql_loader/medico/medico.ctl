@@ -1,5 +1,5 @@
 load data into table MEDICO
-insert
+append
 fields terminated by ","
 (
 nif, id_area_atuacao, cedula

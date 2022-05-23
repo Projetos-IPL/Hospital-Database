@@ -1,5 +1,5 @@
 load data into table USER_EXCEPTION
-insert
+append
 fields terminated by ","
 (
 code, name, errm

@@ -1,4 +1,4 @@
-userid=userOptim/userOptim
+userid=PROJETO/Projeto_22
 control=consulta.ctl
 data=../csv_data/consulta_data_table.csv
-direct=true
+direct=false

@@ -1,5 +1,5 @@
 load data into table FUNCIONARIO
-insert
+append
 fields terminated by ","
 (
 nif

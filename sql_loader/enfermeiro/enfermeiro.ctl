@@ -1,5 +1,5 @@
 load data into table ENFERMEIRO
-insert
+append
 fields terminated by ","
 (
 nif

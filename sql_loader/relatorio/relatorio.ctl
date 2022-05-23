@@ -1,5 +1,5 @@
 load data into table RELATORIO
-insert
+append
 fields terminated by ","
 (
 id_relatorio, nif, texto, categoria

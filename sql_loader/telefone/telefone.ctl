@@ -1,5 +1,5 @@
 load data into table TELEFONE
-insert
+append
 fields terminated by ","
 (
 nif, telefone

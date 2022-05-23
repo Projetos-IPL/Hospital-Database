@@ -1,6 +1,6 @@
 load data into table PESSOA
-insert
+append
 fields terminated by ","
 (
-nif, prim_nome, ult_nome, morada, dta_nasc
+nif, prim_nome, ult_nome, morada, dta_nasc DATE 'YY.MM.DD'
 )
