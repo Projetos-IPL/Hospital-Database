@@ -6,8 +6,11 @@
 SET SERVEROUTPUT ON;
 EXECUTE dbms_output.put_line('> Creating tablespaces...');
 
+
 DROP TABLESPACE tbs_tables;
 DROP TABLESPACE tbs_indexes;
+
+-- REUSE para reutilizar o ficheiro existente
 
 CREATE TABLESPACE tbs_tables
     DATAFILE 'tbs_tables.dbf'
