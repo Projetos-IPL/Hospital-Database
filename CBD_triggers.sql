@@ -6,7 +6,8 @@
 SET SERVEROUTPUT ON;
 EXECUTE dbms_output.put_line('> Creating triggers...');
 
--- Tabela area_atuacao
+
+-- Table area_atuacao
 CREATE OR REPLACE TRIGGER tbi_area_atuacao
     BEFORE INSERT ON area_atuacao
     FOR EACH ROW
@@ -18,8 +19,7 @@ END tbi_area_atuacao;
 /
 
 
--- Tabela tipo_cirurgia
-
+-- Table tipo_cirurgia
 CREATE OR REPLACE TRIGGER tbi_tipo_cirurgia
     BEFORE INSERT ON tipo_cirurgia
     FOR EACH ROW
@@ -31,8 +31,7 @@ END tbi_tipo_cirurgia;
 /
 
 
--- Tabela estado paciente
-
+-- Table estado paciente
 CREATE OR REPLACE TRIGGER tbi_estado_paciente
     BEFORE INSERT ON estado_paciente
     FOR EACH ROW
@@ -44,8 +43,7 @@ END tbi_estado_paciente;
 /
 
 
--- Tabela pessoa
-
+-- Table pessoa
 CREATE OR REPLACE TRIGGER PROJETO.tbi_pessoa
     BEFORE INSERT ON pessoa
     FOR EACH ROW
@@ -90,8 +88,7 @@ END;
 /
 
 
--- Tabela paciente
-
+-- Table paciente
 CREATE OR REPLACE TRIGGER PROJETO.tai_paciente
     AFTER INSERT ON paciente
     FOR EACH ROW
@@ -115,8 +112,7 @@ END;
 /
 
 
--- Tabela processo
-
+-- Table processo
 CREATE OR REPLACE TRIGGER PROJETO.tbi_processo
     BEFORE INSERT ON processo
     FOR EACH ROW
@@ -178,8 +174,7 @@ END tbu_processo;
 /
 
 
--- Tabela consulta
-
+-- Table consulta
 CREATE OR REPLACE TRIGGER PROJETO.tbi_consulta
     BEFORE INSERT ON consulta
     FOR EACH ROW
@@ -219,8 +214,7 @@ END tai_consulta;
 /
 
 
--- Tabela cirurgia
-
+-- Table cirurgia
 CREATE OR REPLACE TRIGGER PROJETO.tbi_cirurgia
     BEFORE INSERT ON cirurgia
     FOR EACH ROW
@@ -271,8 +265,7 @@ END tbud_cirurgia;
 /
 
 
--- Tabela relatorio
-
+-- Table relatorio
 CREATE OR REPLACE TRIGGER PROJETO.tbi_relatorio
     BEFORE INSERT ON relatorio
     FOR EACH ROW
@@ -294,8 +287,7 @@ END tbud_relatorio;
 /
 
 
--- Tabela user_exception
-
+-- Table user_exception
 CREATE OR REPLACE TRIGGER PROJETO.tbi_user_exception
     BEFORE INSERT ON user_exception
     FOR EACH ROW
@@ -317,8 +309,7 @@ END tbi_user_exception;
 /
 
 
--- Tabela exception log
-
+-- Table exception log
 CREATE OR REPLACE TRIGGER PROJETO.tbi_exception_log
     BEFORE INSERT ON exception_log
     FOR EACH ROW

@@ -6,6 +6,8 @@
 SET SERVEROUTPUT ON;
 EXECUTE dbms_output.put_line('> Creating audit...');
 
+
+-- Setup audit for non-successful updates on PROCESSO table
 AUDIT UPDATE
-ON PROJETO.PROCESSO
+	ON PROJETO.PROCESSO
 WHENEVER NOT SUCCESSFUL;

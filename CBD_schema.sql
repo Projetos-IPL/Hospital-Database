@@ -6,14 +6,23 @@
 SET SERVEROUTPUT ON;
 EXECUTE dbms_output.put_line('> Creating user and schema...');
 
+
+-- Connect as SYSDBA
 CONN / AS sysdba
 
+
+-- Delete user and cascade for objects (schema)
 DROP USER PROJETO CASCADE;
 
+
+-- Create user and schema
 CREATE USER PROJETO IDENTIFIED BY Projeto_22;
 
-GRANT DBA TO PROJETO;
 
+-- Grant privileges to schema user
+GRANT DBA TO PROJETO;
 GRANT EXECUTE ON DBMS_CRYPTO TO PROJETO;
 
+
+-- Connect as PROJETO for the rest of scripts
 CONN PROJETO/Projeto_22

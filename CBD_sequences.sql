@@ -6,6 +6,7 @@
 SET SERVEROUTPUT ON;
 EXECUTE dbms_output.put_line('> Creating sequences...');
 
+
 -- Área de atuação
 CREATE SEQUENCE PROJETO.pk_area_atuacao_seq
     INCREMENT BY 1
