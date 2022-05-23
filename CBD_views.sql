@@ -134,7 +134,7 @@ SELECT t.role,
        t.table_name,
        t.privilege
 FROM role_tab_privs t
-WHERE role IN ('APPLICATION', 'DEVELOPER');
+WHERE role IN ('APPLICATION', 'DEVELOPER', 'MANAGER');
 /
 
 
@@ -143,7 +143,7 @@ AS
 SELECT t.role,
        t.privilege
 FROM role_sys_privs t
-WHERE role IN ('APPLICATION', 'DEVELOPER');
+WHERE role IN ('APPLICATION', 'DEVELOPER', 'MANAGER');
 /
 
 
