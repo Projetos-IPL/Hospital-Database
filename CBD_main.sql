@@ -18,17 +18,17 @@ EXECUTE dbms_output.put_line('> Starting main script...');
 @@ exception_handler.sql
 @@ exception_handler_body.sql
 
+-- Encryption utils and key
+@@ encryption_utils.sql
+@@ encryption_utils_body.sql
+@@ CBD_encryption.sql
+
 -- Package header
 @@ et_pessoa.sql
 @@ et_processo.sql
 @@ et_cirurgia.sql
 @@ et_consulta.sql
 @@ et_relatorio.sql
-
--- Encryption utils and key
-@@ encryption_utils.sql
-@@ encryption_utils_body.sql
-@@ CBD_encryption.sql
 
 -- Views
 @@ CBD_views.sql
