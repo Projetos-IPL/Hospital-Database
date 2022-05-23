@@ -10,7 +10,7 @@ CREATE OR REPLACE PACKAGE BODY encryption_utils AS
 	AS
 		v_key VARCHAR2(200);
 		CURSOR cur_key IS
-			SELECT key FROM encryption_key;
+			SELECT key FROM PROJETO.encryption_key;
 	BEGIN
 		OPEN cur_key;
 		FETCH cur_key INTO v_key;
