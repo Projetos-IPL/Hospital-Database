@@ -6,6 +6,7 @@
 SET SERVEROUTPUT ON;
 EXECUTE dbms_output.put_line('> Creating tables...');
 
+
 CREATE TABLE PROJETO.area_atuacao
 (
     id_area_atuacao INTEGER,
