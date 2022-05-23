@@ -56,4 +56,4 @@ EXECUTE dbms_output.put_line('> Starting main script...');
 @@ CBD_indices.sql
 
 
-EXECUTE dbms_output.put_line('> Tudo criado (pelo menos devia ¯\_(ツ)_/¯)');
+EXECUTE dbms_output.put_line('> Tudo criado!');
