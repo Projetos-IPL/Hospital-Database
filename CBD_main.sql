@@ -6,7 +6,9 @@
 SET SERVEROUTPUT ON;
 EXECUTE dbms_output.put_line('> Starting main script...');
 
-SPOOL /hospital_database.log
+
+-- Enable spooling, save script execution results
+SPOOL 'C:\Users\admin\Desktop\hospital_database.log';
 
 
 -- User and schema
@@ -60,4 +62,4 @@ SPOOL /hospital_database.log
 
 EXECUTE dbms_output.put_line('> Tudo criado!');
 
-SPOOL OFF
+SPOOL OFF;
