@@ -4,6 +4,8 @@
 
 
 SET SERVEROUTPUT ON;
+SET TERMOUT OFF;
+
 EXECUTE dbms_output.put_line('> Starting main script...');
 
 
