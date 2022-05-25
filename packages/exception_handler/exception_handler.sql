@@ -2,6 +2,7 @@
 -- Grupo 5 (Afonso Santos - 2210640, Iúri Raimundo - 2210651)
 -- Descrição: Cabeçalho do pacote EXCEPTION_HANDLER
 
+
 CREATE OR REPLACE PACKAGE exception_handler AS
 
     exception_code_out_of_bounds EXCEPTION;

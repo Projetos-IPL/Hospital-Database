@@ -2,6 +2,7 @@
 -- Grupo 5 (Afonso Santos - 2210640, Iúri Raimundo - 2210651)
 -- Descrição: Corpo do pacote ET_PROCESSO
 
+
 CREATE OR REPLACE PACKAGE BODY et_processo AS
 
     -- Esta variável é utilizada para registar erros, por exemplo, alterações inválidas que

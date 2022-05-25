@@ -2,6 +2,7 @@
 -- Grupo 5 (Afonso Santos - 2210640, Iúri Raimundo - 2210651)
 -- Descrição: Cabeçalho do pacote ET_CONSULTA
 
+
 CREATE OR REPLACE PACKAGE et_consulta AS
 
     ex_consulta_em_processo_finalizado EXCEPTION;
