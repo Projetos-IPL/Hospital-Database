@@ -3,8 +3,8 @@
 -- Descrição: script principal para criação dos objetos.
 
 
-SET SERVEROUTPUT ON;
 SET TERMOUT OFF;
+SET SERVEROUTPUT ON;
 
 EXECUTE dbms_output.put_line('> Starting main script...');
 
