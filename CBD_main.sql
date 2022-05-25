@@ -6,6 +6,8 @@
 SET SERVEROUTPUT ON;
 EXECUTE dbms_output.put_line('> Starting main script...');
 
+SPOOL hospital_database.log
+
 
 -- User and schema
 @@ CBD_schema.sql
@@ -57,3 +59,5 @@ EXECUTE dbms_output.put_line('> Starting main script...');
 
 
 EXECUTE dbms_output.put_line('> Tudo criado!');
+
+SPOOL OFF
