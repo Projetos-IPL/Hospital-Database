@@ -6,7 +6,7 @@
 SET SERVEROUTPUT ON;
 EXECUTE dbms_output.put_line('> Starting main script...');
 
-SPOOL hospital_database.log
+SPOOL /hospital_database.log
 
 
 -- User and schema
