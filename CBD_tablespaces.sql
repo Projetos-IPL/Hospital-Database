@@ -13,13 +13,16 @@ DROP TABLESPACE tbs_indexes;
 
 
 -- Option REUSE to use the existing files in the OS
+
 CREATE TABLESPACE tbs_tables
-    DATAFILE 'tbs_tables.dbf'
-    SIZE 1024M
-		REUSE;
+  DATAFILE 'tbs_tables.dbf' SIZE 1M
+		AUTOEXTEND ON NEXT 500K
+	UNIFORM SIZE 40K
+	REUSE;
 
 
 CREATE TABLESPACE tbs_indexes
-    DATAFILE 'tbs_indexes.dbf'
-    SIZE 1024M
-		REUSE;
+	DATAFILE 'tbs_indexes.dbf' SIZE 5M
+		AUTOEXTEND ON NEXT 500K
+	UNIFORM SIZE 40K
+	REUSE;
