@@ -19,9 +19,10 @@ SPOOL 'C:\Users\admin\Desktop\hospital_database.log';
 @@ CBD_tabelas.sql
 @@ CBD_sequences.sql
 
--- Exception handling package
+-- Exception handling package and initial exceptions
 @@ exception_handler.sql
 @@ exception_handler_body.sql
+@@ create_user_exceptions.sql
 
 -- Encryption utils and key
 @@ encryption_utils.sql
@@ -48,7 +49,6 @@ SPOOL 'C:\Users\admin\Desktop\hospital_database.log';
 @@ CBD_triggers.sql
 
 -- Dummy data
-@@ create_user_exceptions.sql
 @@ create_areas_atuacao.sql
 @@ create_tipos_cirurgias.sql
 @@ create_estados_pacientes.sql

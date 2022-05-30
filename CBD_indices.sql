@@ -23,5 +23,5 @@ CREATE INDEX PROJETO.idx_processo_id_area_atuacao ON PROJETO.processo (id_area_a
 
 
 -- Indice para otimizar queries a processos por nif
-CREATE INDEX PROJETO.idx_processo_nif ON PROJETO.processo(nif)
+CREATE INDEX PROJETO.idx_processo_nif ON PROJETO.processo (nif)
     TABLESPACE tbs_indexes;
