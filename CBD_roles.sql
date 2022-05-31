@@ -45,6 +45,8 @@ DECLARE
         END LOOP;
     END;
 
+		CONN / AS SYSDBA
+
     PROCEDURE grantPrivilegeToRole(p_privileges IN t_varchar2, p_role IN VARCHAR2) IS
     BEGIN
         FOR i IN p_privileges.FIRST..p_privileges.LAST
@@ -53,6 +55,8 @@ DECLARE
             EXECUTE IMMEDIATE 'GRANT ' || p_privileges(i) || ' TO ' || p_role;
         END LOOP;
     END;
+
+		CONN PROJETO/Projeto_22
 
 BEGIN
     -- Developer grants
