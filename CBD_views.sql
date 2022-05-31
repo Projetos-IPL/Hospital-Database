@@ -160,3 +160,6 @@ AS
 SELECT *
 FROM dba_audit_object
 WHERE obj_name = 'PROCESSO';
+
+
+
