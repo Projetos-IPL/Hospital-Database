@@ -149,8 +149,14 @@ WHERE role IN ('APPLICATION', 'DEVELOPER', 'MANAGER');
 
 CREATE OR REPLACE VIEW dados_moradas_pessoas_view
 AS
-SELECT	p.prim_nome,
-      	p.ult_nome,
-				encryption_utils.decrypt_str(p.morada) "Morada"
+SELECT p.prim_nome,
+       p.ult_nome,
+	   encryption_utils.decrypt_str(p.morada) "Morada"
 FROM 	PROJETO.pessoa p;
 /
+
+CREATE OR REPLACE VIEW auditoria_processo_view
+AS
+SELECT *
+FROM dba_audit_object
+WHERE obj_name = 'PROCESSO';
