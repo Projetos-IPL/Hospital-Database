@@ -155,11 +155,10 @@ SELECT p.prim_nome,
 FROM 	PROJETO.pessoa p;
 /
 
+
 CREATE OR REPLACE VIEW auditoria_processo_view
 AS
 SELECT *
 FROM dba_audit_object
 WHERE obj_name = 'PROCESSO';
-
-
-
+/
