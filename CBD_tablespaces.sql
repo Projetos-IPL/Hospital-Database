@@ -7,7 +7,7 @@ SET SERVEROUTPUT ON;
 EXECUTE dbms_output.put_line('> Creating tablespaces...');
 
 
-CONN / AS SYSDBA;
+CONN / AS SYSDBA
 
 -- Drop tablespaces if exist
 DROP TABLESPACE tbs_tables INCLUDING CONTENTS AND DATAFILES;
@@ -28,4 +28,4 @@ CREATE TABLESPACE tbs_indexes
 	UNIFORM SIZE 40K;
 
 
-CONN PROJETO/Projeto_22;
+CONN PROJETO/Projeto_22
