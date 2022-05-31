@@ -15,7 +15,6 @@ SPOOL 'C:\Users\admin\Desktop\hospital_database.log';
 -- User and schema
 @@ CBD_schema.sql
 
-@@ CBD_tablespaces.sql
 @@ CBD_tabelas.sql
 @@ CBD_sequences.sql
 
