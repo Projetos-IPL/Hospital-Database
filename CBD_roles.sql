@@ -26,7 +26,7 @@ DECLARE
     t_developer_allowed_packages t_varchar2 := t_varchar2('et_pessoa', 'et_cirurgia', 'et_consulta', 'et_processo', 'et_relatorio', 'exception_handler');
     t_developer_allowed_views    t_varchar2 := t_varchar2('dados_paciente_view', 'medico_area_atuacao_view', 'processo_dados_view', 'processo_total_consultas_view', 'processos_ativos_view');
     t_developer_allowed_tables   t_varchar2 := t_varchar2('area_atuacao', 'cirurgia', 'consulta', 'enfermeiro', 'estado_paciente', 'exception_log', 'funcionario', 'medico', 'medico_cirurgia', 'paciente', 'pessoa', 'processo', 'relatorio', 'telefone', 'tipo_cirurgia', 'user_exception');
-    t_developer_privileges       t_varchar2 := t_varchar2('CREATE SESSION', 'CREATE TABLE', 'UPDATE ANY TABLE', 'CREATE SEQUENCE', 'CREATE ANY PROCEDURE', 'CREATE ANY MATERIALIZED VIEW');
+    t_developer_privileges       t_varchar2 := t_varchar2('CREATE SESSION', 'CREATE TABLE', 'UPDATE ANY TABLE', 'CREATE SEQUENCE', 'CREATE ANY PROCEDURE');
 
     t_application_allowed_packages t_varchar2 := t_varchar2('et_pessoa', 'et_cirurgia', 'et_consulta', 'et_processo', 'et_relatorio');
     t_application_allowed_views    t_varchar2 := t_varchar2('dados_paciente_view', 'medico_area_atuacao_view', 'processo_dados_view', 'processo_total_consultas_view', 'processos_ativos_view');
