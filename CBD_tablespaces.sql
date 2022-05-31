@@ -8,8 +8,8 @@ EXECUTE dbms_output.put_line('> Creating tablespaces...');
 
 
 -- Drop tablespaces if exist
-DROP TABLESPACE tbs_tables INCLUDING CONTENTS;
-DROP TABLESPACE tbs_indexes INCLUDING CONTENTS;
+DROP TABLESPACE tbs_tables INCLUDING CONTENTS AND DATAFILES;
+DROP TABLESPACE tbs_indexes INCLUDING CONTENTS AND DATAFILES;
 
 
 -- Option REUSE to use the existing files in the OS
