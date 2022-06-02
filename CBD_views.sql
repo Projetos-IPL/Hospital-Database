@@ -158,7 +158,16 @@ FROM 	PROJETO.pessoa p;
 
 CREATE OR REPLACE VIEW auditoria_processo_view
 AS
-SELECT *
-FROM dba_audit_object
-WHERE obj_name = 'PROCESSO';
+SELECT
+    au.username,
+    au.action_name,
+    au.timestamp,
+    au.owner,
+    au.obj_name
+FROM
+    dba_audit_object au
+WHERE
+    au.obj_name = 'PROCESSO'
+ORDER BY
+    au.timestamp DESC;
 /
