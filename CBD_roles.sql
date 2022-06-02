@@ -87,6 +87,10 @@ END;
 
 -- create users for each role
 
+DROP USER dev01;
+DROP USER app01;
+DROP USER man01;
+
 CREATE USER dev01
 	IDENTIFIED BY dev01
 	QUOTA 100M ON TBS_INDEXES
